@@ -40,4 +40,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roleOptions(){
+        return[
+            'student',
+            'profesor',
+            'administator'
+        ];
+    }
+
+    public function students(){
+        return $this->where('role', 'student');
+    }
+
+    public function profesors(){
+        return $this->where('role', 'profesor');
+    }
+
+    public function admins(){
+        return $this->where('role', 'administator');
+    }
 }
