@@ -16,6 +16,9 @@ class CreateMateriaCorrelativasTable extends Migration
         Schema::create('materia_correlativas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->foreignId('id_materia')->references('id')->on('materias');
+            $table->foreignId('id_correlativa')->references('id')->on('materias');
+            $table->unsignedSmallInteger('tipo', false);
         });
     }
 

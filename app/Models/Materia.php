@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
 
 class Materia extends Model
 {
@@ -19,4 +18,20 @@ class Materia extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function getCorrelativasFuertes()
+    {
+        return Materia::join('materia_correlativa', 'materia_correlativa.id_materia', '=', 'materias.id')
+            ->select('materia_correlativa.id_correlativa')
+            ->where('materia_correlativa.tipo', '=', '1')->get();
+    }
+
+    public function getCorrelativasDebiles()
+    {
+        return Materia::join('materia_correlativa', 'materia_correlativa.id_materia', '=', 'materias.id')
+            ->select('materia_correlativa.id_correlativa')
+            ->where('materia_correlativa.tipo', '=', '0')->get();
+    }
+
+
 }
