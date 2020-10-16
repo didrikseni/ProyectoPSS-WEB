@@ -14,7 +14,7 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        return view('materias.materias_create');
     }
 
     /**
