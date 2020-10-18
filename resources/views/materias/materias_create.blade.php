@@ -53,11 +53,9 @@
                                 <label for="dpto">Departamento responsable (*)</label>
                                 <select class="form-control @error('dpto') alert-danger @enderror"
                                         type="text" name="dpto" id="dpto" value="{{ old('dpto') }}" id="dpto">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                    @foreach($dptos as $dpto)
+                                        <option value="{{ $dpto->id }}">{{ $dpto->nombre }}</option>
+                                    @endforeach
                                 </select>
                                 @error('dpto')
                                 <p class="badge badge-danger">{{ $errors->first('dpto') }}</p>
