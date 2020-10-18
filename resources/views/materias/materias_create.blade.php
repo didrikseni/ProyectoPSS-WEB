@@ -46,14 +46,18 @@
                     <div class="row my-3">
                         <div class="col">
                             <div class="form-group">
-                                <label class="label" for="dpto">Departamento responsable (*)</label>
-                                <div>
-                                    <input class="input-group form-control @error('dpto') alert-danger @enderror"
-                                           type="text" name="dpto" id="dpto" value="{{ old('dpto') }}">
-                                    @error('dpto')
-                                    <p class="badge badge-danger">{{ $errors->first('dpto') }}</p>
-                                    @enderror
-                                </div>
+                                <label for="dpto">Departamento responsable (*)</label>
+                                <select class="form-control @error('dpto') alert-danger @enderror"
+                                        type="text" name="dpto" id="dpto" value="{{ old('dpto') }}" id="dpto">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                                @error('dpto')
+                                <p class="badge badge-danger">{{ $errors->first('dpto') }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -85,8 +89,24 @@
                             </div>
                         </div>
                     </div>
+
+                    <br>
+                    <div class="row justify-content-center">
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <button class="waves-effect waves-light btn blue">Aceptar</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <button class="waves-effect waves-light btn blue">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 @endsection
+
+
