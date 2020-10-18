@@ -25,3 +25,6 @@ Route::get('/User', [UserController::class, 'index']);
 Route::get('/User/create', [UserController::class, 'create']);
 Route::get('User/confirmation', [UserController::class, 'confirmation']);
 Route::post('/User', [UserController::class, 'store']);
+
+Route::resource('/materias', 'App\Http\Controllers\MateriaController');
+Route::resource('/correlativas', 'App\Http\Controllers\MateriaCorrelativaController');

@@ -14,7 +14,7 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        return view('materias.materias_create');
     }
 
     /**
@@ -35,7 +35,16 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateMateria();
+        $materia = new Materia([
+            'nombre' => $request->get('nombre'),
+            'id_str' => $request->get('id'),
+            'departamento' => $request->get('dpto'),
+            'id_profesor' =>  $request->get('profesor'),
+            'id_asistente' =>  $request->get('asistente')
+        ]);
+        $materia->save();
+        return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
     }
 
     /**
@@ -82,4 +91,15 @@ class MateriaController extends Controller
     {
         //
     }
+
+    private function validateMateria(): array {
+        return request()->validate([
+            'nombre' => 'required',
+            'id' => 'required|min:1|max:5',
+            'dpto' => 'required|exists:departamentos,id',
+            'profesor' => 'required|exists:users,id',
+            'asistente' => 'required|exists:users,id'
+        ]);
+    }
+
 }
