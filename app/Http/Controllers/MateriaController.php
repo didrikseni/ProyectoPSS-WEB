@@ -44,7 +44,7 @@ class MateriaController extends Controller
             'id_asistente' =>  $request->get('asistente')
         ]);
         $materia->save();
-        return redirect('/');
+        return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
     }
 
     /**

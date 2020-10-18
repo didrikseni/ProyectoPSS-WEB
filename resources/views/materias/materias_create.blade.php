@@ -1,10 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(session('success'))
+        <h1>{{session('success')}}</h1>
+    @endif
+
     <div class="page-content">
         <div class="card justify-content-center m-5">
             <div class="card-header">
-                <p class="text-center"> Ingrese los siguientes datos para dar de alta una nueva materia </p>
+                <h4 class="text-center"> Ingrese los siguientes datos para dar de alta una nueva materia </h4>
             </div>
 
             <div class="card-body ">

@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/materias', 'App\Http\Controllers\MateriaController');
+Route::resource('/correlativas', 'App\Http\Controllers\MateriaCorrelativaController');

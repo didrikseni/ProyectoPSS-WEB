@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Materia;
 use App\Models\materia_correlativa;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class MateriaCorrelativaController extends Controller
      */
     public function index()
     {
-        //
+        return view('materias.materias_asociate');
     }
 
     /**
@@ -35,7 +36,14 @@ class MateriaCorrelativaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateMateriaCorrelativa();
+        $materia_correlativa = new materia_correlativa([
+            'id_materia' => $request->get('materia'),
+            'id_correlativa' => $request->get('correlativa'),
+            'tipo' => $request->get('tipo'),
+        ]);
+        $materia_correlativa->save();
+        return redirect()->back()->with('Sistema', "La correlativa fue cargada correctamente.");
     }
 
     /**
@@ -81,5 +89,14 @@ class MateriaCorrelativaController extends Controller
     public function destroy(materia_correlativa $materia_correlativa)
     {
         //
+    }
+
+    private function validateMateriaCorrelativa()
+    {
+        return request()->validate([
+            'materia' => 'required|exists:materia,id',
+            'correlativa' => 'required|exists:materia,id',
+            'tipo' => 'required|digits_between:0,1',
+        ]);
     }
 }
