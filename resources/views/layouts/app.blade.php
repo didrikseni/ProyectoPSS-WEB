@@ -31,7 +31,7 @@
     <!-- Navbar -->
     <nav class="orange lighten-3 mb-5">
         <div class="nav-wrapper">
-            <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+            <a class="navbar-brand mx-3" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <!-- Authentication Links -->
                 @guest
@@ -47,7 +47,7 @@
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
+                            {{ auth()->user()->nombre }}
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

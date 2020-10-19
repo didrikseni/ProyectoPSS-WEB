@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departamentos;
 use App\Models\Materia;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MateriaController extends Controller
 {
@@ -96,11 +97,10 @@ class MateriaController extends Controller
     private function validateMateria(): array {
         return request()->validate([
             'nombre' => 'required',
-            'id' => 'required|min:1|max:5',
+            'id' => 'required|min:1|max:5|unique:materias,id_str',
             'dpto' => 'required|exists:departamentos,id',
-            'profesor' => 'required|exists:users,id',
-            'asistente' => 'required|exists:users,id'
+            'profesor' => ['required', Rule::exists('users', 'legajo')->where('rol', 'Profesor')],
+            'asistente' => ['required', Rule::exists('users', 'legajo')->where('rol', 'Profesor')],
         ]);
     }
-
 }
