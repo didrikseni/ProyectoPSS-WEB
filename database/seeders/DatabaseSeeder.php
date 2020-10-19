@@ -31,5 +31,8 @@ class DatabaseSeeder extends Seeder
         Departamentos::create(array('nombre' => 'INGENIERIA ELECTRICA Y DE COMPUTADORAS'));
         Departamentos::create(array('nombre' => 'INGENIERIA QUIMICA'));
         Departamentos::create(array('nombre' => 'QUIMICA'));
+
+        $this->call(UserSeeder::class);
+        $this->call(MateriaSeeder::class);
     }
 }

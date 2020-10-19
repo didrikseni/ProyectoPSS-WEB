@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Materia;
 use Illuminate\Database\Seeder;
 
 class MateriaSeeder extends Seeder
@@ -13,6 +14,6 @@ class MateriaSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Materia::factory()->times(10)->create();
     }
 }

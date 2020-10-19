@@ -9,6 +9,14 @@ class Materia extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id_str',
+        'nombre',
+        'departamento',
+        'id_profesor',
+        'id_asistente',
+    ];
+
     public function profesor()
     {
         return $this->hasOne(User::class);

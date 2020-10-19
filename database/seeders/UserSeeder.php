@@ -16,11 +16,11 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->fill([            
+        $user->fill([
             'nombre' => 'Admin',
-            'apellido' => 'istrador', 
+            'apellido' => 'istrador',
             'fecha_nacimiento' => '1998-03-27',
-            'lugar_nacimiento' => 'Bahia Blanca', 
+            'lugar_nacimiento' => 'Bahia Blanca',
             'DNI' => '41071020',
             'direccion_calle' => 'Alem',
             'direccion_numero' => '123',
@@ -32,14 +32,11 @@ class UserSeeder extends Seeder
             'password' => Hash::make( '12345678'),
             'escuela_secundaria' => 'Ciclo Básico',
         ]);
-        
+
         $user->save();
 
-        User::factory()->times(1)->create();
-        User::factory()->times(1)->create();
-        User::factory()->times(1)->create();
-        User::factory()->times(1)->create();
-        User::factory()->times(1)->create();
-        User::factory()->times(1)->create();
+        for($i = 0; $i < 20; $i++) {
+            User::factory()->times(1)->create();
+        }
     }
 }
