@@ -23,7 +23,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/User', [UserController::class, 'index']);
 Route::get('/User/create', [UserController::class, 'create']);
-Route::get('User/confirmation', [UserController::class, 'confirmation']);
+Route::get('User/confirmation/{user}', [UserController::class, 'confirmation']);
 Route::post('/User', [UserController::class, 'store']);
 
 Route::resource('/materias', 'App\Http\Controllers\MateriaController');

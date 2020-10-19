@@ -28,7 +28,9 @@ class User extends Authenticatable
         'escuela_secundaria',
         'numero_telefono',
         'legajo',
-        'rol'
+        'rol',
+        'password',
+        'nombre_usuario'
     ];
 
     /**
@@ -64,6 +66,7 @@ class User extends Authenticatable
         if($int != 0){
             $userName = $userName. $int;
         }
+        $userName = str_replace(' ', '', $userName);
         return $userName; 
     }
 
@@ -86,14 +89,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function students(){
-        return $User->where('rol', 'Alumno');
+    public function isAdmin(){
+        return $this->rol == 'Administrador';
     }
 
-    public function profesors(){
-        return $User->where('rol', 'Profesor');
+    public function isProfessor(){
+        return $this->rol == 'Profesor';
     }
 
-
+    public function isStudent(){
+        return $this->rol == 'Alumno';
+    }
 
 }

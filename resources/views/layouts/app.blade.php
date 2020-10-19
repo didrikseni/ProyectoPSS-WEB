@@ -95,8 +95,8 @@
                         <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
-                            <a class="dropdown-item" href="#">Crear</a>
-                            <a class="dropdown-item" href="#">Buscar</a>
+                            <a class="dropdown-item" href="/User/create">Crear</a>
+                            <a class="dropdown-item" href="/User">Buscar</a>
                         </div>
                     </div>
                 </li>

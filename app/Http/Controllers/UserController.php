@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        // $this->middleware('admin')->only('create');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -81,14 +87,19 @@ class UserController extends Controller
             'nombre_usuario' => '$nombre_usuario',
             'rol' => $request->rol,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make( $request->password),
             'escuela_secundaria' => 'asdasd',
         ]);
         
-        $user->password = '12345678';
         $user->nombre_usuario = $nombre_usuario;
         $user->save();
-        return view('User/confirmation', compact ('user'));
+       
+        return redirect('User/confirmation/' . $user->DNI);
+    }
+
+    public function confirmation($user_dni){
+        $user = User::where('DNI', $user_dni)->firstOrFail();
+        return view('User/confirmation', compact('user'));
     }
 
     /**

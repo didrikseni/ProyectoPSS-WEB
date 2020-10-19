@@ -82,6 +82,7 @@
                     <div class="form-group ">
                         <label for="rol">Selecciona el tipo de usuario a crear:</label>
                         <select name="rol" id="rol" class="form-control" >
+                            <option disabled selected>Seleccionar</option>
                             @foreach ($user->roleOptions() as $option)                            
                                 <option value="{{$option}}">{{$option}}</option>
                             @endforeach                                                      
