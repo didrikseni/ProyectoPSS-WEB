@@ -14,7 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->createDeptaramentos();
+        $this->call(UserSeeder::class);
+        $this->call(MateriaSeeder::class);
+    }
+
+    private function createDeptaramentos()
+    {
         Departamentos::create(array('nombre' => 'AGRONOMIA'));
         Departamentos::create(array('nombre' => 'BIOLOGIA BIOQUIMICA Y FARMACIA'));
         Departamentos::create(array('nombre' => 'CIENCIAS DE LA ADMINISTRACION'));
@@ -31,8 +37,5 @@ class DatabaseSeeder extends Seeder
         Departamentos::create(array('nombre' => 'INGENIERIA ELECTRICA Y DE COMPUTADORAS'));
         Departamentos::create(array('nombre' => 'INGENIERIA QUIMICA'));
         Departamentos::create(array('nombre' => 'QUIMICA'));
-
-        $this->call(UserSeeder::class);
-        $this->call(MateriaSeeder::class);
     }
 }

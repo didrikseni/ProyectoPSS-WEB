@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Materia;
 use App\Models\materia_correlativa;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class MateriaCorrelativaController extends Controller
 {
@@ -94,7 +95,7 @@ class MateriaCorrelativaController extends Controller
     private function validateMateriaCorrelativa()
     {
         return request()->validate([
-            'materia' => 'required|exists:materia,id',
+            'materia' => ['required', Rule::exists('materias', 'id_str')->where('rol', 'Profesor'), ],
             'correlativa' => 'required|exists:materia,id',
             'tipo' => 'required|digits_between:0,1',
         ]);
