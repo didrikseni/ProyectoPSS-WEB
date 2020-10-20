@@ -38,7 +38,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
-
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -62,47 +61,57 @@
             </ul>
         </div>
 
-        <div class="nav-wrapper deep-orange accent-1">
-            <ul id="nav-mobile" class="hide-on-med-and-down">
-                <li>
-                    <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuCarrera"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
-                            <a class="dropdown-item" href="/Carreras/create">Crear</a>
-                            <a class="dropdown-item" href="/Carreras">Buscar</a>
+        @if(auth()->check())
+            <div class="nav-wrapper deep-orange accent-1">
+                <ul id="nav-mobile" class="hide-on-med-and-down">
+                    <li>
+                        <div class="dropdown show">
+                            <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuCarrera"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
+                                @if(auth()->user()->isAdmin())
+                                    <a class="dropdown-item" href="/Carreras/create">Crear</a>
+                                @endif
+                                <a class="dropdown-item" href="/Carreras">Buscar</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
-                <li>
-                    <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuMateria"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Materia</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
-                            <a class="dropdown-item" href="/materias/create">Crear</a>
-                            <a class="dropdown-item" href="/busqueda/materias">Buscar</a>
+                    <li>
+                        <div class="dropdown show">
+                            <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuMateria"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Materia</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
+                                @if(auth()->user()->isAdmin())
+                                    <a class="dropdown-item" href="/materias/create">Crear</a>
+                                @endif
+                                <a class="dropdown-item" href="/busqueda/materias">Buscar</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
-                <li>
-                    <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuUsuario"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
-                            <a class="dropdown-item" href="/User/create">Crear</a>
-                            <a class="dropdown-item" href="/User">Buscar</a>
+                    <li>
+                        <div class="dropdown show">
+                            <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuUsuario"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
+                                @if(auth()->user()->isAdmin())
+                                    <a class="dropdown-item" href="/User/create">Crear</a>
+                                @endif
+                                <a class="dropdown-item" href="/User">Buscar</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
-                <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/correlativas/create">Asociar correlativa</a></li>
-                <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar materia a carrera</a></li>
-                <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar profesor a materia</a></li>
+                    @if(auth()->user()->isAdmin())
+                        <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/correlativas/create">Asociar correlativa</a></li>
+                        <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar materia a carrera</a></li>
+                        <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar profesor a materia</a></li>
+                    @endif
 
-            </ul>
-        </div>
+                </ul>
+            </div>
+        @endif
     </nav>
     <!-- Nabvar -->
 
