@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Carreras;
 use App\Models\User;
+use App\Models\Departamentos;
 use Illuminate\Http\Request;
 
 class CarrerasController extends Controller
 {
+    
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin')->only('create');
+    }
+    
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,8 @@ class CarrerasController extends Controller
      */
     public function index()
     {
-        return view('Carreras/index');
+        $carreras = Carreras::all();
+        return view('Carreras/index', compact('carreras'));
     }
 
     /**
@@ -25,8 +34,9 @@ class CarrerasController extends Controller
      */
     public function create()
     {
+        $departamentos = Departamentos::all();
         $professors = User::where('rol', '=', 'Profesor')->get();        
-        return view('Carreras/create', compact('professors'));
+        return view('Carreras/create', compact('professors', 'departamentos'));
     }
 
     /**
@@ -38,17 +48,11 @@ class CarrerasController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => ['required', 'string', 'max:255'],
-            'apellido' =>['required', 'string', 'max:255'],
-            'fecha_nacimiento' => ['required', 'date'],
-            'lugar_nacimiento' => ['required', 'string', 'max:255'],
-            'DNI' => ['required', 'integer', 'digits:8', 'unique:users'],
-            'direccion_calle' => ['required', 'string', 'max:255'],
-            'direccion_numero'=> ['required', 'integer'],
-            'numero_telefono' => ['required', 'integer'],
-            'rol' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8']          
+            'nombre' => ['required', 'string', 'max:255'],           
+            'anio_inicio' => ['required', 'integer', 'digits:4'],
+            'id_str' => ['required', 'string', 'max:255', 'unique:carreras'],
+            'departamento_responsable' => ['required', 'string'],
+            'profesor_responsable' => ['required'],
         ];
 
         $messages = [
@@ -62,22 +66,18 @@ class CarrerasController extends Controller
         
        $this->validate(request(), $rules, $messages);       
 
-        $carrera = new Carrera();
-        
-        $legajo = User::getLegajo();
-        $nombre_usuario = User::getUserName($request->nombre, $request->apellido);
-        
+        $carrera = new Carreras();
         $carrera->fill([            
             'nombre' => $request->nombre,
             'anio_inicio' => $request->anio_inicio, 
             'id_str' => $request->id_str,
             'departamento_responsable' => $request->departamento_responsable, 
-            'profesor' => $request->profesor,
+            'profesor_responsable' => $request->profesor_responsable,
         ]);
         
         $carrera->save();
        
-        return redirect('carreras/');
+        return redirect('Carreras/');
     }
 
     /**

@@ -18,9 +18,9 @@ class CreateCarrerasTable extends Migration
             $table->timestamps();
             $table->string('nombre');
             $table->string('anio_inicio');
-            $table->date('id_str')->unique();
+            $table->string('id_str')->unique();
             $table->string('departamento_responsable');
-            $table->foreignId('profesor')->references('id')->on('users');
+            $table->foreignId('profesor_responsable')->references('id')->on('users');
         });
     }
 
