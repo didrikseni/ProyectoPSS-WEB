@@ -69,8 +69,8 @@
                         <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuCarrera"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
-                            <a class="dropdown-item" href="#">Crear</a>
-                            <a class="dropdown-item" href="#">Buscar</a>
+                            <a class="dropdown-item" href="/Carreras/create">Crear</a>
+                            <a class="dropdown-item" href="/Carreras">Buscar</a>
                         </div>
                     </div>
                 </li>
