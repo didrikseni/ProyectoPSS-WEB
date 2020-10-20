@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('escuela_secundaria');
             $table->string('direccion_calle');
             $table->string('direccion_numero');
-            $table->integer('numero_telefono');
+            $table->bigInteger('numero_telefono');
             $table->string('rol');
             $table->integer('legajo')->unique();
             $table->timestamp('email_verified_at')->nullable();
