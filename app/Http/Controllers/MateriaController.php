@@ -94,6 +94,12 @@ class MateriaController extends Controller
         //
     }
 
+
+    public function search() {
+        return view('materias.materias_search', Carreras::all());
+    }
+
+
     private function validateMateria(): array {
         return request()->validate([
             'nombre' => 'required',

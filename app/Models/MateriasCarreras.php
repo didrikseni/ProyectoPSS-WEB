@@ -9,7 +9,7 @@ class MateriasCarreras extends Model
 {
     use HasFactory;
 
-    public function materia() {
+    public function materias() {
         return $this->belongsTo(Carrera::class);
     }
 
