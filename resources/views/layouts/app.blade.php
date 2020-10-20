@@ -38,7 +38,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
-                    
+
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -80,8 +80,8 @@
                         <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuMateria"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Materia</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
-                            <a class="dropdown-item" href="/materias">Crear</a>
-                            <a class="dropdown-item" href="#">Buscar</a>
+                            <a class="dropdown-item" href="/materias/create">Crear</a>
+                            <a class="dropdown-item" href="/busqueda/materias">Buscar</a>
                         </div>
                     </div>
                 </li>
@@ -97,7 +97,7 @@
                     </div>
                 </li>
 
-                <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/correlativas">Asociar correlativa</a></li>
+                <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/correlativas/create">Asociar correlativa</a></li>
                 <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar materia a carrera</a></li>
                 <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar profesor a materia</a></li>
 

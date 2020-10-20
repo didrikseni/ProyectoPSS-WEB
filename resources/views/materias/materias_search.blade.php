@@ -2,7 +2,46 @@
 
 
 @section('content')
-    @if(auth()->check())
+{{--    <div class="page-content">--}}
+{{--        <div class="col-12">--}}
+{{--            <div class="title m-b-md">--}}
+{{--                <h1>Materias</h1>--}}
+{{--                <table class="table table-striped ">--}}
+{{--                    <thead>--}}
+{{--                    <tr>--}}
+{{--                        <th scope="col">Nombre</th>--}}
+{{--                        <th scope="col">ID</th>--}}
+{{--                        <th scope="col">Departamento</th>--}}
+{{--                        <th scope="col">Profesor</th>--}}
+{{--                        <th scope="col">Asistente</th>--}}
+{{--                        <th scope="col">Correlativas debiles</th>--}}
+{{--                        <th scope="col">Correlativas fuertes</th>--}}
+{{--                        <th scope="col">Año de la carrera</th>--}}
+{{--                        <th scope="col">Cuatrimestre</th>--}}
+{{--                    </tr>--}}
+{{--                    </thead>--}}
+{{--                    <tbody>--}}
+{{--                    @foreach ($materias as $materia)--}}
+{{--                        <tr>--}}
+{{--                            <th>{{$materia->nombre}}</th>--}}
+{{--                            <th>{{$materia->id_str}} </th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                            <th scope="col"></th>--}}
+{{--                        </tr>--}}
+{{--                    @endforeach--}}
+{{--                    </tbody>--}}
+{{--                </table>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+
+        @if(auth()->check())
         <div class="page-content">
             <div class="card justify-content-center m-5">
                 <div class="card-body ">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carreras;
 use App\Models\Departamentos;
 use App\Models\Materia;
 use Illuminate\Http\Request;
@@ -9,6 +10,12 @@ use Illuminate\Validation\Rule;
 
 class MateriaController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,7 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        return view('materias.materias_create', ['dptos' => Departamentos::all()]);
+        //
     }
 
     /**
@@ -26,7 +33,7 @@ class MateriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('materias.materias_create', ['dptos' => Departamentos::all()]);
     }
 
     /**
@@ -42,8 +49,8 @@ class MateriaController extends Controller
             'nombre' => $request->get('nombre'),
             'id_str' => $request->get('id'),
             'departamento' => $request->get('dpto'),
-            'id_profesor' =>  $request->get('profesor'),
-            'id_asistente' =>  $request->get('asistente')
+            'id_profesor' =>  User::where('legajo', '=', $request->get('profesor'))->select('id')->first(),
+            'id_asistente' =>  User::where('legajo', '=', $request->get('asistente'))->select('id')->first()
         ]);
         $materia->save();
         return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
@@ -96,7 +103,10 @@ class MateriaController extends Controller
 
 
     public function search() {
-        return view('materias.materias_search', Carreras::all());
+        $materias = Materia::all();
+        $carreras = Carreras::all();
+        $matInfo = null;
+        return view('materias.materias_search', compact('materias', 'carreras', 'matInfo'));
     }
 
 

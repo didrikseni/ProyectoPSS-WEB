@@ -3,7 +3,10 @@
 @section('content')
     @if(session('success'))
         <h1>{{session('success')}}</h1>
+    @elseif(session('error'))
+        <h1>{{session('error')}}</h1>
     @endif
+
 
     <div class="page-content">
         <div class="card justify-content-center m-5">

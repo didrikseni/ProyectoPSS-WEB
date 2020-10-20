@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Carreras;
 use App\Models\Departamentos;
 use Illuminate\Database\Seeder;
 
@@ -17,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->createDeptaramentos();
         $this->call(UserSeeder::class);
         $this->call(MateriaSeeder::class);
+        $this->call(CarrerasSeeder::class);
     }
 
     private function createDeptaramentos()

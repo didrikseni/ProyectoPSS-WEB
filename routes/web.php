@@ -26,6 +26,6 @@ Route::post('/User', [UserController::class, 'store']);
 
 Route::resource('/materias', 'App\Http\Controllers\MateriaController');
 Route::resource('/correlativas', 'App\Http\Controllers\MateriaCorrelativaController');
-Route::get('/materias/search', 'App\Http\Controllers\MateriaController@search');
+Route::get('/busqueda/materias', 'App\Http\Controllers\MateriaController@search');
 
 Route::resource('Carreras', 'App\Http\Controllers\CarrerasController');

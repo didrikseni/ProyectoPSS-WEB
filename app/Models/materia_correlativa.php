@@ -9,6 +9,12 @@ class materia_correlativa extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'id_materia',
+        'id_correlativa',
+        'tipo',
+    ];
+
     public function materia()
     {
         return $this->belongsTo(Materia::class);

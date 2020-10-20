@@ -12,7 +12,7 @@ class UserController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
-        // $this->middleware('admin')->only('create');
+        $this->middleware('admin')->only('create');
     }
 
     /**
@@ -56,7 +56,7 @@ class UserController extends Controller
             'numero_telefono' => ['required', 'integer'],
             'rol' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8']          
+            'password' => ['required', 'string', 'min:8']
         ];
 
         $messages = [
@@ -67,19 +67,19 @@ class UserController extends Controller
             'integer' => 'El atributo tiene que ser de tipo numérico',
             'unique' => 'El atributo tiene que ser único para cada usuario, actualmente hay un usuario con estos datos'
         ];
-        
-       $this->validate(request(), $rules, $messages);       
+
+       $this->validate(request(), $rules, $messages);
 
         $user = new User();
-        
+
         $legajo = User::getLegajo();
         $nombre_usuario = User::getUserName($request->nombre, $request->apellido);
-        
-        $user->fill([            
+
+        $user->fill([
             'nombre' => $request->nombre,
-            'apellido' => $request->apellido, 
+            'apellido' => $request->apellido,
             'fecha_nacimiento' => $request->fecha_nacimiento,
-            'lugar_nacimiento' => $request->lugar_nacimiento, 
+            'lugar_nacimiento' => $request->lugar_nacimiento,
             'DNI' => $request->DNI,
             'direccion_calle' => $request->direccion_calle,
             'direccion_numero' => $request->direccion_numero,
@@ -91,10 +91,10 @@ class UserController extends Controller
             'password' => Hash::make( $request->password),
             'escuela_secundaria' => 'asdasd',
         ]);
-        
+
         $user->nombre_usuario = $nombre_usuario;
         $user->save();
-       
+
         return redirect('User/confirmation/' . $user->DNI);
     }
 

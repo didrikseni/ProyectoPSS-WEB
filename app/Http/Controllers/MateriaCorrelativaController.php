@@ -16,7 +16,7 @@ class MateriaCorrelativaController extends Controller
      */
     public function index()
     {
-        return view('materias.materias_asociate');
+        //
     }
 
     /**
@@ -26,21 +26,21 @@ class MateriaCorrelativaController extends Controller
      */
     public function create()
     {
-        //
+        return view('materias.materias_asociate');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validateMateriaCorrelativa();
         $materia_correlativa = new materia_correlativa([
-            'id_materia' => $request->get('materia'),
-            'id_correlativa' => $request->get('correlativa'),
+            'id_materia' => Materia::where('id_str', '=', $request->get('materia'))->first()->id,
+            'id_correlativa' => Materia::where('id_str', '=', $request->get('correlativa'))->first()->id,
             'tipo' => $request->get('tipo'),
         ]);
         $materia_correlativa->save();
@@ -50,7 +50,7 @@ class MateriaCorrelativaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\materia_correlativa  $materia_correlativa
+     * @param \App\Models\materia_correlativa $materia_correlativa
      * @return \Illuminate\Http\Response
      */
     public function show(materia_correlativa $materia_correlativa)
@@ -61,7 +61,7 @@ class MateriaCorrelativaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\materia_correlativa  $materia_correlativa
+     * @param \App\Models\materia_correlativa $materia_correlativa
      * @return \Illuminate\Http\Response
      */
     public function edit(materia_correlativa $materia_correlativa)
@@ -72,8 +72,8 @@ class MateriaCorrelativaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\materia_correlativa  $materia_correlativa
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\materia_correlativa $materia_correlativa
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, materia_correlativa $materia_correlativa)
@@ -84,7 +84,7 @@ class MateriaCorrelativaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\materia_correlativa  $materia_correlativa
+     * @param \App\Models\materia_correlativa $materia_correlativa
      * @return \Illuminate\Http\Response
      */
     public function destroy(materia_correlativa $materia_correlativa)
@@ -95,8 +95,8 @@ class MateriaCorrelativaController extends Controller
     private function validateMateriaCorrelativa()
     {
         return request()->validate([
-            'materia' => ['required', Rule::exists('materias', 'id_str')->where('rol', 'Profesor'), ],
-            'correlativa' => 'required|exists:materia,id',
+            'materia' => 'required|exists:materias,id_str',
+            'correlativa' => 'required|exists:materias,id_str',
             'tipo' => 'required|digits_between:0,1',
         ]);
     }
