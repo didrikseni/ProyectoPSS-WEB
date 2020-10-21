@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Carreras;
 use App\Models\Departamentos;
 use App\Models\Materia;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -49,8 +50,8 @@ class MateriaController extends Controller
             'nombre' => $request->get('nombre'),
             'id_str' => $request->get('id'),
             'departamento' => $request->get('dpto'),
-            'id_profesor' =>  User::where('legajo', '=', $request->get('profesor'))->select('id')->first(),
-            'id_asistente' =>  User::where('legajo', '=', $request->get('asistente'))->select('id')->first()
+            'id_profesor' =>  User::where('legajo', '=', $request->get('profesor'))->first()->id,
+            'id_asistente' =>  User::where('legajo', '=', $request->get('asistente'))->first()->id
         ]);
         $materia->save();
         return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
@@ -103,8 +104,8 @@ class MateriaController extends Controller
 
 
     public function search() {
-        $materias = Materia::all();
-        $carreras = Carreras::all();
+        $materias = Materia::all()->sortByDesc('created_at');
+        $carreras = Carreras::all()->sortBy('created_at');
         $matInfo = null;
         return view('materias.materias_search', compact('materias', 'carreras', 'matInfo'));
     }
