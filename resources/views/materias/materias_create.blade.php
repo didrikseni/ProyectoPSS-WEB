@@ -69,7 +69,7 @@
                                 <div>
                                     <input
                                         class="input-group form-control @error('profesor') alert-danger @enderror"
-                                        type="text" name="profesor" id="profesor" value="{{ old('profesor') }}">
+                                        type="number" name="profesor" id="profesor" value="{{ old('profesor') }}">
                                     @error('profesor')
                                     <p class="badge badge-danger">{{ $errors->first('profesor') }}</p>
                                     @enderror
@@ -83,7 +83,7 @@
                                 <div>
                                     <input
                                         class="input-group form-control @error('asistente') alert-danger @enderror"
-                                        type="text" name="asistente" id="asistente" value="{{ old('asistente') }}">
+                                        type="number" name="asistente" id="asistente" value="{{ old('asistente') }}">
                                     @error('asistente')
                                     <p class="badge badge-danger">{{ $errors->first('asistente') }}</p>
                                     @enderror
