@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CarrerasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,10 +14,9 @@ use App\Http\Controllers\CarrerasController;
 |
 */
 
+Auth::routes(['register' => false]);
 
-Auth::routes();
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
 Route::get('/User', [UserController::class, 'index']);
 Route::get('/User/create', [UserController::class, 'create']);
