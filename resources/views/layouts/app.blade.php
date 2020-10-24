@@ -84,6 +84,9 @@
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
                                 @if(auth()->user()->isAdmin())
                                     <a class="dropdown-item" href="/materias/create">Crear</a>
+                                    <a class="dropdown-item" href="/correlativas/create">Asociar correlativa</a>
+                                    <a class="dropdown-item" href="/">Asociar carrera</a>
+                                    <a class="dropdown-item" href="/">Asociar profesor</a>
                                 @endif
                                 <a class="dropdown-item" href="/busqueda/materias">Buscar</a>
                             </div>
@@ -102,13 +105,6 @@
                             </div>
                         </div>
                     </li>
-
-                    @if(auth()->user()->isAdmin())
-                        <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/correlativas/create">Asociar correlativa</a></li>
-                        <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar materia a carrera</a></li>
-                        <li><a class="waves-effect waves-light btn deep-orange accent-1" href="/">Asociar profesor a materia</a></li>
-                    @endif
-
                 </ul>
             </div>
         @endif

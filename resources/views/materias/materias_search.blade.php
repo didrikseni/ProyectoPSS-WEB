@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="page-content m-5">
-        <div class="card justify-content-center">
+        <div class="justify-content-center">
             <div class="title m-b-md text-center">
                 <h1>Materias</h1>
                 <table class="table table-striped">
@@ -39,8 +39,8 @@
             </div>
         </div>
 
-        <div class="card justify-content-center m-5">
-            <div class="card-body ">
+        <div class="justify-content-center m-5">
+            <div class="col-9">
                 <form method="POST" action="/materias/search" enctype="multipart/form-data">
                     @csrf
 
@@ -125,9 +125,9 @@
 
                 @if($matInfo !== null)
                     <br>
-                    <div class="m-5 card">
-                        <h4 class="card-header">Información</h4>
-                        <div class="card-body">
+                    <div class="m-5">
+                        <h4>Información</h4>
+                        <div class="col">
                             <p class="text-xl-left">Nombre: {{ $matInfo->nombre }}</p>
                             <hr>
                             <p class="text-xl-left">Identificador: {{ $matInfo->id_str }}</p>

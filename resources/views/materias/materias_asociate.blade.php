@@ -9,12 +9,12 @@
 
 
     <div class="page-content">
-        <div class="card justify-content-center m-5">
-            <div class="card-header">
-                <h4 class="text-center"> Ingrese los siguientes datos para asociar correlativas a una materia </h4>
+        <div class="justify-content-center m-5">
+            <div class="col-9 my-5">
+                <h1> Asociar correlativas a una materia </h1>
             </div>
 
-            <div class="card-body ">
+            <div class="col-9 my-5">
                 <form method="POST" action="/correlativas" enctype="multipart/form-data">
                     @csrf
                     <div class="row my-3">
@@ -45,16 +45,12 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col">
-                            <h4> (*) Campo obligatorio </h4>
-                        </div>
                     </div>
 
                     <br>
 
-                    <div class="row my-3">
-                        <div class="col-auto">
+                    <div class="row my-5">
+                        <div class="col">
                             <div class="form-group">
                                 <label for="tipo">Tipo de Correlativa (*)</label>
                                 <select class="form-control @error('tipo') alert-danger @enderror"
@@ -69,17 +65,19 @@
                             </div>
                         </div>
 
-
-                        <div class="row justify-content-center">
-                            <div class="form-group">
-                                <div class="col-auto">
-                                    <button class="waves-effect waves-light btn blue">Aceptar</button>
-                                </div>
+                        <div class="col">
+                            <h4 class="text-right"> (*) Campo obligatorio </h4>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center my-5">
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <button class="waves-effect waves-light btn blue">Aceptar</button>
                             </div>
-                            <div class="form-group">
-                                <div class="col-auto">
-                                    <button class="waves-effect waves-light btn blue">Cancelar</button>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <button class="waves-effect waves-light btn blue">Cancelar</button>
                             </div>
                         </div>
                     </div>

@@ -6,15 +6,18 @@
     @endif
 
     <div class="page-content">
-        <div class="card justify-content-center m-5">
-            <div class="card-header">
-                <h4 class="text-center"> Ingrese los siguientes datos para dar de alta una nueva materia </h4>
+        <div class="m-5">
+            <div class="col-9">
+                <h1> Alta de materia </h1>
             </div>
-
-            <div class="card-body ">
-                <form method="POST" action="/materias" enctype="multipart/form-data">
-                    @csrf
-                    <div class="row my-3">
+            <div class="col-9">
+                <h5> (*) Campo obligatorio </h5>
+            </div>
+            <br>
+            <form method="POST" action="/materias" enctype="multipart/form-data">
+                @csrf
+                <div class="col-9">
+                    <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
                                 <label class="label" for="nombre">Nombre (*)</label>
@@ -41,13 +44,9 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col">
-                            <h4> (*) Campo obligatorio </h4>
-                        </div>
                     </div>
 
-                    <div class="row my-3">
+                    <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
                                 <label for="dpto">Departamento responsable (*)</label>
@@ -62,7 +61,8 @@
                                 @enderror
                             </div>
                         </div>
-
+                    </div>
+                    <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
                                 <label class="label" for="profesor">Profesor (*)</label>
@@ -107,8 +107,8 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 
