@@ -113,23 +113,12 @@ class MateriaController extends Controller
 
 
     private function validateMateria(): array {
-        $rules = [
+        return request()->validate([
             'nombre' => 'required',
             'id' => 'required|min:1|max:5|unique:materias,id_str',
             'dpto' => 'required|exists:departamentos,id',
             'profesor' => ['required', 'integer', new MateriaProfesor],
             'asistente' => ['required', 'integer', new MateriaProfesor]
-        ];
-
-        $messages = [
-            'required' => 'El atributo es obligatorio',
-            'string' => 'El atributo tiene que ser de tipo alfanumérico',
-            'min' => 'El atributo tiene que tener un mínimo de :min caracteres',
-            'max' => 'El atributo tiene que tener un máximo de :max caracteres',
-            'integer' => 'El atributo tiene que ser de tipo numérico',
-            'unique' => 'El identificador tiene que ser único para cada materia, actualmente hay una materia con este identificador'
-        ];
-
-        return $this->validate(request(), $rules, $messages);
+        ]);
     }
 }
