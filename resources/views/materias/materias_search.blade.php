@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('style')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="justify-content-center">
             <div class="title m-b-md text-center">
                 <h1>Materias</h1>
-                <table id="materiasTable" class="table" cellspacing="0" width="100%">
+                <table id="example" style="width:100%">
                     <thead>
                     <tr>
                         <th scope="col">Nombre</th>
@@ -21,6 +21,7 @@
                         <th scope="col">Correlativas fuertes</th>
                         <th scope="col">Año de la carrera</th>
                         <th scope="col">Cuatrimestre</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -43,23 +44,50 @@
                             <th scope="col"> -</th>
                             <th scope="col"> -</th>
                             <th scope="col"> -</th>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="#">
+                                        <button type="button" class="btn btn btn-raised btn-primary btn-sm">Editar</button>
+                                    </a>
+                                    <button type="button" class="btn btn btn-raised btn-danger btn-sm ml-1 delete"
+                                            data-toggle="modal" data-target="#deleteModal"
+                                            data-name="{{$materia->name}}" data-id="{{$materia->id}}">Borrar
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Departamento</th>
-                        <th scope="col">Profesor</th>
-                        <th scope="col">Asistente</th>
-                        <th scope="col">Correlativas debiles</th>
-                        <th scope="col">Correlativas fuertes</th>
-                        <th scope="col">Año de la carrera</th>
-                        <th scope="col">Cuatrimestre</th>
-                    </tr>
-                    </tfoot>
                 </table>
+            </div>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete artist</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-warning" role="alert">
+                                <p>Esta seguro de borrar la materia <b id="name">{{ $materia->name }}</b> ?</p>
+                            </div>
+                            <form id="formDeleteSignature" action="{{ route('materias.destroy', 1) }}"
+                                  method="POST">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="id" id="signatureHideDelete">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn btn-raised btn-secondary mx-2" data-dismiss="modal">Close</button>
+                            <button type="submit" id="deleteButton" class="btn btn btn-raised btn-danger xm-2"
+                                    form="formDeleteSignature">Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

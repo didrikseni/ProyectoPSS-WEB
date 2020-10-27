@@ -14,6 +14,6 @@ class MateriaSeeder extends Seeder
      */
     public function run()
     {
-        Materia::factory()->times(10)->create();
+        Materia::factory()->times(15)->create();
     }
 }
