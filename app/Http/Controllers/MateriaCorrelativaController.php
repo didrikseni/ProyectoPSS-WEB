@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Materia;
 use App\Models\materia_correlativa;
+use App\Rules\CorrelativasCirculares;
+use App\Rules\CorrelativaUnica;
+use App\Rules\DistintasCorrelativas;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class MateriaCorrelativaController extends Controller
 {
@@ -95,8 +97,18 @@ class MateriaCorrelativaController extends Controller
     private function validateMateriaCorrelativa()
     {
         return request()->validate([
-            'materia' => 'required|exists:materias,id_str',
-            'correlativa' => 'required|exists:materias,id_str',
+            'materia' => [
+                'required',
+                'exists:materias,id_str',
+                'different:correlativa',
+                new CorrelativasCirculares(request()->get('materia'), request()->get('correlativa')),
+                new CorrelativaUnica(request()->get('materia'), request()->get('correlativa'))],
+            'correlativa' => [
+                'required',
+                'exists:materias,id_str',
+                'different:materia',
+                new CorrelativasCirculares(request()->get('correlativa'), request()->get('materia')),
+                new CorrelativaUnica(request()->get('materia'), request()->get('correlativa'))],
             'tipo' => 'required|digits_between:0,1',
         ]);
     }

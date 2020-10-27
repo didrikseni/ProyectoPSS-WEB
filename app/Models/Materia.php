@@ -17,6 +17,14 @@ class Materia extends Model
         'id_asistente',
     ];
 
+    public static function getID($strID)
+    {
+        if (self::where('id_str', '=', $strID)->exists()) {
+            return self::where('id_str', '=', $strID)->first()->id;
+        }
+        return -1;
+    }
+
     public function profesor()
     {
         return $this->hasOne(User::class);
