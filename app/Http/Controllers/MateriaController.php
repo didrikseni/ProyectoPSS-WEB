@@ -51,9 +51,18 @@ class MateriaController extends Controller
             'nombre' => $request->get('nombre'),
             'id_str' => $request->get('id'),
             'departamento' => $request->get('dpto'),
-            'id_profesor' =>  User::where('legajo', '=', $request->get('profesor'))->first()->id,
-            'id_asistente' =>  User::where('legajo', '=', $request->get('asistente'))->first()->id
         ]);
+
+        if ($request->profesor) {
+            request()->validate(['profesor' => ['integer', new MateriaProfesor]]);
+            $materia['id_profesor'] = User::where('legajo', '=', $request->profesor)->first()->id;
+        }
+
+        if ($request->asistente) {
+            request()->validate(['asistente' => ['integer', new MateriaProfesor]]);
+            $materia['id_asistente'] = User::where('legajo', '=', $request->asistente)->first()->id;
+        }
+
         $materia->save();
         return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
     }
@@ -117,8 +126,6 @@ class MateriaController extends Controller
             'nombre' => 'required',
             'id' => 'required|min:1|max:5|unique:materias,id_str',
             'dpto' => 'required|exists:departamentos,id',
-            'profesor' => ['required', 'integer', new MateriaProfesor],
-            'asistente' => ['required', 'integer', new MateriaProfesor]
         ]);
     }
 }

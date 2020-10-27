@@ -26,8 +26,16 @@
                             <th>{{$materia->nombre}}</th>
                             <th>{{$materia->id_str}} </th>
                             <th scope="col">{{App\Models\Departamentos::where('id', '=', $materia->departamento)->first()->nombre}}</th>
-                            <th scope="col">{{App\Models\User::where('id', '=', $materia->id_profesor)->first()->nombre}}</th>
-                            <th scope="col">{{App\Models\User::where('id', '=', $materia->id_asistente)->first()->nombre}}</th>
+                            @if ($materia->id_profesor !== null)
+                                <th scope="col">{{App\Models\User::where('id', '=', $materia->id_profesor)->first()->nombre}}</th>
+                            @else
+                                <th scope="col">{{ 'Sin profesor' }}</th>
+                            @endif
+                            @if ($materia->id_asistente !== null)
+                                <th scope="col">{{App\Models\User::where('id', '=', $materia->id_asistente)->first()->nombre}}</th>
+                            @else
+                                <th scope="col">{{ 'Sin asistente' }}</th>
+                            @endif
                             <th scope="col"> -</th>
                             <th scope="col"> -</th>
                             <th scope="col"> -</th>

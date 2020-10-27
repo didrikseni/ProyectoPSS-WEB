@@ -19,8 +19,8 @@ class CreateMateriasTable extends Migration
             $table->timestamps();
             $table->string('nombre');
             $table->string('departamento');
-            $table->foreignId('id_profesor')->references('id')->on('users');
-            $table->foreignId('id_asistente')->references('id')->on('users');
+            $table->foreignId('id_profesor')->nullable()->references('id')->on('users');
+            $table->foreignId('id_asistente')->nullable()->references('id')->on('users');
         });
     }
 

@@ -65,7 +65,7 @@
                     <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
-                                <label class="label" for="profesor">Profesor (*)</label>
+                                <label class="label" for="profesor">Profesor</label>
                                 <div>
                                     <input
                                         class="input-group form-control @error('profesor') alert-danger @enderror"
@@ -79,7 +79,7 @@
 
                         <div class="col">
                             <div class="form-group">
-                                <label class="label" for="asistente">Asistente (*)</label>
+                                <label class="label" for="asistente">Asistente</label>
                                 <div>
                                     <input
                                         class="input-group form-control @error('asistente') alert-danger @enderror"
