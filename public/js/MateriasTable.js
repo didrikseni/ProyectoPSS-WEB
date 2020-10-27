@@ -1,0 +1,1 @@
+$('#materiasTable').DataTable();
