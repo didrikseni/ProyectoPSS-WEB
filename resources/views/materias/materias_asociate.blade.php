@@ -72,12 +72,12 @@
                     <div class="row justify-content-center my-5">
                         <div class="form-group">
                             <div class="col-auto">
-                                <button class="waves-effect waves-light btn blue">Aceptar</button>
+                                <button class="waves-effect waves-light btn">Aceptar</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-auto">
-                                <button class="waves-effect waves-light btn blue">Cancelar</button>
+                                <button class="waves-effect waves-light btn">Cancelar</button>
                             </div>
                         </div>
                     </div>
