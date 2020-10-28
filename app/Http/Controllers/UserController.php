@@ -45,31 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = [
-            'nombre' => ['required', 'string', 'max:255'],
-            'apellido' =>['required', 'string', 'max:255'],
-            'fecha_nacimiento' => ['required', 'date'],
-            'lugar_nacimiento' => ['required', 'string', 'max:255'],
-            'DNI' => ['required', 'integer', 'digits:8', 'unique:users'],
-            'direccion_calle' => ['required', 'string', 'max:255'],
-            'direccion_numero'=> ['required', 'integer'],
-            'numero_telefono' => ['required', 'integer'],
-            'rol' => ['required'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8']
-        ];
-
-        $messages = [
-            'required' => 'El atributo es obligatorio',
-            'string' => 'El atributo tiene que ser de tipo alfanumérico',
-            'min' => 'El atributo tiene que tener un mínimo de :min caracteres',
-            'digits' => 'El atributo tiene que tener un tamaño de :digits caracteres',
-            'integer' => 'El atributo tiene que ser de tipo numérico',
-            'unique' => 'El atributo tiene que ser único para cada usuario, actualmente hay un usuario con estos datos'
-        ];
-
-       $this->validate(request(), $rules, $messages);
-
+        $this->validateUser($request);
         $user = new User();
 
         $legajo = User::getLegajo();
@@ -80,6 +56,7 @@ class UserController extends Controller
             'apellido' => $request->apellido,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'lugar_nacimiento' => $request->lugar_nacimiento,
+            'tipo_documento' => $request->tipo_documento,
             'DNI' => $request->DNI,
             'direccion_calle' => $request->direccion_calle,
             'direccion_numero' => $request->direccion_numero,
@@ -89,7 +66,7 @@ class UserController extends Controller
             'rol' => $request->rol,
             'email' => $request->email,
             'password' => Hash::make( $request->password),
-            'escuela_secundaria' => 'asdasd',
+            'escuela_secundaria' => $request->escuela_secundaria,
         ]);
 
         $user->nombre_usuario = $nombre_usuario;
@@ -146,6 +123,29 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    private function storeUser(Request $request){
+
+    }
+
+    private function validateUser(Request $request): array {
+        return request()->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'apellido' =>['required', 'string', 'max:255'],
+            'fecha_nacimiento' => ['required', 'date'],
+            'lugar_nacimiento' => ['required', 'string', 'max:255'],
+            'tipo_documento' => ['required'],
+            'DNI' => ['required', 'integer', 'digits_between:1,12', 'unique:users'],
+            'direccion_calle' => ['required', 'string', 'max:255'],
+            'direccion_numero'=> ['required', 'integer'],
+            'numero_telefono' => ['required', 'integer'],
+            'rol' => ['required'],
+            'escuela_secundaria' => ['required_if:rol,Alumno'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8']
+        ]);
+
     }
 
 }

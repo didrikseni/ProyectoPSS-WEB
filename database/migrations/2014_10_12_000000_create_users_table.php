@@ -19,10 +19,11 @@ class CreateUsersTable extends Migration
             $table->string('apellido');
             $table->date('fecha_nacimiento');
             $table->string('lugar_nacimiento');
+            $table->string('tipo_documento');
             $table->integer('DNI')->unique();
             $table->string('email')->unique();
             $table->string('nombre_usuario')->unique();
-            $table->string('escuela_secundaria');
+            $table->string('escuela_secundaria')->nullable();
             $table->string('direccion_calle');
             $table->string('direccion_numero');
             $table->bigInteger('numero_telefono');

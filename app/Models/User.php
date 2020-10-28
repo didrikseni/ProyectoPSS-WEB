@@ -20,6 +20,7 @@ class User extends Authenticatable
         'nombre',
         'apellido',
         'email',
+        'tipo_documento',
         'DNI',
         'fecha_nacimiento',
         'lugar_nacimiento',
@@ -86,6 +87,16 @@ class User extends Authenticatable
             'Alumno',
             'Profesor',
             'Administrador'
+        ];
+    }
+
+    public function documentOptions(){
+        return[
+            'DNI',
+            'Pasaporte',
+            'Libreta Cívica',
+            'Libreta de Enrolamiento',
+            'Cédula de Identidad',
         ];
     }
 

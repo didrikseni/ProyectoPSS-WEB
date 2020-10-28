@@ -33,7 +33,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'), // password
             'remember_token' => Str::random(10),
-            'apellido'=> $apellido,            
+            'apellido'=> $apellido,       
+            'tipo_documento' => $this->faker->randomElement( ['DNI', 'Pasaporte', 'Libreta Cívica', 'Libreta de Enrolamiento','Cédula de Identidad']),     
             'DNI' => $this->faker->numberBetween($min = 10000000, $max = 99999999),
             'fecha_nacimiento' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
             'lugar_nacimiento' => $this->faker->name,

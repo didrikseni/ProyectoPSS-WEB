@@ -16,7 +16,7 @@
                         <th scope="col"> Rol </th>
                         @if(auth()->user()->isAdmin())
                             <th scope="col">Usuario</th>
-                            <th scope="col">DNI</th>
+                            <th scope="col">Documento</th>
                         @endif
                         <th scope="col">Email</th>
                         @if(auth()->user()->isAdmin())
@@ -36,7 +36,7 @@
                             <th>{{$user->rol}} </th>
                             @if(auth()->user()->isAdmin())
                                 <th>{{$user->nombre_usuario}} </th> 
-                                <th>{{$user->DNI}}</th>
+                                <th>{{$user->tipo_documento . ' '. $user->DNI}}</th>
                             @endif                            
                             <th>{{$user->email}}</th>
                             @if(auth()->user()->isAdmin())
