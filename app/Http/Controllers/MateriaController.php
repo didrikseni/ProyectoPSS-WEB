@@ -52,9 +52,9 @@ class MateriaController extends Controller
     {
         $this->validateMateria();
         $materia = new Materia([
-            'nombre' => $request->get('nombre'),
-            'id_str' => $request->get('id'),
-            'departamento' => $request->get('dpto'),
+            'nombre' => $request->nombre,
+            'id_str' => $request->id,
+            'departamento' => $request->dpto,
         ]);
 
         if ($request->profesor) {
@@ -85,12 +85,16 @@ class MateriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Materia  $materia
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Materia $materia)
+    public function edit(int $id)
     {
-        //
+        $materia = Materia::findOrFail($id);
+        $materia['id_profesor'] = User::findOrFail($materia->id_profesor)->legajo;
+        $materia['id_asistente'] = User::findOrFail($materia->id_asistente)->legajo;
+        $dptos = Departamentos::all();
+        return view('materias.materias_edit', compact('materia', 'dptos'));
     }
 
     /**
@@ -102,7 +106,22 @@ class MateriaController extends Controller
      */
     public function update(Request $request, Materia $materia)
     {
-        //
+        $materia = Materia::findOrFail($materia->id);
+        $request->validate([
+            'nombre' => 'required',
+            'id_str' => 'required|min:1|max:5|unique:materias,id_str',
+            'departamento' => 'required|exists:departamentos,id',
+            'profesor' => ['integer', new MateriaProfesor],
+            'asistente' => ['integer', new MateriaProfesor],
+        ]);
+        $materia->nombre = $request->nombre;
+        $materia->id_str = $request->id_str;
+        $materia->departamento = $request->departamento;
+        $materia->id_profesor = $request->id_profesor;
+        $materia->id_asistente = $request->id_asistente;
+        $materia->save();
+
+        return redirect(route('materias.index'));
     }
 
     /**
@@ -113,7 +132,7 @@ class MateriaController extends Controller
      */
     public function destroy(Materia $materia)
     {
-        $materia = Materia::FindofFail($materia);
+        $materia = Materia::findOrFail($materia->id);
         $materia->delete();
         return redirect()->route('materias.index');
     }

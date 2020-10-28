@@ -6,7 +6,7 @@ $('#example').DataTable( {
     "iDisplayLength": 25, // default display length
 });
 
-function deleteEstablishment(button) {
+function deleteSignature(button) {
     $('#signatureHideDelete').val(button.data('id'))
     $('#name').html(button.data('name'))
     $('#formDeleteSignature').attr('action','/materias/'+ button.data('id'))
