@@ -47,9 +47,9 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="#">
-                                        <button type="button" class="btn btn btn-raised btn-primary btn-sm">Editar</button>
+                                        <button type="button" class="btn btn-primary btn-small">Editar</button>
                                     </a>
-                                    <button type="button" class="btn btn btn-raised btn-danger btn-sm ml-1 delete"
+                                    <button type="button" class="btn red lighten-1 ml-2 btn-small"
                                             data-toggle="modal" data-target="#deleteModal"
                                             data-name="{{$materia->name}}" data-id="{{$materia->id}}">Borrar
                                     </button>
@@ -81,8 +81,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn btn-raised btn-secondary mx-2" data-dismiss="modal">Close</button>
-                            <button type="submit" id="deleteButton" class="btn btn btn-raised btn-danger xm-2"
+                            <button type="button" class="btn btn-primary btn-small" data-dismiss="modal">Close</button>
+                            <button type="submit" id="deleteButton" class="btn red lighten-1 ml-2 btn-small"
                                     form="formDeleteSignature">Delete
                             </button>
                         </div>

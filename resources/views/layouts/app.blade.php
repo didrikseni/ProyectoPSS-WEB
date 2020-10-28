@@ -19,13 +19,18 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/appstyle.css') }}" rel="stylesheet">
 
-    <link rel="stylesheet"
-          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
-            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-            crossorigin="anonymous"></script>
+{{--    <link rel="stylesheet"--}}
+{{--          href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"--}}
+{{--          integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">--}}
+{{--    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"--}}
+{{--            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"--}}
+{{--            crossorigin="anonymous"></script>--}}
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -38,89 +43,7 @@
 </head>
 <body>
 <div id="app">
-    <!-- Navbar -->
-    <nav class="nav nav-pills nav-justified">
-        <a class="navbar-brand mx-3" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
-        <ul id="nav nav-tabs" class="right hide-on-med-and-down">
-            <!-- Authentication Links -->
-            @guest
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                </li>
-            @else
-                <li class="nav-item">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle btn btn-raised" href="#"
-                       role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ auth()->user()->nombre }}
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
-                </li>
-            @endguest
-        </ul>
-
-        @if(auth()->check())
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <div class="nav-item dropdown show">
-                        <a class="btn btn-raised dropdown-toggle" href="#" role="sbutton" id="dropdownMenuCarrera"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
-                            @if(auth()->user()->isAdmin())
-                                <a class="dropdown-item" href="/Carreras/create">Crear</a>
-                                <a class="dropdown-item" href="/">Asociar materia</a>
-                            @endif
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/Carreras">Buscar</a>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <div class="dropdown show">
-                        <a class="btn btn-raised dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
-                           id="dropdownMenuMateria"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Materia</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
-                            @if(auth()->user()->isAdmin())
-                                <a class="dropdown-item" href="/materias/create">Crear</a>
-                                <a class="dropdown-item" href="/correlativas/create">Asociar correlativa</a>
-                                <a class="dropdown-item" href="/">Asociar profesor</a>
-                            @endif
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/busqueda/materias">Buscar</a>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <div class="dropdown show">
-                        <a class="btn btn-raised dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
-                           id="dropdownMenuUsuario"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
-                            @if(auth()->user()->isAdmin())
-                                <a class="dropdown-item" href="/User/create">Crear</a>
-                            @endif
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="/User">Buscar</a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        @endif
-    </nav>
-    <!-- Nabvar -->
+   @include('layouts.navbar')
 
     <main class="py-4">
         @yield('content')

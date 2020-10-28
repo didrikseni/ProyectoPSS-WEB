@@ -8,6 +8,7 @@ use App\Models\Materia;
 use App\Models\User;
 use App\Rules\MateriaProfesor;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use Illuminate\Validation\Rule;
 
 class MateriaController extends Controller
@@ -25,7 +26,10 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        $materias = Materia::all()->sortByDesc('created_at');
+        $carreras = Carreras::all()->sortBy('created_at');
+        $matInfo = null;
+        return view('materias.materias_search', compact('materias', 'carreras', 'matInfo'));
     }
 
     /**
@@ -109,17 +113,10 @@ class MateriaController extends Controller
      */
     public function destroy(Materia $materia)
     {
-        //
+        $materia = Materia::FindofFail($materia);
+        $materia->delete();
+        return redirect()->route('materias.index');
     }
-
-
-    public function search() {
-        $materias = Materia::all()->sortByDesc('created_at');
-        $carreras = Carreras::all()->sortBy('created_at');
-        $matInfo = null;
-        return view('materias.materias_search', compact('materias', 'carreras', 'matInfo'));
-    }
-
 
     private function validateMateria(): array {
         return request()->validate([
