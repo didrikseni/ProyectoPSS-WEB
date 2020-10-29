@@ -47,7 +47,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
                             @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/Carreras/create">Crear</a>
-                                <a class="dropdown-item" href="/carreras/materias/create">Asociar materia</a>
+                                <a class="dropdown-item" href="/carreras_materias/create">Asociar materia</a>
                             @endif
                             <a class="dropdown-item" href="/Carreras">Buscar</a>
                         </div>
@@ -62,7 +62,7 @@
                             @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/materias/create">Crear</a>
                                 <a class="dropdown-item" href="/correlativas/create">Asociar correlativa</a>
-                                <a class="dropdown-item" href="/">Asociar profesor</a>
+                                <a class="dropdown-item" href="/materia/profesor">Asociar profesor</a>
                             @endif
                             <a class="dropdown-item" href="/materias">Buscar</a>
                         </div>

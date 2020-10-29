@@ -111,14 +111,14 @@ class MateriaController extends Controller
             'nombre' => 'required',
             'id_str' => 'required|min:1|max:5|unique:materias,id_str',
             'departamento' => 'required|exists:departamentos,id',
-            'profesor' => ['integer', new MateriaProfesor],
-            'asistente' => ['integer', new MateriaProfesor],
+//            'profesor' => ['integer', new MateriaProfesor],
+//            'asistente' => ['integer', new MateriaProfesor],
         ]);
         $materia->nombre = $request->nombre;
         $materia->id_str = $request->id_str;
         $materia->departamento = $request->departamento;
-        $materia->id_profesor = $request->id_profesor;
-        $materia->id_asistente = $request->id_asistente;
+        $materia->id_profesor = null;
+        $materia->id_asistente = null;
         $materia->save();
 
         return redirect(route('materias.index'));
@@ -144,4 +144,23 @@ class MateriaController extends Controller
             'dpto' => 'required|exists:departamentos,id',
         ]);
     }
+
+    public function edit_professor() {
+        return view('materias.materias_asociate_professor');
+    }
+
+    public function update_professor(Request $request) {
+        $materia = Materia::find(Materia::getID($request->materia));
+        $request->validate([
+            'materia' => 'required|exists:materias,id_str',
+            'profesor' => ['required','integer', new MateriaProfesor],
+            'asistente' => ['required', 'integer', new MateriaProfesor],
+        ]);
+        $materia['id_profesor'] = $request->profesor;
+        $materia['id_asistente'] = $request->asistente;
+
+        $materia->save();
+        return redirect(route('materias.index'));
+    }
+
 }

@@ -11,28 +11,14 @@
     <div class="page-content">
         <div class="justify-content-center m-5">
             <div class="col-9 my-5">
-                <h1> Asociar materia a una carrera </h1>
+                <h1> Asociar profesor a una materia </h1>
             </div>
 
             <div class="col-9 my-5">
-                <form method="POST" action="/carreras_materias" enctype="multipart/form-data">
+                <form method="POST" action="/materia/profesor" enctype="multipart/form-data">
                     @csrf
+                    {{ method_field('PUT') }}
                     <div class="row my-3">
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="label" for="carrera">Carrera (*)</label>
-                                <div>
-                                    <input
-                                        class="input-group form-control @error('carrera') alert-danger @enderror"
-                                        type="text" name="carrera" id="carrera"
-                                        value="{{ old('carrera') }}">
-                                    @error('carrera')
-                                    <p class="badge badge-danger">{{ $errors->first('carrera') }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="col">
                             <div class="form-group">
                                 <label class="label" for="materia">Materia (*)</label>
@@ -47,32 +33,36 @@
                         </div>
                     </div>
 
-                    <br>
+                    <div class="row my-5">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="label" for="profesor">Profesor (*)</label>
+                                <div>
+                                    <input
+                                        class="input-group form-control @error('profesor') alert-danger @enderror"
+                                        type="text" name="profesor" id="profesor"
+                                        value="{{ old('profesor') }}">
+                                    @error('profesor')
+                                    <p class="badge badge-danger">{{ $errors->first('profesor') }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
-                                <label for="anio">Año de carrera (*)</label>
-                                <input class="input-group form-control @error('anio') alert-danger @enderror"
-                                       type="number" name="anio" id="anio" value="{{ old('anio') }}">
-                                @error('anio')
-                                <p class="badge badge-danger">{{ $errors->first('anio') }}</p>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="cuatrimestre">Cuatrimestre (*)</label>
-                                <select class="form-control @error('cuatrimestre') alert-danger @enderror"
-                                        type="text" name="cuatrimestre" id="cuatrimestre" value="{{ old('cuatrimestre') }}">
-                                    <option disabled selected>Seleccionar</option>
-                                    <option value="0">Primer</option>
-                                    <option value="1">Segundo</option>
-                                </select>
-                                @error('cuatrimestre')
-                                <p class="badge badge-danger">{{ $errors->first('cuatrimestre') }}</p>
-                                @enderror
+                                <label class="label" for="asistente">Asistente (*)</label>
+                                <div>
+                                    <input
+                                        class="input-group form-control @error('asistente') alert-danger @enderror"
+                                        type="text" name="asistente" id="asistente"
+                                        value="{{ old('asistente') }}">
+                                    @error('asistente')
+                                    <p class="badge badge-danger">{{ $errors->first('asistente') }}</p>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +73,6 @@
                         </div>
                     </div>
 
-
                     <div class="row justify-content-center my-5">
                         <div class="form-group">
                             <div class="col-auto">
@@ -92,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-auto">
-                                <button class="waves-effect waves-light btn">Cancelar</button>
+                                <a class="waves-effect waves-light btn" href="/">Cancelar</a>
                             </div>
                         </div>
                     </div>
@@ -101,3 +90,5 @@
         </div>
     </div>
 @endsection
+
+

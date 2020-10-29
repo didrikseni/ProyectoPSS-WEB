@@ -62,35 +62,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row my-5">
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="label" for="profesor">Profesor</label>
-                                <div>
-                                    <input
-                                        class="input-group form-control @error('profesor') alert-danger @enderror"
-                                        type="number" name="profesor" id="profesor" value="{{ old('profesor') }}">
-                                    @error('profesor')
-                                    <p class="badge badge-danger">{{ $errors->first('profesor') }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="label" for="asistente">Asistente</label>
-                                <div>
-                                    <input
-                                        class="input-group form-control @error('asistente') alert-danger @enderror"
-                                        type="number" name="asistente" id="asistente" value="{{ old('asistente') }}">
-                                    @error('asistente')
-                                    <p class="badge badge-danger">{{ $errors->first('asistente') }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="row my-5">--}}
+{{--                        <div class="col">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label class="label" for="profesor">Profesor</label>--}}
+{{--                                <div>--}}
+{{--                                    <input--}}
+{{--                                        class="input-group form-control @error('profesor') alert-danger @enderror"--}}
+{{--                                        type="number" name="profesor" id="profesor" value="{{ old('profesor') }}">--}}
+{{--                                    @error('profesor')--}}
+{{--                                    <p class="badge badge-danger">{{ $errors->first('profesor') }}</p>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
+{{--                        <div class="col">--}}
+{{--                            <div class="form-group">--}}
+{{--                                <label class="label" for="asistente">Asistente</label>--}}
+{{--                                <div>--}}
+{{--                                    <input--}}
+{{--                                        class="input-group form-control @error('asistente') alert-danger @enderror"--}}
+{{--                                        type="number" name="asistente" id="asistente" value="{{ old('asistente') }}">--}}
+{{--                                    @error('asistente')--}}
+{{--                                    <p class="badge badge-danger">{{ $errors->first('asistente') }}</p>--}}
+{{--                                    @enderror--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <br>
                     <div class="row justify-content-center">
