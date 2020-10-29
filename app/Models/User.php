@@ -61,14 +61,14 @@ class User extends Authenticatable
         $already_exist = User::where('nombre_usuario' , $userName)->first();
 
         while ($already_exist != null){
-            $int++; 
-            $already_exist = User::where('nombre_usuario', $userName . $int)->first();                           
+            $int++;
+            $already_exist = User::where('nombre_usuario', $userName . $int)->first();
         }
         if($int != 0){
             $userName = $userName. $int;
         }
         $userName = str_replace(' ', '', $userName);
-        return $userName; 
+        return $userName;
     }
 
     public static function getLegajo(){
@@ -78,8 +78,16 @@ class User extends Authenticatable
         else {
             $user_max_legajo = User::max('legajo');
             $legajo = $user_max_legajo + 1;
-        }        
+        }
         return $legajo;
+    }
+
+    public static function getID($legajo)
+    {
+        if (self::where('legajo', '=', $legajo)->exists()) {
+            return self::where('legajo', '=', $legajo)->first()->id;
+        }
+        return -1;
     }
 
     public function roleOptions(){

@@ -47,7 +47,8 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
                             @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/Carreras/create">Crear</a>
-                                <a class="dropdown-item" href="/carreras_materias/create">Asociar materia</a>
+                                <a class="dropdown-item" href="{{ route('carreras_materias.create') }}">Asociar materia</a>
+                                <a class="dropdown-item" href="{{ route('inscripcion_carrera.create') }}">Inscribir a carrera</a>
                             @endif
                             <a class="dropdown-item" href="/Carreras">Buscar</a>
                         </div>
