@@ -9,11 +9,21 @@ class MateriasCarreras extends Model
 {
     use HasFactory;
 
-    public function materias() {
+    protected $fillable = [
+        'id_materia',
+        'id_carrera',
+        'cuatrimestre',
+        'anio'
+    ];
+
+
+    public function materias()
+    {
         return $this->belongsTo(Carrera::class);
     }
 
-    public function carrera() {
+    public function carrera()
+    {
         $this->belongsTo(Materia::class);
     }
 }

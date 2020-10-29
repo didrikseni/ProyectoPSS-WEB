@@ -41,6 +41,7 @@ class MateriaCorrelativaController extends Controller
     public function store(Request $request)
     {
         $this->validateMateriaCorrelativa();
+        $this->validateCustomRules();
         $materia_correlativa = new materia_correlativa([
             'id_materia' => Materia::where('id_str', '=', $request->get('materia'))->first()->id,
             'id_correlativa' => Materia::where('id_str', '=', $request->get('correlativa'))->first()->id,
@@ -98,23 +99,23 @@ class MateriaCorrelativaController extends Controller
     private function validateMateriaCorrelativa()
     {
         return request()->validate([
+            'materia' => 'required|exists:materias,id_str|different:correlativa',
+            'correlativa' => 'required|exists:materias,id_str|different:materia',
+            'tipo' => 'required|digits_between:0,1',
+        ]);
+    }
+
+    private function validateCustomRules()
+    {
+        return request()->validate([
             'materia' => [
-                'required',
-                'exists:materias,id_str',
-                'different:correlativa',
                 new CorrelativasCirculares(request()->get('materia'), request()->get('correlativa')),
                 new CorrelativaUnica(request()->get('materia'), request()->get('correlativa')),
-//                new MateriasMismaCarrera(request()->get('materia'), request()->get('correlativa')),
             ],
             'correlativa' => [
-                'required',
-                'exists:materias,id_str',
-                'different:materia',
                 new CorrelativasCirculares(request()->get('correlativa'), request()->get('materia')),
                 new CorrelativaUnica(request()->get('materia'), request()->get('correlativa')),
-//                new MateriasMismaCarrera(request()->get('materia'), request()->get('correlativa')),
             ],
-            'tipo' => 'required|digits_between:0,1',
         ]);
     }
 }

@@ -2,16 +2,17 @@
 
 namespace App\Rules;
 
+use App\Models\Carreras;
 use App\Models\Materia;
-use App\Models\materia_correlativa;
+use App\Models\MateriasCarreras;
 use Illuminate\Contracts\Validation\Rule;
 
-class MateriasMismaCarrera implements Rule
+class CarreraMateriaUnica implements Rule
 {
     private $materia;
-    private $correlativa;
+    private $carrera;
     private $materiaID;
-    private $correlativaID;
+    private $carreraID;
 
     /**
      * Create a new rule instance.
@@ -21,11 +22,11 @@ class MateriasMismaCarrera implements Rule
      */
     public function __construct(string $param1, string $param2)
     {
-        $this->materiaID = $param1;
-        $this->correlativaID = $param2;
+        $this->materiaID = $param2;
+        $this->carreraID = $param1;
 
-        $this->materia = Materia::getID($param1);
-        $this->correlativa = Materia::getID($param2);
+        $this->materia = Materia::getID($param2);
+        $this->carrera = Carreras::getID($param1);
     }
 
     /**
@@ -38,10 +39,7 @@ class MateriasMismaCarrera implements Rule
      */
     public function passes($attribute, $value)
     {
-        $carreraMateria = materias_carreras::where('id_materia', '=', $this->materia)->first()->id_carrera;
-        $carreraCorrelativa = materias_carreras::where('id_materia', '=', $this->materia)->first()->id_carrera;
-
-        return $carreraCorrelativa === $carreraMateria;
+        return !MateriasCarreras::where('id_materia', '=', $this->materia)->where('id_carrera', '=', $this->carrera)->exists();
     }
 
     /**
@@ -51,6 +49,6 @@ class MateriasMismaCarrera implements Rule
      */
     public function message()
     {
-        return 'Las materias no pertenecen a la misma carrera.';
+        return 'La carrera "'.$this->carreraID.'" ya tiene asociada la materia "'.$this->materiaID.'".';
     }
 }

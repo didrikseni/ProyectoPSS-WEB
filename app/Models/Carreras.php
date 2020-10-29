@@ -14,7 +14,15 @@ class Carreras extends Model
         'anio_inicio',
         'id_str',
         'departamento_responsable',
-        'profesor_responsable',      
+        'profesor_responsable',
     ];
+
+    public static function getID($strID)
+    {
+        if (self::where('id_str', '=', $strID)->exists()) {
+            return self::where('id_str', '=', $strID)->first()->id;
+        }
+        return -1;
+    }
 
 }
