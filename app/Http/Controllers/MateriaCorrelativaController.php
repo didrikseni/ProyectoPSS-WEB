@@ -6,7 +6,8 @@ use App\Models\Materia;
 use App\Models\materia_correlativa;
 use App\Rules\CorrelativasCirculares;
 use App\Rules\CorrelativaUnica;
-use App\Rules\DistintasCorrelativas;
+use App\Rules\MateriaAsociadaACarrera;
+use App\Rules\MateriaPosteriorACorrelativa;
 use App\Rules\MateriasMismaCarrera;
 use Illuminate\Http\Request;
 
@@ -111,10 +112,16 @@ class MateriaCorrelativaController extends Controller
             'materia' => [
                 new CorrelativasCirculares(request()->get('materia'), request()->get('correlativa')),
                 new CorrelativaUnica(request()->get('materia'), request()->get('correlativa')),
+                new MateriaAsociadaACarrera(),
+                new MateriasMismaCarrera(request()->materia, request()->correlativa),
+                new MateriaPosteriorACorrelativa(request()->materia, request()->correlativa),
             ],
             'correlativa' => [
                 new CorrelativasCirculares(request()->get('correlativa'), request()->get('materia')),
                 new CorrelativaUnica(request()->get('materia'), request()->get('correlativa')),
+                new MateriaAsociadaACarrera(),
+                new MateriasMismaCarrera(request()->materia, request()->correlativa),
+                new MateriaPosteriorACorrelativa(request()->materia, request()->correlativa),
             ],
         ]);
     }

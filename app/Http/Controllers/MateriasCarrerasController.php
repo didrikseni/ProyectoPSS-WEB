@@ -49,7 +49,7 @@ class MateriasCarrerasController extends Controller
         request()->validate([
             'materia' => 'required|exists:materias,id_str',
             'carrera' => 'required|exists:carreras,id_str',
-            'cuatrimestre' => 'required|integer|gte:0|lte:1',
+            'cuatrimestre' => 'required|integer|digits_between:0,1',
             'anio' => 'required|integer|gt:0'
         ]);
 
