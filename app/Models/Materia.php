@@ -49,5 +49,10 @@ class Materia extends Model
             ->where('materia_correlativa.tipo', '=', '0')->get();
     }
 
+    public function getMesasExamen()
+    {
+        return $this->hasMany(MesaExamen::class);
+    }
+
 
 }

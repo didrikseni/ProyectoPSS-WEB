@@ -53,29 +53,30 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function getUserName($name, $surname){
+    public static function getUserName($name, $surname)
+    {
         $first_name_letter = $name[0];
         $int = 0;
-        $userName = strtolower( $first_name_letter . $surname);
+        $userName = strtolower($first_name_letter . $surname);
 
-        $already_exist = User::where('nombre_usuario' , $userName)->first();
+        $already_exist = User::where('nombre_usuario', $userName)->first();
 
-        while ($already_exist != null){
+        while ($already_exist != null) {
             $int++;
             $already_exist = User::where('nombre_usuario', $userName . $int)->first();
         }
-        if($int != 0){
-            $userName = $userName. $int;
+        if ($int != 0) {
+            $userName = $userName . $int;
         }
         $userName = str_replace(' ', '', $userName);
         return $userName;
     }
 
-    public static function getLegajo(){
-        if (User::count()<1){
+    public static function getLegajo()
+    {
+        if (User::count() < 1) {
             $legajo = 0;
-        }
-        else {
+        } else {
             $user_max_legajo = User::max('legajo');
             $legajo = $user_max_legajo + 1;
         }
@@ -90,16 +91,18 @@ class User extends Authenticatable
         return -1;
     }
 
-    public function roleOptions(){
-        return[
+    public function roleOptions()
+    {
+        return [
             'Alumno',
             'Profesor',
             'Administrador'
         ];
     }
 
-    public function documentOptions(){
-        return[
+    public function documentOptions()
+    {
+        return [
             'DNI',
             'Pasaporte',
             'Libreta Cívica',
@@ -108,19 +111,39 @@ class User extends Authenticatable
         ];
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->rol == 'Administrador';
     }
 
-    public function isProfessor(){
+    public function isProfessor()
+    {
         return $this->rol == 'Profesor';
     }
 
-    public function isStudent(){
+    public function isStudent()
+    {
         return $this->rol == 'Alumno';
     }
 
-    public function carrera() {
+    public function materiasProfesor()
+    {
+        $materias = $this->hasMany(Materia::class);
+        return $materias->where('id_profesor', '=', auth()->user());
+    }
+
+    public function materiasAlumno()
+    {
+        return $this->hasMany(Materia::class);
+    }
+
+    public function notas()
+    {
+        return $this->hasMany(Nota::class);
+    }
+
+    public function carrera()
+    {
         return self::select('carreras.*')
             ->join('inscripto_en_carreras', 'inscripto_en_carreras.id_alumno', '=', 'users.id')
             ->join('carreras', 'carreras.id', '=', 'inscripto_en_carreras.id_carrera')

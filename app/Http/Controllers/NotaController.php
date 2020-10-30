@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carreras;
-use App\Models\InscripcionEnMateria;
+use App\Models\Nota;
 use Illuminate\Http\Request;
 
-class InscripcionEnMateriaController extends Controller
+class NotaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,17 +24,7 @@ class InscripcionEnMateriaController extends Controller
      */
     public function create()
     {
-        $carreras = auth()->user()->carrera();
-        $materias = [];
-        foreach ($carreras as $car) {
-            $mat = Carreras::findOrFail($car->id)->materias();
-            foreach ($mat as $m) {
-                if ($m->id_profesor !== null) {
-                    $materias[] = $m;
-                }
-            }
-        }
-        return view('materias.materias_inscribir', compact('materias'));
+        //
     }
 
     /**
@@ -46,18 +35,16 @@ class InscripcionEnMateriaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-
-        ]);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\InscripcionEnMateria  $inscripcionEnMateria
+     * @param  \App\Models\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function show(InscripcionEnMateria $inscripcionEnMateria)
+    public function show(Nota $nota)
     {
         //
     }
@@ -65,10 +52,10 @@ class InscripcionEnMateriaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\InscripcionEnMateria  $inscripcionEnMateria
+     * @param  \App\Models\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function edit(InscripcionEnMateria $inscripcionEnMateria)
+    public function edit(Nota $nota)
     {
         //
     }
@@ -77,10 +64,10 @@ class InscripcionEnMateriaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\InscripcionEnMateria  $inscripcionEnMateria
+     * @param  \App\Models\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, InscripcionEnMateria $inscripcionEnMateria)
+    public function update(Request $request, Nota $nota)
     {
         //
     }
@@ -88,10 +75,10 @@ class InscripcionEnMateriaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\InscripcionEnMateria  $inscripcionEnMateria
+     * @param  \App\Models\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InscripcionEnMateria $inscripcionEnMateria)
+    public function destroy(Nota $nota)
     {
         //
     }
