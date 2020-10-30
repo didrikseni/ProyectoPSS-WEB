@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MesaExamenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +32,6 @@ Route::resource('/correlativas', 'App\Http\Controllers\MateriaCorrelativaControl
 Route::resource('Carreras', 'App\Http\Controllers\CarrerasController');
 Route::resource('/carreras_materias', 'App\Http\Controllers\MateriasCarrerasController');
 Route::resource('/inscripcion_carrera', 'App\Http\Controllers\InscriptoEnCarreraController');
+
+Route::resource('/MesaExamen', 'App\Http\Controllers\MesaExamenController');
+Route::get('MesaExamen/confirmation/{mesa}', [MesaExamenController::class, 'confirmation']);

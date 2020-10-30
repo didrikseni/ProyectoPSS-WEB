@@ -120,4 +120,20 @@ class User extends Authenticatable
         return $this->rol == 'Alumno';
     }
 
+
+    public function materiasProfesor(){
+        $materias = $this->hasMany(Materia::class); 
+        return $materias->where('id_profesor', '=', auth()->user());
+    }
+
+    public function materiasAlumno(){
+        return $this->hasMany(Materia::class);        
+    }
+
+    
+    public function notas()
+    {
+        return $this->hasMany(Nota::class);
+    }
+
 }
