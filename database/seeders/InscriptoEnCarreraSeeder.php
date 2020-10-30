@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\InscriptoEnCarrera;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class InscriptoEnCarreraSeeder extends Seeder
@@ -13,6 +15,7 @@ class InscriptoEnCarreraSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $count = User::where('rol', 'Alumno')->get()->count();
+        InscriptoEnCarrera::factory()->times($count)->create();
     }
 }

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(MateriaSeeder::class);
         $this->call(CarrerasSeeder::class);
+        $this->call(InscriptoEnCarreraSeeder::class);
     }
 
     private function createDeptaramentos()

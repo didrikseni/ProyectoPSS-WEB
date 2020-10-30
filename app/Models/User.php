@@ -120,4 +120,12 @@ class User extends Authenticatable
         return $this->rol == 'Alumno';
     }
 
+    public function carrera() {
+        return self::select('carreras.*')
+            ->join('inscripto_en_carreras', 'inscripto_en_carreras.id_alumno', '=', 'users.id')
+            ->join('carreras', 'carreras.id', '=', 'inscripto_en_carreras.id_carrera')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+
 }

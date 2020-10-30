@@ -25,4 +25,13 @@ class Carreras extends Model
         return -1;
     }
 
+    public static function materias($id) {
+        return self::select('materias.*')
+            ->join('materias_carreras', 'materias_carreras.id_carrera', '=', 'carreras.id')
+            ->join('materias', 'materias.id', '=', 'materias_carreras.id_materia')
+//            ->where('carreras.id', $this->id)
+            ->where('carreras.id', $id)
+            ->get();
+    }
+
 }

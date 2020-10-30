@@ -27,6 +27,7 @@ Route::resource('/materias', 'App\Http\Controllers\MateriaController');
 Route::get('/materia/profesor', 'App\Http\Controllers\MateriaController@edit_professor');
 Route::put('/materia/profesor', 'App\Http\Controllers\MateriaController@update_professor');
 Route::resource('/correlativas', 'App\Http\Controllers\MateriaCorrelativaController');
+Route::resource('/inscripcion_materia', 'App\Http\Controllers\InscripcionEnMateriaController');
 
 Route::resource('Carreras', 'App\Http\Controllers\CarrerasController');
 Route::resource('/carreras_materias', 'App\Http\Controllers\MateriasCarrerasController');
