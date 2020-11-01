@@ -42,13 +42,17 @@
             <ul id="nav-mobile" class="hide-on-med-and-down">
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuCarrera"
+                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                           id="dropdownMenuCarrera"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
                             @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/Carreras/create">Crear</a>
                                 <a class="dropdown-item" href="{{ route('carreras_materias.create') }}">Asociar materia</a>
                                 <a class="dropdown-item" href="{{ route('inscripcion_carrera.create') }}">Inscribir a carrera</a>
+                            @endif
+                            @if(auth()->user()->isStudent())
+                                <a class="dropdown-item" href="{{ route('inscripcion_materia.create') }}">Inscribir a materia</a>
                             @endif
                             <a class="dropdown-item" href="/Carreras">Buscar</a>
                         </div>
@@ -57,7 +61,8 @@
 
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuMateria"
+                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                           id="dropdownMenuMateria"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Materia</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
                             @if(auth()->user()->isAdmin())
@@ -72,7 +77,8 @@
 
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuUsuario"
+                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                           id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
                             @if(auth()->user()->isAdmin())

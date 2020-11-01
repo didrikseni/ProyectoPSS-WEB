@@ -33,8 +33,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'), // password
             'remember_token' => Str::random(10),
-            'apellido'=> $apellido,       
-            'tipo_documento' => $this->faker->randomElement( ['DNI', 'Pasaporte', 'Libreta Cívica', 'Libreta de Enrolamiento','Cédula de Identidad']),     
+            'apellido'=> $apellido,
+            'tipo_documento' => $this->faker->randomElement( ['DNI', 'Pasaporte', 'Libreta Cívica', 'Libreta de Enrolamiento','Cédula de Identidad']),
             'DNI' => $this->faker->numberBetween($min = 10000000, $max = 99999999),
             'fecha_nacimiento' => $this->faker->date($format = 'Y-m-d', $max = 'now'),
             'lugar_nacimiento' => $this->faker->name,
@@ -43,7 +43,7 @@ class UserFactory extends Factory
             'escuela_secundaria' => $this->faker->name,
             'numero_telefono' => $this->faker->numberBetween($min = 10000000, $max = 99999999),
             'legajo' => $legajo,
-            'rol' => $this->faker->randomElement(['Administrador', 'Alumno', 'Profesor']),
+            'rol' => $this->faker->randomElement(['Alumno', 'Profesor']),
             'nombre_usuario' => $nombre_usuario,
         ];
     }

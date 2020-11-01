@@ -12,13 +12,17 @@ class Nota extends Model
     protected $fillable = [
         'calificacion',
         'LU_alumno',
-        'id_mesa_examen',        
+        'id_mesa_examen',
     ];
 
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function mesaExamen() {
+        return $this->hasOne(MesaExamen::class);
     }
 
 

@@ -111,8 +111,6 @@ class MateriaController extends Controller
             'nombre' => 'required',
             'id_str' => 'required|min:1|max:5|unique:materias,id_str',
             'departamento' => 'required|exists:departamentos,id',
-//            'profesor' => ['integer', new MateriaProfesor],
-//            'asistente' => ['integer', new MateriaProfesor],
         ]);
         $materia->nombre = $request->nombre;
         $materia->id_str = $request->id_str;
