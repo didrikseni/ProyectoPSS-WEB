@@ -137,20 +137,34 @@ class User extends Authenticatable
         return $this->hasMany(Materia::class);
     }
 
-    public function getAllMesas(){
-        return MesaExamen::all()->toArray();        
-    }
- 
     public function notas()
     {
-        return $this->hasMany(Nota::class);
-    }
-
+        return $this->hasMany(Nota::class,'LU_alumnno');
+    } 
+    
     public function carrera()
     {
         return self::select('carreras.*')
             ->join('inscripto_en_carreras', 'inscripto_en_carreras.id_alumno', '=', 'users.id')
             ->join('carreras', 'carreras.id', '=', 'inscripto_en_carreras.id_carrera')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+
+    public function mesasExamenAlumno()
+    {        
+        return self::select('mesa_examens.*')
+            ->join('inscripcion_en_materias', 'inscripcion_en_materias.id_alumno', '=', 'users.id') 
+            ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'inscripcion_en_materias.id_materia')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+
+    public function mesasExamenProfesor()
+    {
+        return self::select('mesa_examens.*')
+            ->join('materias', 'materias.id_profesor', '=', 'users.id') 
+            ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'materias.id')
             ->where('users.id', $this->id)
             ->get();
     }

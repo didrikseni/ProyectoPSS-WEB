@@ -15,39 +15,28 @@ class MesaExamenController extends Controller
      */
     public function index()
     {   
-        $mesa_examen = $this->getMesasExamen();
+        $mesa_examen = $this->getMesasExamen();        
         return view('MesaExamen/index', compact ('mesa_examen')); 
     }
 
-    private function getMesasExamen():array {
+    private function getMesasExamen() {
         $user = auth()->user();
         $mesa_examen = array();
-        $materia = null;
         if($user->isAdmin()){
-            $mesa_examen = MesaExamen::all();
+            $mesa_examen = MesaExamen::all();            
         }
         else{
             if($user->isProfessor()){
-                $materias = $user->materiasProfesor();  
-                // $mesa_examen = $user->getAllMesas();  
+                $mesa_examen = $user->mesasExamenProfesor();                  
             }
             else{
-                if($user->isStuddent()){
-                    $materias = $user->materiasAlumno();
+                if($user->isStudent()){
+                    $mesa_examen = $user->mesasExamenAlumno();
                 }
-            }
-            foreach ($materias as $materia){
-                array_merge($mesa_examen, $materia->getMesasExamen());
-            }
+            }            
         }
-        return $mesa_examen->all();
-        // CUando entro commo proferos, aca me tira error porque me dice que llamo All() a un arreglo, 
-        // Pero cuando entro como admin me tira que no estoy pasando un arreglo, sino que un objeto.
-
-        //Si meto el metodo array:merge arriba y dps pongo toArray() tampoco anda, nose que onda, porque me manda un 
-        //arreglo con odos los elementos, pero anda a saber que pasara.
-
-        //Probar meter desde MesaExamen.
+        
+        return $mesa_examen;
     }
 
     /**
@@ -78,7 +67,7 @@ class MesaExamenController extends Controller
             'tipo_examen' => $request->tipo_examen,
             'fecha' => $request->fecha,
             'horario' => $request->hora,
-            'observaciones' => $request->observaciones
+            'observaciones' => $request->observaciones,
         ]);
 
         $mesa->save();
@@ -110,10 +99,15 @@ class MesaExamenController extends Controller
      * @param  \App\Models\MesaExamen  $mesaExamen
      * @return \Illuminate\Http\Response
      */
-    public function edit(MesaExamen $mesaExamen)
+    public function edit(MesaExamen $mesaExamen_id)
     {
-        //
+        $mesa = MesaExamen::findOrFail($mesaExamen_id);
+        $tipo_examen = MesaExamen::type_exam_options();
+        $materias = Materia::all();
+        return view('MesaExamen.edit', compact('materias', 'tipo_examen', 'mesa'));
     }
+
+   
 
     /**
      * Update the specified resource in storage.
@@ -133,12 +127,13 @@ class MesaExamenController extends Controller
      * @param  \App\Models\MesaExamen  $mesaExamen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MesaExamen $mesaExamen)
+    public function destroy(MesaExamen $mesaExamen_id)
     {
-        //
+        $mesa = MesaExamen::findOrFail($mesaExamen_id);
+        $mesa->delete();
+        return redirect()->route('MesaExamen.index');
     }
-
-
+  
 
     private function validateData(Request $request): array {
         return request()->validate([
@@ -146,6 +141,8 @@ class MesaExamenController extends Controller
             'tipo_examen' =>['required'],
             'fecha' => ['required', 'date'],
             'hora' => ['required'],
+            'observaciones' => ['nullable'],
+
         ]);
 
     }

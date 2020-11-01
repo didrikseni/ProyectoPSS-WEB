@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MesaExamen;
 use Illuminate\Database\Seeder;
 
 class MesaExamenSeeder extends Seeder
@@ -13,6 +14,6 @@ class MesaExamenSeeder extends Seeder
      */
     public function run()
     {
-        //
+        MesaExamen::factory()->times(10)->create();
     }
 }
