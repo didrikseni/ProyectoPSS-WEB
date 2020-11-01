@@ -28,7 +28,8 @@ class MesaExamenController extends Controller
         }
         else{
             if($user->isProfessor()){
-                $materias = $user->materiasProfesor();               
+                $materias = $user->materiasProfesor();  
+                // $mesa_examen = $user->getAllMesas();  
             }
             else{
                 if($user->isStuddent()){
@@ -40,6 +41,13 @@ class MesaExamenController extends Controller
             }
         }
         return $mesa_examen->all();
+        // CUando entro commo proferos, aca me tira error porque me dice que llamo All() a un arreglo, 
+        // Pero cuando entro como admin me tira que no estoy pasando un arreglo, sino que un objeto.
+
+        //Si meto el metodo array:merge arriba y dps pongo toArray() tampoco anda, nose que onda, porque me manda un 
+        //arreglo con odos los elementos, pero anda a saber que pasara.
+
+        //Probar meter desde MesaExamen.
     }
 
     /**

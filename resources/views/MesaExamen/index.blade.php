@@ -52,35 +52,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Delete artist</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="alert alert-warning" role="alert">
-                                <p>Esta seguro de borrar la materia <b id="name">{{ $mesa->name }}</b> ?</p>
-                            </div>
-                            <form id="formDeleteSignature" action="{{ route('materias.destroy', 1) }}"
-                                  method="POST">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="id" id="signatureHideDelete">
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn-small" data-dismiss="modal">Close</button>
-                            <button type="submit" id="deleteButton" class="btn red lighten-1 ml-2 btn-small"
-                                    form="formDeleteSignature">Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
         </div>
     </div>
 @endsection

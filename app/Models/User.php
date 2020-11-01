@@ -130,6 +130,11 @@ class User extends Authenticatable
         return $this->hasMany(Materia::class);        
     }
 
+    public function getAllMesas(){
+        return MesaExamen::all()->toArray();        
+    }
+
+
     
     public function notas()
     {
