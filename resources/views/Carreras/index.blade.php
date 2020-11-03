@@ -9,7 +9,7 @@
     <div class="page-content m-5">
         <div class="justify-content-center">
             <div class="title m-b-md text-center">
-                <h1>Materias</h1>
+                <h1>Carreras</h1>
                 <table id="example" style="width:100%">
                     <thead>
                         <tr>
@@ -29,7 +29,11 @@
                             <th>{{$carrera->id_str}} </th>
                             <th>{{App\Models\Departamentos::where('id', '=', $carrera->departamento_responsable)->first()->nombre}} </th>                      
                             <th>{{App\Models\User::where('id', '=', $carrera->profesor_responsable)->first()->nombre}}</th>
-                            <th> Materias </th>                            
+                            <th> 
+
+                                <a href="/Carreras/{{$carrera->id}}/materias">Materias</a>
+
+                            </th>                            
                         </tr>
                     @endforeach
                     </tbody>
@@ -44,4 +48,5 @@
 @section('scripts')
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" type="application/javascript"></script>
     <script src="/js/MateriasTable.js" type="application/javascript"></script>
+    <script src="/js/CarrerasTable.js" type="application/javascript"></script>
 @endsection

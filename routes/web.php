@@ -35,6 +35,7 @@ Route::resource('/inscripcion_materia', 'App\Http\Controllers\InscripcionEnMater
 Route::resource('Carreras', 'App\Http\Controllers\CarrerasController');
 Route::resource('/carreras_materias', 'App\Http\Controllers\MateriasCarrerasController');
 Route::resource('/inscripcion_carrera', 'App\Http\Controllers\InscriptoEnCarreraController');
+Route::get('/Carreras/{carrera}/materias','App\Http\Controllers\CarrerasController@showMaterias');
 
 Route::resource('/MesaExamen', 'App\Http\Controllers\MesaExamenController');
 Route::get('MesaExamen/confirmation/{mesa}', [MesaExamenController::class, 'confirmation']);

@@ -126,4 +126,11 @@ class CarrerasController extends Controller
     {
         //
     }
+
+    public function showMaterias($carrera_id){
+        $carrera = Carreras::findorFail($carrera_id)->first();
+        $materias = Carreras::findOrFail($carrera_id)->materias();
+
+        return view('Carreras/materias', compact('carrera', 'materias'));
+    }
 }

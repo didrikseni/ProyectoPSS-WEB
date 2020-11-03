@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class MesaExamenController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin')->only('create');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -99,7 +106,7 @@ class MesaExamenController extends Controller
      * @param  \App\Models\MesaExamen  $mesaExamen
      * @return \Illuminate\Http\Response
      */
-    public function edit(MesaExamen $mesaExamen_id)
+    public function edit(int $mesaExamen_id)
     {
         $mesa = MesaExamen::findOrFail($mesaExamen_id);
         $tipo_examen = MesaExamen::type_exam_options();
@@ -146,4 +153,6 @@ class MesaExamenController extends Controller
         ]);
 
     }
+
+   
 }
