@@ -17,8 +17,14 @@ class NotaController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('Nota/index', compact ('users'));
+        $user = auth()->user();
+        $notasCursadas = Nota::all();
+        $notasFinales = Nota::all();
+        if($user->isStudent()){
+            $notasCursadas = $user->notasCursada();
+            $notasFinales = $user->notasFinales();
+        }        
+        return view('Nota/index', compact ('notasFinales', 'notasCursadas'));
     }
 
     /**

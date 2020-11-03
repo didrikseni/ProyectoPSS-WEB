@@ -44,4 +44,7 @@ class Nota extends Model
         }
         return $toRet;
     }
+
+
+
 }
