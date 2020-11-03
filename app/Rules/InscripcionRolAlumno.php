@@ -26,6 +26,8 @@ class InscripcionRolAlumno implements Rule
      */
     public function passes($attribute, $value)
     {
+//        Quizas se pueda cambiar por esto.
+//        return auth()->user()->isStudent();
         return User::where('legajo', '=', $value)->where('rol', '=', 'Alumno')->exists();
     }
 

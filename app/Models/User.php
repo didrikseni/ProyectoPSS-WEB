@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -139,9 +138,9 @@ class User extends Authenticatable
 
     public function notas()
     {
-        return $this->hasMany(Nota::class,'LU_alumnno');
-    } 
-    
+        return $this->hasMany(Nota::class, 'LU_alumnno');
+    }
+
     public function carrera()
     {
         return self::select('carreras.*')
@@ -152,9 +151,9 @@ class User extends Authenticatable
     }
 
     public function mesasExamenAlumno()
-    {        
+    {
         return self::select('mesa_examens.*')
-            ->join('inscripcion_en_materias', 'inscripcion_en_materias.id_alumno', '=', 'users.id') 
+            ->join('inscripcion_en_materias', 'inscripcion_en_materias.id_alumno', '=', 'users.id')
             ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'inscripcion_en_materias.id_materia')
             ->where('users.id', $this->id)
             ->get();
@@ -163,7 +162,7 @@ class User extends Authenticatable
     public function mesasExamenProfesor()
     {
         return self::select('mesa_examens.*')
-            ->join('materias', 'materias.id_profesor', '=', 'users.id') 
+            ->join('materias', 'materias.id_profesor', '=', 'users.id')
             ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'materias.id')
             ->where('users.id', $this->id)
             ->get();

@@ -8,13 +8,13 @@ use App\Models\Materia;
 use App\Models\User;
 use App\Rules\MateriaProfesor;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
-use Illuminate\Validation\Rule;
+use Illuminate\Http\Response;
 
 class MateriaController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('admin')->except(['index', 'show']);
     }
@@ -22,7 +22,7 @@ class MateriaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -35,7 +35,7 @@ class MateriaController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -45,8 +45,8 @@ class MateriaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -71,11 +71,20 @@ class MateriaController extends Controller
         return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
     }
 
+    private function validateMateria(): array
+    {
+        return request()->validate([
+            'nombre' => 'required',
+            'id' => 'required|min:1|max:5|unique:materias,id_str',
+            'dpto' => 'required|exists:departamentos,id',
+        ]);
+    }
+
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Materia  $materia
-     * @return \Illuminate\Http\Response
+     * @param Materia $materia
+     * @return Response
      */
     public function show(Materia $materia)
     {
@@ -86,7 +95,7 @@ class MateriaController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(int $id)
     {
@@ -100,9 +109,9 @@ class MateriaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Materia  $materia
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Materia $materia
+     * @return Response
      */
     public function update(Request $request, Materia $materia)
     {
@@ -125,8 +134,8 @@ class MateriaController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Materia  $materia
-     * @return \Illuminate\Http\Response
+     * @param Materia $materia
+     * @return Response
      */
     public function destroy(Materia $materia)
     {
@@ -135,23 +144,17 @@ class MateriaController extends Controller
         return redirect()->route('materias.index');
     }
 
-    private function validateMateria(): array {
-        return request()->validate([
-            'nombre' => 'required',
-            'id' => 'required|min:1|max:5|unique:materias,id_str',
-            'dpto' => 'required|exists:departamentos,id',
-        ]);
-    }
-
-    public function edit_professor() {
+    public function edit_professor()
+    {
         return view('materias.materias_asociate_professor');
     }
 
-    public function update_professor(Request $request) {
+    public function update_professor(Request $request)
+    {
         $materia = Materia::find(Materia::getID($request->materia));
         $request->validate([
             'materia' => 'required|exists:materias,id_str',
-            'profesor' => ['required','integer', new MateriaProfesor],
+            'profesor' => ['required', 'integer', new MateriaProfesor],
             'asistente' => ['required', 'integer', new MateriaProfesor],
         ]);
         $materia['id_profesor'] = $request->profesor;
@@ -160,5 +163,4 @@ class MateriaController extends Controller
         $materia->save();
         return redirect(route('materias.index'));
     }
-
 }
