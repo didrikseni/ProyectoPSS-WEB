@@ -57,7 +57,7 @@ class MateriaCorrelativaController extends Controller
             'tipo' => $request->get('tipo'),
         ]);
         $materia_correlativa->save();
-        return redirect()->back()->with('Sistema', "La correlativa fue cargada correctamente.");
+        return redirect(route('materias.index'))->with('success', "La correlativa fue cargada correctamente.");
     }
 
     private function validateMateriaCorrelativa()

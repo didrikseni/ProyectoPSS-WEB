@@ -68,7 +68,7 @@ class MateriaController extends Controller
         }
 
         $materia->save();
-        return redirect()->back()->with('Sistema', 'La materia fue cargada correctamente.');
+        return redirect()->back()->with('success', 'La materia fue cargada correctamente.');
     }
 
     private function validateMateria(): array
