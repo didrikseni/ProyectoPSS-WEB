@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Materia;
+use App\Models\MesaExamen;
 use App\Models\Nota;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotaController extends Controller
@@ -14,7 +17,8 @@ class NotaController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return view('Nota/index', compact ('users'));
     }
 
     /**
@@ -22,10 +26,13 @@ class NotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+        $tipo_examen = MesaExamen::type_exam_options();
+        $materias = Materia::all();
+        $nota = new Nota();
+        return view('Nota/create', compact('materias', 'tipo_examen', 'nota'));
     }
+
 
     /**
      * Store a newly created resource in storage.
