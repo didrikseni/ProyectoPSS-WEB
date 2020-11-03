@@ -91,6 +91,20 @@
 
                 <li>
                     <div class="dropdown show">
+                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                           id="dropdownMenuUsuario"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notas</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
+                            @if(auth()->user()->isAdmin())
+                                <a class="dropdown-item" href="/Nota/create">Cargar Nota</a>
+                            @endif
+                            <a class="dropdown-item" href="/Nota">Buscar</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="dropdown show">
                         <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mesas de Examen</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
