@@ -128,7 +128,7 @@ class MateriaController extends Controller
         $materia->id_asistente = null;
         $materia->save();
 
-        return redirect(route('materias.index'));
+        return redirect(route('materias.index'))->with('success');
     }
 
     /**

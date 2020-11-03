@@ -7,22 +7,22 @@
 <!-- Navbar -->
 <nav class="orange lighten-3 mb-5">
     <div class="nav-wrapper">
-        <a class="navbar-brand mx-3" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+        <a class="navbar-brand mx-3 custom-text-navbar" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <!-- Authentication Links -->
             @guest
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link custom-text-navbar" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
             @else
                 @if (auth()->user()->isStudent() && auth()->user()->carrera()->first() != null)
                     <li class="nav-item">
-                        <a> {{ auth()->user()->carrera()->first()->nombre }}</a>
+                        <a class="custom-text-navbar"> {{ auth()->user()->carrera()->first()->nombre }}</a>
                     </li>
                 @endif
 
                 <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle custom-text-navbar" href="#" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ auth()->user()->nombre }}
                     </a>
@@ -48,17 +48,16 @@
             <ul id="nav-mobile" class="hide-on-med-and-down">
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                        <a class="btn dropdown-toggle deep-orange accent-1 custom-text-navbar" href="#" role="sbutton"
                            id="dropdownMenuCarrera"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Carrera</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuCarrera">
                             @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/Carreras/create">Crear</a>
-                                <a class="dropdown-item" href="{{ route('carreras_materias.create') }}">Asociar materia</a>
-                                <a class="dropdown-item" href="{{ route('inscripcion_carrera.create') }}">Inscribir a carrera</a>
-                            @endif
-                            @if(auth()->user()->isStudent())
-                                <a class="dropdown-item" href="{{ route('inscripcion_materia.create') }}">Inscribir a materia</a>
+                                <a class="dropdown-item" href="{{ route('carreras_materias.create') }}">Asociar
+                                    materia</a>
+                                <a class="dropdown-item" href="{{ route('inscripcion_carrera.create') }}">Inscribir a
+                                    carrera</a>
                             @endif
                             <a class="dropdown-item" href="/Carreras">Buscar</a>
                         </div>
@@ -67,7 +66,7 @@
 
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                        <a class="btn dropdown-toggle deep-orange accent-1 custom-text-navbar" href="#" role="sbutton"
                            id="dropdownMenuMateria"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Materia</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuMateria">
@@ -76,6 +75,10 @@
                                 <a class="dropdown-item" href="/correlativas/create">Asociar correlativa</a>
                                 <a class="dropdown-item" href="/materia/profesor">Asociar profesor</a>
                             @endif
+                            @if(auth()->user()->isStudent())
+                                <a class="dropdown-item" href="{{ route('inscripcion_materia.create') }}">Inscribir a
+                                    materia</a>
+                            @endif
                             <a class="dropdown-item" href="/materias">Buscar</a>
                         </div>
                     </div>
@@ -83,7 +86,7 @@
 
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                        <a class="btn dropdown-toggle deep-orange accent-1 custom-text-navbar" href="#" role="sbutton"
                            id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuario</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
@@ -97,7 +100,7 @@
 
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton"
+                        <a class="btn dropdown-toggle deep-orange accent-1 custom-text-navbar" href="#" role="sbutton"
                            id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notas</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
@@ -111,7 +114,8 @@
 
                 <li>
                     <div class="dropdown show">
-                        <a class="btn dropdown-toggle deep-orange accent-1" href="#" role="sbutton" id="dropdownMenuUsuario"
+                        <a class="btn dropdown-toggle deep-orange accent-1 custom-text-navbar" href="#" role="sbutton"
+                           id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mesas de Examen</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
                             @if(auth()->user()->isAdmin())

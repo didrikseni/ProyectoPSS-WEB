@@ -76,7 +76,7 @@ class InscripcionEnMateriaController extends Controller
         ]);
 
         $inscripcion->save();
-        return redirect(route('materias.index'));
+        return redirect(route('materias.index'))->with('success', 'Se inscribió correctamente en la materia');
     }
 
     /**

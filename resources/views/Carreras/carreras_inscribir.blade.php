@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('success'))
-        <h1>{{session('success')}}</h1>
-    @endif
-
     <div class="page-content">
         <div class="m-5">
             <div class="col-9">
