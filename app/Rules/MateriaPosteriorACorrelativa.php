@@ -39,9 +39,9 @@ class MateriaPosteriorACorrelativa implements Rule
      */
     public function passes($attribute, $value)
     {
+
         $materia = MateriasCarreras::where('id_materia', $this->materia)->first();
         $correlativa = MateriasCarreras::where('id_materia', $this->correlativa)->first();
-//        dd($materia, $correlativa);
         return ($correlativa->anio < $materia->anio) || ($correlativa->anio === $materia->anio && $correlativa->cuatrimestre === "0" && $materia->cuatrimestre === "1");
     }
 

@@ -15,6 +15,12 @@
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
             @else
+                @if (auth()->user()->isStudent() && auth()->user()->carrera()->first() != null)
+                    <li class="nav-item">
+                        <a> {{ auth()->user()->carrera()->first()->nombre }}</a>
+                    </li>
+                @endif
+
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
