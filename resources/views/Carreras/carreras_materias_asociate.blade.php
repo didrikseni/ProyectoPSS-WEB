@@ -13,6 +13,10 @@
             <div class="col-9 my-5">
                 <h1> Asociar materia a una carrera </h1>
             </div>
+            <div class="col-9">
+                <h5> (*) Campo obligatorio </h5>
+            </div>
+            </br>
 
             <div class="col-9 my-5">
                 <form method="POST" action="/carreras_materias" enctype="multipart/form-data">
@@ -77,11 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="row my-5">
-                        <div class="col">
-                            <h4 class="text-center"> (*) Campo obligatorio </h4>
-                        </div>
-                    </div>
+                    
 
 
                     <div class="row justify-content-center my-5">
