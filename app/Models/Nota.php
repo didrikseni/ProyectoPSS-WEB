@@ -36,4 +36,12 @@ class Nota extends Model
             'Desaprobado'
         ];
     }
+
+    public function gradingNumResult($N){
+        $toRet = array();
+        for ($i = 1; $i <= $N; $i++){
+            array_push($toRet, $i);
+        }
+        return $toRet;
+    }
 }

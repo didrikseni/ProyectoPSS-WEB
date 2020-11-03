@@ -77,6 +77,21 @@
                             </div>
                         </div>
 
+                        <div class="col ">
+                            <label for="tipo_examen">Seleccione la Calificación: (*)</label>
+                            <div>
+                                <select name="rol" id="rol" class="form-control" >
+                                    <option disabled selected>Seleccionar</option>
+                                    @foreach ($nota->gradingNumResult(10) as $option)
+                                        <option value="{{$option}}">{{$option}}</option>
+                                    @endforeach
+                                </select>
+                                @error('rol')
+                                <p class="badge badge-danger">{{ $errors->first('rol') }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
                     </div>
 
 
