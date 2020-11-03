@@ -169,4 +169,25 @@ class User extends Authenticatable
             ->get();
     }
 
+
+    public function notasCursada()
+    {
+        return self::select('notas.*')            
+            ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Parcial')
+            ->join('notas', 'notas.LU_alumno', '=', 'users_id')
+            ->join('notas', 'mesa_examens.id', '=', 'notas.id')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+
+    public function notasFinales()
+    {
+        return self::select('notas.*')            
+        ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Final')
+        ->join('notas', 'notas.LU_alumno', '=', 'users_id')
+        ->join('notas', 'mesa_examens.id', '=', 'notas.id')
+        ->where('users.id', $this->id)
+        ->get();
+    }
+
 }

@@ -8,52 +8,62 @@
     <div class="page-content m-5">
         <div class="justify-content-center">
             <div class="title m-b-md text-center">
-                <h1>Usuarios</h1>
+                <h1>Notas de Examen</h1>
+                </br>
+                <h3> Notas Cursadas </h3>
                 <table id="example" style="width:100%">
                     <thead>
                     <tr>
+                        <th scope="col">LU</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
-                        <th scope="col">LU</th>
-                        <th scope="col"> Rol </th>
-                        @if(auth()->user()->isAdmin())
-                            <th scope="col">Usuario</th>
-                            <th scope="col">Documento</th>
-                        @endif
-                        <th scope="col">Email</th>
-                        @if(auth()->user()->isAdmin())
-                            <th scope="col">Fecha de Nacimiento</th>
-                            <th scope="col">Direccion</th>
-                            <th scope="col">Número de telefono</th>
-                            <th scope="col">Escuela Secundaria</th>
-                        @endif
+                        <th scope="col">Materia</th>
+                        <th scope="col"> Nota </th>                       
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($users as $user)
+                    @foreach ($notasCursadas as $nota)
                         <tr>
-                            <th>{{$user->nombre}}</th>
-                            <th>{{$user->apellido}} </th>
-                            <th>{{$user->legajo}} </th>
-                            <th>{{$user->rol}} </th>
-                            @if(auth()->user()->isAdmin())
-                                <th>{{$user->nombre_usuario}} </th>
-                                <th>{{$user->tipo_documento . ' '. $user->DNI}}</th>
-                            @endif
-                            <th>{{$user->email}}</th>
-                            @if(auth()->user()->isAdmin())
-                                <th>{{$user->fecha_nacimiento}}</th>
-                                <th>{{$user->direccion_calle . ' '. $user->direccion_numero}}</th>
-                                <th>{{$user->numero_telefono}}</th>
-                                <th>{{$user->escuela_secundaria}}</th>
-                            @endif
-
-                        </tr>
+                            <th>{{$nota->LU_alumno}}</th>
+                            <th>{{App\Models\User::where('id', '=', $nota->LU_alumno)->first()->nombre}} </th>
+                            <th>{{App\Models\User::where('id', '=', $materia->LU_alumno)->first()->apellido}} </th>
+                            <th> {{App\Models\Materia::where('id', '=', App\Models\MesaExamen::where('id', '=', $nota->id_mesa_examen)->first()->id)->first()->nombre}} </th>
+                            <th>{{$nota->calificacion}}</th>
+                        </tr>                       
                     @endforeach
                     </tbody>
                 </table>
-            </div>
 
+
+
+                <!-- </br>
+                <h3> Notas Finales </h3>
+                <table id="example" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th scope="col">LU</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Materia</th>
+                        <th scope="col"> Nota </th>                       
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach ($notasFinales as $nota)
+                        <tr>
+                            <th>{{$nota->LU_alumno}}</th>
+                            <th>{{App\Models\User::where('id', '=', $nota->LU_alumno)->first()->nombre}} </th>
+                            <th>{{App\Models\User::where('id', '=', $materia->LU_alumno)->first()->apellido}} </th>
+                            <th> {{App\Models\Materia::where('id', '=', App\Models\MesaExamen::where('id', '=', $nota->id_mesa_examen)->first()->id)->first()->nombre}} </th>
+                            <th>{{$nota->calificacion}}</th>
+                        </tr>                       
+                    @endforeach
+                    </tbody>
+                </table> -->
+
+
+
+            </div>           
         </div>
     </div>
 @endsection
