@@ -41,5 +41,5 @@ Route::resource('/MesaExamen', 'App\Http\Controllers\MesaExamenController');
 Route::get('MesaExamen/confirmation/{mesa}', [MesaExamenController::class, 'confirmation']);
 
 Route::resource('/Nota', 'App\Http\Controllers\NotaController');
-Route::get('Nota/createParcial','App\Http\Controllers\NotaController@createParcial' );
-Route::get('Nota/createFinal', [NotaController::class, 'createFinal']);
+//Route::get('Nota/createParcial','App\Http\Controllers\NotaController@createParcial' );
+//Route::get('Nota/createFinal', [NotaController::class, 'createFinal']);
