@@ -28,26 +28,29 @@
                         </div>
                     </div>
 
-                    <input class="input-group form-control invisible" name="alumno" id="alumno" value="{{ auth()->user()->id_str }}">
+                    <div class="form-group">
+                        <input class="input-group form-control invisible" name="alumno" id="alumno"
+                               value="{{ auth()->user()->id }}">
+                    </div>
 
-                        <br>
+                    <br>
 
-                        <div class="row justify-content-center">
-                            <div class="form-group">
-                                <div class="col-auto">
-                                    <button type="submit" class="waves-effect waves-light btn">Aceptar</button>
-                                </div>
+                    <div class="row justify-content-center">
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <button type="submit" class="waves-effect waves-light btn">Aceptar</button>
                             </div>
-                            <div class="form-group">
-                                <div class="col-auto">
-                                    <a class="waves-effect waves-light btn"
-                                       onclick="return confirm('¿Quiere cancelar? se perderan los datos ingresados')"
-                                       href="{{ route('materias.store') }}">Cancelar</a>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-auto">
+                                <a class="waves-effect waves-light btn"
+                                   onclick="return confirm('¿Quiere cancelar? se perderan los datos ingresados')"
+                                   href="{{ route('materias.store') }}">Cancelar</a>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-    @endsection
+    </div>
+@endsection
