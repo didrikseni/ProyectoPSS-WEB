@@ -3,7 +3,6 @@
 namespace App\Rules;
 
 use App\Models\Materia;
-use App\Models\materia_correlativa;
 use App\Models\MateriasCarreras;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -42,7 +41,12 @@ class MateriaPosteriorACorrelativa implements Rule
 
         $materia = MateriasCarreras::where('id_materia', $this->materia)->first();
         $correlativa = MateriasCarreras::where('id_materia', $this->correlativa)->first();
-        return ($correlativa->anio < $materia->anio) || ($correlativa->anio === $materia->anio && $correlativa->cuatrimestre === "0" && $materia->cuatrimestre === "1");
+
+        return ($materia !== null && $correlativa !== null) &&
+            (($correlativa->anio < $materia->anio) ||
+                ($correlativa->anio === $materia->anio &&
+                    $correlativa->cuatrimestre === "0" &&
+                    $materia->cuatrimestre === "1"));
     }
 
     /**

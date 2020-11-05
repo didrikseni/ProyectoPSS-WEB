@@ -65,6 +65,7 @@ class InscripcionEnMateriaController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'materia' => new CorrelatividadCheck(),
             'alumno' => new InscripcionRolAlumno(),
