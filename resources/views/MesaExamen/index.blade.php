@@ -27,7 +27,7 @@
                     @foreach ($mesa_examen as $mesa)
                         <tr>
                             <th>{{$mesa->id}}</th>
-                            <th>{{App\Models\Materia::where('id', '=', $mesa->id_materia)->first()->nombre}} </th>
+                            <th>{{$mesa->materia()->nombre}} </th>
                             <th>{{$mesa->fecha}}</th>
                             <th scope="col"> {{$mesa->horario}}</th>
                             <th scope="col"> {{$mesa->tipo_examen}}</th>
@@ -42,7 +42,15 @@
                                                                 
                             </th>
                             <th scope="col"> {{$mesa->notas()->count()}}</th>
-                            <th>{{App\Models\User::where('id', '=', App\Models\Materia::where('id', '=', $mesa->id_materia)->first()->id_profesor)->first()->nombre}}</th>
+                            <th>
+                                @if( $mesa->materia()->profesor() != null )
+                                    {{$mesa->materia()->profesor()->nombre}}
+                                
+                                @else
+                                    No hay profesor asignado
+                                
+                                @endif                            
+                            </th>
                            
                             <td>
                                 <!-- <div class="btn-group">

@@ -30,7 +30,7 @@ class MesaExamenController extends Controller
         $user = auth()->user();
         $mesa_examen = array();
         if($user->isAdmin()){
-            $mesa_examen = MesaExamen::all();            
+            $mesa_examen = MesaExamen::all();                        
         }
         else{
             if($user->isProfessor()){

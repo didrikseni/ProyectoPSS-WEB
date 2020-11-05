@@ -27,7 +27,7 @@ class Materia extends Model
 
     public function profesor()
     {
-        return $this->hasOne(User::class);
+        return User::where('id',$this->id_profesor)->first();
     }
 
     public function asistente()
