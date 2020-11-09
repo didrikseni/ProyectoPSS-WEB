@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class MesaExamen extends Model
 {
     use HasFactory;
@@ -28,6 +29,12 @@ class MesaExamen extends Model
     public function notas(){
         return $this->hasMany(Nota::class,'id_mesa_examen');
     }
+
+    public function materia(){
+        return Materia::where('id', '=', $this->id_materia)->first();
+    }
+
+
 
     
 }

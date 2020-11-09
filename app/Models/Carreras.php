@@ -30,7 +30,6 @@ class Carreras extends Model
             ->join('materias_carreras', 'materias_carreras.id_carrera', '=', 'carreras.id')
             ->join('materias', 'materias.id', '=', 'materias_carreras.id_materia')
             ->where('carreras.id', $this->id)
-//            ->where('carreras.id', $id)
             ->get();
     }
 

@@ -69,7 +69,7 @@ class MateriasCarrerasController extends Controller
             'anio' => $request->anio,
         ]);
         $materia_carrera->save();
-        return redirect()->back()->with('Sistema', "La materia fue asociada correctamente.");
+        return redirect()->back()->with('success', "La materia fue asociada correctamente.");
     }
 
     /**

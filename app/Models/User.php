@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -139,7 +139,7 @@ class User extends Authenticatable
 
     public function notas()
     {
-        return $this->hasMany(Nota::class);
+        return $this->hasMany(Nota::class, 'LU_alumnno');
     }
 
     public function carrera()
@@ -149,6 +149,47 @@ class User extends Authenticatable
             ->join('carreras', 'carreras.id', '=', 'inscripto_en_carreras.id_carrera')
             ->where('users.id', $this->id)
             ->get();
+    }
+
+    public function mesasExamenAlumno()
+    {
+        return self::select('mesa_examens.*')
+            ->join('inscripcion_en_materias', 'inscripcion_en_materias.id_alumno', '=', 'users.id')
+            ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'inscripcion_en_materias.id_materia')
+            ->join('materias', 'materias.id', '=', 'inscripcion_en_materias.id_materia')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+    
+
+    public function mesasExamenProfesor()
+    {
+        return self::select('mesa_examens.*')
+            ->join('materias', 'materias.id_profesor', '=', 'users.id')
+            ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'materias.id')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+
+
+    public function notasCursada()
+    {
+        return self::select('notas.*')            
+            ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Parcial')
+            ->join('notas', 'notas.LU_alumno', '=', 'users_id')
+            ->join('notas', 'mesa_examens.id', '=', 'notas.id')
+            ->where('users.id', $this->id)
+            ->get();
+    }
+
+    public function notasFinales()
+    {
+        return self::select('notas.*')            
+        ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Final')
+        ->join('notas', 'notas.LU_alumno', '=', 'users_id')
+        ->join('notas', 'mesa_examens.id', '=', 'notas.id')
+        ->where('users.id', $this->id)
+        ->get();
     }
 
 }

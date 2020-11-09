@@ -1,18 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('success'))
-        <h1>{{session('success')}}</h1>
-    @elseif(session('error'))
-        <h1>{{session('error')}}</h1>
-    @endif
-
-
     <div class="page-content">
         <div class="justify-content-center m-5">
             <div class="col-9 my-5">
                 <h1> Asociar materia a una carrera </h1>
             </div>
+            <div class="col-9">
+                <h5> (*) Campo obligatorio </h5>
+            </div>
+            </br>
 
             <div class="col-9 my-5">
                 <form method="POST" action="/carreras_materias" enctype="multipart/form-data">
@@ -77,11 +74,7 @@
                         </div>
                     </div>
 
-                    <div class="row my-5">
-                        <div class="col">
-                            <h4 class="text-center"> (*) Campo obligatorio </h4>
-                        </div>
-                    </div>
+
 
 
                     <div class="row justify-content-center my-5">

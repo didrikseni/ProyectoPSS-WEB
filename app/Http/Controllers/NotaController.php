@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Materia;
+use App\Models\MesaExamen;
 use App\Models\Nota;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NotaController extends Controller
@@ -14,7 +17,14 @@ class NotaController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+        $notasCursadas = Nota::all();
+        $notasFinales = Nota::all();
+        if($user->isStudent()){
+            $notasCursadas = $user->notasCursada();
+            $notasFinales = $user->notasFinales();
+        }
+        return view('Nota/index', compact ('notasFinales', 'notasCursadas'));
     }
 
     /**
@@ -22,9 +32,18 @@ class NotaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+        $tipo_examen = MesaExamen::type_exam_options();
+        $materias = Materia::all();
+        $nota = new Nota();
+        return view('Nota/create', compact('materias', 'tipo_examen', 'nota'));
+    }
+
+    public function createF(){
+        $tipo_examen = MesaExamen::type_exam_options();
+        $materias = Materia::all();
+        $nota = new Nota();
+        return view('Nota/createF', compact('materias', 'tipo_examen', 'nota'));
     }
 
     /**
@@ -35,7 +54,23 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateData($request);
+        $nota = new Nota();
+
+        $nota->fill([
+            'calificacion' => $request->calificacion,
+            'LU_alumno' => $request->LU_alumno,
+            'id_mesa_examen'=>$request->materia // Habría que pedirle el mesaExamen a la nota
+        ]);
+
+        $nota->save();
+        return redirect('Nota/confirmation/' . $nota->id);
+    }
+
+    public function confirmation($mesa_id){
+        $mesa = MesaExamen::where('id', $mesa_id)->firstOrFail();
+        $materia = Materia::where('id', $mesa->id_materia)->firstOrFail();
+        return view('MesaExamen/confirmation', compact('mesa', 'materia'));
     }
 
     /**
@@ -55,9 +90,12 @@ class NotaController extends Controller
      * @param  \App\Models\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function edit(Nota $nota)
+    public function edit(int $nota_id)
     {
-        //
+//        $nota = MesaExamen::findOrFail($nota_id);
+//        $tipo_examen = MesaExamen::type_exam_options();
+//        $materias = Materia::all();
+//        return view('MesaExamen.edit', compact('materias', 'tipo_examen', 'mesa'));
     }
 
     /**
@@ -78,8 +116,19 @@ class NotaController extends Controller
      * @param  \App\Models\Nota  $nota
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Nota $nota)
+    public function destroy(Nota $nota_id)
     {
-        //
+        $nota = MesaExamen::findOrFail($nota_id);
+        $nota->delete();
+        return redirect()->route('Nota.index');
+    }
+
+    private function validateData(Request $request): array {
+        return request()->validate([
+            'calificacion' => ['required'],
+            'LU_alumno' =>['required'],
+            'id_mesa_examen' => ['required']
+        ]);
+
     }
 }

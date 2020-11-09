@@ -45,6 +45,39 @@
 <div id="app">
    @include('layouts.navbar')
 
+    @if(session()->has('success') || session()->has('error'))
+        <script>
+            $(document).ready(function(){
+                $("#myModal").modal('show');
+            });
+        </script>
+
+
+        <div class="modal fade" id="myModal" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Mensaje del servidor</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                <p>{{ session('success') }}</p>
+                            </div>
+                        @elseif(session('error'))
+                            <div class="alert alert-warning" role="alert">
+                                <p>{{ session('error') }}</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <main class="py-4">
         @yield('content')
         @yield('scripts')

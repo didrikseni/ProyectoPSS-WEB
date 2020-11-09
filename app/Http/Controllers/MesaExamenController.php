@@ -8,6 +8,13 @@ use Illuminate\Http\Request;
 
 class MesaExamenController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware('admin')->only('create');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -15,31 +22,28 @@ class MesaExamenController extends Controller
      */
     public function index()
     {   
-        $mesa_examen = $this->getMesasExamen();
+        $mesa_examen = $this->getMesasExamen();        
         return view('MesaExamen/index', compact ('mesa_examen')); 
     }
 
-    private function getMesasExamen():array {
+    private function getMesasExamen() {
         $user = auth()->user();
         $mesa_examen = array();
-        $materia = null;
         if($user->isAdmin()){
-            $mesa_examen = MesaExamen::all();
+            $mesa_examen = MesaExamen::all();                        
         }
         else{
             if($user->isProfessor()){
-                $materias = $user->materiasProfesor();               
+                $mesa_examen = $user->mesasExamenProfesor();                  
             }
             else{
-                if($user->isStuddent()){
-                    $materias = $user->materiasAlumno();
+                if($user->isStudent()){
+                    $mesa_examen = $user->mesasExamenAlumno();
                 }
-            }
-            foreach ($materias as $materia){
-                array_merge($mesa_examen, $materia->getMesasExamen());
-            }
+            }            
         }
-        return $mesa_examen->all();
+        
+        return $mesa_examen;
     }
 
     /**
@@ -70,7 +74,7 @@ class MesaExamenController extends Controller
             'tipo_examen' => $request->tipo_examen,
             'fecha' => $request->fecha,
             'horario' => $request->hora,
-            'observaciones' => $request->observaciones
+            'observaciones' => $request->observaciones,
         ]);
 
         $mesa->save();
@@ -102,10 +106,15 @@ class MesaExamenController extends Controller
      * @param  \App\Models\MesaExamen  $mesaExamen
      * @return \Illuminate\Http\Response
      */
-    public function edit(MesaExamen $mesaExamen)
+    public function edit(int $mesaExamen_id)
     {
-        //
+        $mesa = MesaExamen::findOrFail($mesaExamen_id);
+        $tipo_examen = MesaExamen::type_exam_options();
+        $materias = Materia::all();
+        return view('MesaExamen.edit', compact('materias', 'tipo_examen', 'mesa'));
     }
+
+   
 
     /**
      * Update the specified resource in storage.
@@ -125,12 +134,13 @@ class MesaExamenController extends Controller
      * @param  \App\Models\MesaExamen  $mesaExamen
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MesaExamen $mesaExamen)
+    public function destroy(MesaExamen $mesaExamen_id)
     {
-        //
+        $mesa = MesaExamen::findOrFail($mesaExamen_id);
+        $mesa->delete();
+        return redirect()->route('MesaExamen.index');
     }
-
-
+  
 
     private function validateData(Request $request): array {
         return request()->validate([
@@ -138,7 +148,11 @@ class MesaExamenController extends Controller
             'tipo_examen' =>['required'],
             'fecha' => ['required', 'date'],
             'hora' => ['required'],
+            'observaciones' => ['nullable'],
+
         ]);
 
     }
+
+   
 }

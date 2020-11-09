@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('success'))
-        <h1>{{session('success')}}</h1>
-    @elseif(session('error'))
-        <h1>{{session('error')}}</h1>
-    @endif
-
-
     <div class="page-content">
         <div class="justify-content-center m-5">
             <div class="col-9 my-5">

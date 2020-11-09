@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(session('success'))
-        <h1>{{session('success')}}</h1>
-    @endif
-
     <div class="page-content">
         <div class="m-5">
             <div class="col-9">
@@ -32,19 +28,9 @@
                         </div>
                     </div>
 
-                    <div class="row my-5">
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="label" for="alumno">LU de alumno (*)</label>
-                                <div>
-                                    <input class="input-group form-control @error('alumno') alert-danger @enderror"
-                                           type="number" name="alumno" id="alumno" value="{{ old('alumno') }}">
-                                    @error('alumno')
-                                    <p class="badge badge-danger">{{ $errors->first('alumno') }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
+                    <div class="form-group">
+                        <input class="input-group form-control invisible" name="alumno" id="alumno"
+                               value="{{ auth()->user()->id }}">
                     </div>
 
                     <br>

@@ -1,6 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\APIAuthController;
+use App\Http\Controllers\API\APICarrerasController;
+use App\Http\Controllers\API\APIInscripcionMateriaController;
+use App\Http\Controllers\API\APIMateriaController;
+use App\Http\Controllers\API\APIUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('login', [APIAuthController::class , 'login']);
+Route::post('logout', [APIAuthController::class, 'logout'])->middleware('auth:api');
+Route::get('isLoggedIn', [APIAuthController::class, 'isLoggedIn']);
+
+
+Route::resource('api_user', APIUserController::class)->middleware('auth:api');
+Route::resource('api_materias', APIMateriaController::class)->middleware('auth:api');
+Route::resource('api_carreras', APICarrerasController::class)->middleware('auth:api');
+Route::resource('api_inscripcion_materia', APIInscripcionMateriaController::class)->middleware('auth:api');
+

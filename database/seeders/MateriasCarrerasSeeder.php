@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\MesaExamen;
+use App\Models\Carreras;
+use App\Models\MateriasCarreras;
 use Illuminate\Database\Seeder;
 
-class MesaExamenSeeder extends Seeder
+class MateriasCarrerasSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +15,6 @@ class MesaExamenSeeder extends Seeder
      */
     public function run()
     {
-        MesaExamen::factory()->times(10)->create();
+        MateriasCarreras::factory()->times(20)->create();
     }
 }

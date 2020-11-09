@@ -10,13 +10,21 @@ use App\Rules\MateriaAsociadaACarrera;
 use App\Rules\MateriaPosteriorACorrelativa;
 use App\Rules\MateriasMismaCarrera;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MateriaCorrelativaController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -26,7 +34,7 @@ class MateriaCorrelativaController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -36,8 +44,8 @@ class MateriaCorrelativaController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -49,52 +57,7 @@ class MateriaCorrelativaController extends Controller
             'tipo' => $request->get('tipo'),
         ]);
         $materia_correlativa->save();
-        return redirect()->back()->with('Sistema', "La correlativa fue cargada correctamente.");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\Models\materia_correlativa $materia_correlativa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(materia_correlativa $materia_correlativa)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\materia_correlativa $materia_correlativa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(materia_correlativa $materia_correlativa)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\materia_correlativa $materia_correlativa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, materia_correlativa $materia_correlativa)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\materia_correlativa $materia_correlativa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(materia_correlativa $materia_correlativa)
-    {
-        //
+        return redirect(route('materias.index'))->with('success', "La correlativa fue cargada correctamente.");
     }
 
     private function validateMateriaCorrelativa()
@@ -124,5 +87,50 @@ class MateriaCorrelativaController extends Controller
                 new MateriaPosteriorACorrelativa(request()->materia, request()->correlativa),
             ],
         ]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param materia_correlativa $materia_correlativa
+     * @return Response
+     */
+    public function show(materia_correlativa $materia_correlativa)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param materia_correlativa $materia_correlativa
+     * @return Response
+     */
+    public function edit(materia_correlativa $materia_correlativa)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param materia_correlativa $materia_correlativa
+     * @return Response
+     */
+    public function update(Request $request, materia_correlativa $materia_correlativa)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param materia_correlativa $materia_correlativa
+     * @return Response
+     */
+    public function destroy(materia_correlativa $materia_correlativa)
+    {
+        //
     }
 }

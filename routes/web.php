@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MesaExamenController;
+use App\Http\Controllers\NotaController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +38,11 @@ Route::resource('/inscripcion_materia', 'App\Http\Controllers\InscripcionEnMater
 Route::resource('/Carreras', 'App\Http\Controllers\CarrerasController');
 Route::resource('/carreras_materias', 'App\Http\Controllers\MateriasCarrerasController');
 Route::resource('/inscripcion_carrera', 'App\Http\Controllers\InscriptoEnCarreraController');
+Route::get('/Carreras/{carrera}/materias','App\Http\Controllers\CarrerasController@showMaterias');
 
 Route::resource('/MesaExamen', 'App\Http\Controllers\MesaExamenController');
 Route::get('MesaExamen/confirmation/{mesa}', [MesaExamenController::class, 'confirmation']);
+
+Route::resource('/Nota', 'App\Http\Controllers\NotaController');
+//Route::get('Nota/createParcial','App\Http\Controllers\NotaController@createParcial' );
+//Route::get('Nota/createFinal', [NotaController::class, 'createFinal']);

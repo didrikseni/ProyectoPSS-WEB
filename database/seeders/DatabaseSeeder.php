@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Carreras;
 use App\Models\Departamentos;
+use Database\Factories\MateriasCarrerasFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MateriaSeeder::class);
         $this->call(CarrerasSeeder::class);
         $this->call(InscriptoEnCarreraSeeder::class);
+        $this->call(MesaExamenSeeder::class);
+        $this->call(MateriasCarrerasSeeder::class);
     }
 
     private function createDeptaramentos()

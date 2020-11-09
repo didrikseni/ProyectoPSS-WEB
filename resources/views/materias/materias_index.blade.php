@@ -44,6 +44,7 @@
                             <th scope="col"> -</th>
                             <th scope="col"> -</th>
                             <th scope="col"> -</th>
+                            @if (auth()->user()->isAdmin())
                             <td>
                                 <div class="btn-group">
                                     <a href="/materias/{{ $materia->id }}/edit">
@@ -56,6 +57,7 @@
                                     </button>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>

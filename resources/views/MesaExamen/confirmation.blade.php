@@ -32,8 +32,8 @@
             </div>
                             
             <p>
-                <a href="/User" role="button" class="btn btn-primary">
-                    Volver al menu principal                       
+                <a href="/MesaExamen" role="button" class="btn btn-primary">
+                    Volver a Mesas de Examen                       
                 </a>
             </p>
             
