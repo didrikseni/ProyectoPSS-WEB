@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Auth;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('admin')->only('create');
     }
@@ -18,30 +25,30 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
         $users = User::all();
-        return view('User/index', compact ('users'));
+        return view('User/index', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
         $user = new User();
-        return view('User/create', compact ('user'));
+        return view('User/create', compact('user'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function store(Request $request)
     {
@@ -65,7 +72,7 @@ class UserController extends Controller
             'nombre_usuario' => '$nombre_usuario',
             'rol' => $request->rol,
             'email' => $request->email,
-            'password' => Hash::make( $request->password),
+            'password' => Hash::make($request->password),
             'escuela_secundaria' => $request->escuela_secundaria,
         ]);
 
@@ -75,7 +82,28 @@ class UserController extends Controller
         return redirect('User/confirmation/' . $user->DNI);
     }
 
-    public function confirmation($user_dni){
+    private function validateUser(Request $request): array
+    {
+        return request()->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'apellido' => ['required', 'string', 'max:255'],
+            'fecha_nacimiento' => ['required', 'date'],
+            'lugar_nacimiento' => ['required', 'string', 'max:255'],
+            'tipo_documento' => ['required'],
+            'DNI' => ['required', 'integer', 'digits_between:1,12', 'unique:users'],
+            'direccion_calle' => ['required', 'string', 'max:255'],
+            'direccion_numero' => ['required', 'integer'],
+            'numero_telefono' => ['required', 'integer'],
+            'rol' => ['required'],
+            'escuela_secundaria' => ['required_if:rol,Alumno'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8']
+        ]);
+
+    }
+
+    public function confirmation($user_dni)
+    {
         $user = User::where('DNI', $user_dni)->firstOrFail();
         return view('User/confirmation', compact('user'));
     }
@@ -83,8 +111,8 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $materia
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return void
      */
     public function show(User $user)
     {
@@ -94,22 +122,23 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $materia
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Application|Factory|View|void
      */
-    public function edit(User $user)
+    public function edit(int $id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('User.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $materia
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param User $user
+     * @return void
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, int $id)
     {
         //
     }
@@ -117,34 +146,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $materia
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return void
      */
-    public function destroy(User $user)
+    public function destroy(int $id)
     {
-        //
-    }
-
-    private function storeUser(Request $request){
-
-    }
-
-    private function validateUser(Request $request): array {
-        return request()->validate([
-            'nombre' => ['required', 'string', 'max:255'],
-            'apellido' =>['required', 'string', 'max:255'],
-            'fecha_nacimiento' => ['required', 'date'],
-            'lugar_nacimiento' => ['required', 'string', 'max:255'],
-            'tipo_documento' => ['required'],
-            'DNI' => ['required', 'integer', 'digits_between:1,12', 'unique:users'],
-            'direccion_calle' => ['required', 'string', 'max:255'],
-            'direccion_numero'=> ['required', 'integer'],
-            'numero_telefono' => ['required', 'integer'],
-            'rol' => ['required'],
-            'escuela_secundaria' => ['required_if:rol,Alumno'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8']
-        ]);
 
     }
 
