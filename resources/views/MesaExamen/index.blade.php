@@ -33,8 +33,13 @@
                             <th scope="col"> {{$mesa->tipo_examen}}</th>
                             <th scope="col"> {{$mesa->observaciones}}</th>
                             <th scope="col"> {{$mesa->notas()->count()}}</th>
-                            <th>{{App\Models\User::where('id', '=', App\Models\Materia::where('id', '=', $mesa->id_materia)->first()->id_profesor)->first()->nombre}}</th>
-
+                            <th>
+                                @if( $mesa->materia()->profesor() != null )
+                                    {{$mesa->materia()->profesor()->nombre}}
+                                @else
+                                    No hay profesor asignado
+                                @endif
+                            </th>
                             <td>
                                 <div class="btn-group">
                                     <a href="/materias/{{ $mesa->id }}/edit">
@@ -63,7 +68,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="alert alert-warning" role="alert">
-                                <p>Esta seguro de borrar la mesa de exámen <b id="name">{{ $mesa->name }}</b> ?</p>
+                                <p>Esta seguro de borrar la mesa de exámen ?</p>
                             </div>
                             <form id="formDeleteSignature" action="{{ route('MesaExamen.destroy', 1) }}"
                                   method="POST">

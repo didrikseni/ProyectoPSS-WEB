@@ -76,7 +76,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="alert alert-warning" role="alert">
-                                <p>Esta seguro de borrar el usuario <b id="name">{{ $user->name }}</b> ?</p>
+                                <p>Esta seguro de borrar el usuario ?</p>
                             </div>
                             <form id="formDeleteSignature" action="{{ route('User.destroy', 1) }}"
                                   method="POST">

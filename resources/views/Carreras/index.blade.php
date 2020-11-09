@@ -56,7 +56,7 @@
                         </div>
                         <div class="modal-body">
                             <div class="alert alert-warning" role="alert">
-                                <p>Esta seguro de borrar la carrera <b id="name">{{ $carrera->name }}</b> ?</p>
+                                <p>Esta seguro de borrar la carrera ?</p>
                             </div>
                             <form id="formDeleteSignature" action="{{ route('Carreras.destroy', 1) }}"
                                   method="POST">

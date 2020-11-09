@@ -5,8 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Carreras;
 use App\Models\Departamentos;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class CarrerasController extends Controller
 {
@@ -21,7 +26,7 @@ class CarrerasController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
@@ -32,7 +37,7 @@ class CarrerasController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
@@ -45,7 +50,7 @@ class CarrerasController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function store(Request $request)
     {
@@ -79,7 +84,7 @@ class CarrerasController extends Controller
 
         $carrera->save();
 
-        return redirect('Carreras/');
+        return redirect('Carreras/')->with('success', 'La carrera fue cargada correctamente en el sistema.');
     }
 
     /**
@@ -97,7 +102,7 @@ class CarrerasController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function edit(int $id)
     {
@@ -114,7 +119,7 @@ class CarrerasController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return Response
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function update(Request $request, int $id)
     {
@@ -122,7 +127,7 @@ class CarrerasController extends Controller
         $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'anio_inicio' => ['required', 'integer', 'digits:4'],
-            'id_str' => ['required', 'string', 'max:255', 'unique:carreras,id_str,'.$carrera->id.',id'],
+            'id_str' => ['required', 'string', 'max:255', 'unique:carreras,id_str,' . $carrera->id . ',id'],
             'departamento_responsable' => ['string', 'exists:departamentos,id'],
             'profesor_responsable' => ['exists:users,legajo'],
         ]);
@@ -139,11 +144,13 @@ class CarrerasController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Carreras $carreras
-     * @return Response
+     * @param int $id
+     * @return RedirectResponse
      */
-    public function destroy(Carreras $carreras)
+    public function destroy(int $id)
     {
-        //
+        $carrera = Carreras::findOrFail($id);
+        $carrera->delete();
+        return redirect()->route('Carreras.index')->with('success', 'La carrera fue eliminada correctamente.');
     }
 }

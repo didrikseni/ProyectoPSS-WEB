@@ -75,7 +75,7 @@ class MateriaController extends Controller
     {
         return request()->validate([
             'nombre' => 'required',
-            'id' => 'required|min:1|max:5|unique:materias,id_str',
+            'id' => 'required|min:1|max:255|unique:materias,id_str',
             'dpto' => 'required|exists:departamentos,id',
         ]);
     }
@@ -118,7 +118,7 @@ class MateriaController extends Controller
         $materia = Materia::findOrFail($materia->id);
         $request->validate([
             'nombre' => 'required',
-            'id_str' => 'required|min:1|max:5|unique:materias,id_str,'.$materia->id.',id',
+            'id_str' => 'required|min:1|max:255|unique:materias,id_str,'.$materia->id.',id',
             'departamento' => 'required|exists:departamentos,id',
         ]);
         $materia->nombre = $request->nombre;

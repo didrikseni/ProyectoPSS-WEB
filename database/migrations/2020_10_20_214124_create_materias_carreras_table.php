@@ -16,8 +16,8 @@ class CreateMateriasCarrerasTable extends Migration
         Schema::create('materias_carreras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_materia')->references('id')->on('materias');
-            $table->foreignId('id_carrera')->references('id')->on('carreras');
+            $table->foreignId('id_materia')->references('id')->on('materias')->onDelete('cascade');
+            $table->foreignId('id_carrera')->references('id')->on('carreras')->onDelete('cascade');
             $table->string('cuatrimestre');
             $table->integer('anio');
         });
