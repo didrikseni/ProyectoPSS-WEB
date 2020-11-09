@@ -14,7 +14,7 @@ class CarrerasController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin')->only(['create', 'store', 'update', 'destroy']);
+        $this->middleware('admin')->only('create');
     }
 
 
@@ -96,24 +96,44 @@ class CarrerasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Carreras $carreras
+     * @param int $id
      * @return Response
      */
-    public function edit(Carreras $carreras)
+    public function edit(int $id)
     {
-        //
+        $carrera = Carreras::findOrFail($id);
+        $carrera['departamento_responsable'] = Departamentos::findOrFail($carrera->departamento_responsable)->nombre;
+        $carrera['profesor_responsable'] = User::findOrFail($carrera->profesor_responsable)->legajo;
+        $professors = User::where('rol', '=', 'Profesor')->get();
+        $dptos = Departamentos::all();
+        return view('Carreras.carreras_edit', compact('carrera', 'dptos', 'professors'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Carreras $carreras
+     * @param int $id
      * @return Response
      */
-    public function update(Request $request, Carreras $carreras)
+    public function update(Request $request, int $id)
     {
-        //
+        $carrera = Carreras::findOrFail($id);
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'anio_inicio' => ['required', 'integer', 'digits:4'],
+            'id_str' => ['required', 'string', 'max:255', 'unique:carreras,id_str,'.$carrera->id.',id'],
+            'departamento_responsable' => ['string', 'exists:departamentos,id'],
+            'profesor_responsable' => ['exists:users,legajo'],
+        ]);
+        $carrera->nombre = $request->nombre;
+        $carrera->anio_inicio = $request->anio_inicio;
+        $carrera->id_str = $request->id_str;
+        $carrera->departamento_responsable = $request->departamento_responsable ?? $carrera->departamento_responsable;
+        $carrera->profesor_responsable = $request->profesor_responsable ?? $carrera->profesor_responsable;
+        $carrera->save();
+
+        return redirect(route('Carreras.index'))->with('success', 'La carrera se actualizó correctamente.');
     }
 
     /**
@@ -125,12 +145,5 @@ class CarrerasController extends Controller
     public function destroy(Carreras $carreras)
     {
         //
-    }
-
-    public function showMaterias($carrera_id){
-        $carrera = Carreras::findorFail($carrera_id)->first();
-        $materias = Carreras::findOrFail($carrera_id)->materias();
-
-        return view('Carreras/materias', compact('carrera', 'materias'));
     }
 }

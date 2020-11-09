@@ -9,6 +9,6 @@ $('#example').DataTable( {
 function deleteSignature(button) {
     $('#signatureHideDelete').val(button.data('id'))
     $('#name').html(button.data('name'))
-    $('#formDeleteSignature').attr('action','/Carreras/'+ button.data('id'))
+    $('#formDeleteSignature').attr('action','/MesaExamen/'+ button.data('id'))
     console.log($('#formDeleteSignature').attr('action'))
 }
