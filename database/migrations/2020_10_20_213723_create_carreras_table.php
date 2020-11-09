@@ -20,7 +20,7 @@ class CreateCarrerasTable extends Migration
             $table->string('anio_inicio');
             $table->string('id_str')->unique();
             $table->string('departamento_responsable');
-            $table->foreignId('profesor_responsable')->references('id')->on('users');
+            $table->foreignId('profesor_responsable')->references('id')->on('users')->onDelete('set null');;
         });
     }
 

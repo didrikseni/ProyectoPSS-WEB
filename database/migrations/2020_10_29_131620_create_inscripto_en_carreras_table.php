@@ -16,8 +16,8 @@ class CreateInscriptoEnCarrerasTable extends Migration
         Schema::create('inscripto_en_carreras', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_alumno')->references('id')->on('users');
-            $table->foreignId('id_carrera')->references('id')->on('carreras');
+            $table->foreignId('id_alumno')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_carrera')->references('id')->on('carreras')->onDelete('cascade');
         });
     }
 

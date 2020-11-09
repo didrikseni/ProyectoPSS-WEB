@@ -166,7 +166,7 @@
                         <button type="submit" class="btn btn-primary" >
                             Modificar
                         </button>
-                        <a href="/User/create" role="button" class="btn btn-danger">
+                        <a href="/User" role="button" class="btn btn-danger">
                             Cancelar
                         </a>
                     </p>

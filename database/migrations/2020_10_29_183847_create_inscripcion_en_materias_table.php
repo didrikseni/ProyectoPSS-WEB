@@ -16,8 +16,8 @@ class CreateInscripcionEnMateriasTable extends Migration
         Schema::create('inscripcion_en_materias', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('id_alumno')->references('id')->on('users');
-            $table->foreignId('id_materia')->references('id')->on('materias');
+            $table->foreignId('id_alumno')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_materia')->references('id')->on('materias')->onDelete('cascade');
         });
     }
 

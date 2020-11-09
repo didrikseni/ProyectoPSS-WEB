@@ -16,8 +16,8 @@ class CreateNotasTable extends Migration
         Schema::create('notas', function (Blueprint $table) {
             $table->id();
             $table->integer('calificacion');
-            $table->foreignId('id_mesa_examen')->references('id')->on('mesa_examens');
-            $table->foreignId('LU_alumnno')->references('legajo')->on('users');
+            $table->foreignId('id_mesa_examen')->references('id')->on('mesa_examens')->onDelete('cascade');
+            $table->foreignId('LU_alumnno')->references('legajo')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
