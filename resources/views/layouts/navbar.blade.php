@@ -92,8 +92,11 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
                             @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/User/create">Crear</a>
+                            @else
+                                <a class="dropdown-item" href="/User/{{ auth()->user()->id }}/edit">Editar información</a>
                             @endif
                             <a class="dropdown-item" href="/User">Buscar</a>
+
                         </div>
                     </div>
                 </li>

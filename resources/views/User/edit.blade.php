@@ -18,6 +18,10 @@
 
             <div class="col-9">
                 <form method="POST" action="{{ route('User.update', $user->id) }}">
+                    @csrf
+                    {{ method_field('PUT') }}
+
+                    @if (auth()->user()->isAdmin())
                     <div class="form-row my-3">
                         <div class="col">
                             <label for="nombre">Nombre: (*)</label>
@@ -62,8 +66,10 @@
                             </div>
                         </div>
                     </div>
+                    @endif
 
                     <div class="form-row my-4">
+                        @if (auth()->user()->isAdmin())
                         <div class="col col-lg-3" >
                             <label for="tipo_documento">Tipo Documento: (*)</label>
                             <div>
@@ -87,6 +93,7 @@
                                 @enderror
                             </div>
                         </div>
+                        @endif
                         <div class="col ">
                             <label for="numero_telefono">Número de telfono: (*)</label>
                             <div>
@@ -120,6 +127,7 @@
                         </div>
                     </div>
 
+                    @if (auth()->user()->isAdmin())
                     <div class="form-group ">
                         <label for="escuela_secundaria">Escuela secundaria:</label>
                         <div>
@@ -153,10 +161,10 @@
                             @enderror
                         </div>
                     </div>
-
+                    @endif
                     <p>
                         <button type="submit" class="btn btn-primary" >
-                            Crear nuevo usuario
+                            Modificar
                         </button>
                         <a href="/User/create" role="button" class="btn btn-danger">
                             Cancelar

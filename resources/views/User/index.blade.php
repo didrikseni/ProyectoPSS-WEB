@@ -48,6 +48,7 @@
                                 <th>{{$user->numero_telefono}}</th>
                                 <th>{{$user->escuela_secundaria}}</th>
                             @endif
+                            @if(auth()->user()->isAdmin())
                             <td>
                                 <div class="btn-group">
                                     <a href="/User/{{ $user->id }}/edit">
@@ -60,6 +61,7 @@
                                     </button>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                     </tbody>
