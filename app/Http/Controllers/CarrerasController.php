@@ -3,23 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carreras;
-use App\Models\User;
 use App\Models\Departamentos;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CarrerasController extends Controller
 {
-    
-    public function __construct(){
+
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('admin')->only('create');
     }
-    
-    
+
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -30,25 +32,25 @@ class CarrerasController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
         $departamentos = Departamentos::all();
-        $professors = User::where('rol', '=', 'Profesor')->get();        
+        $professors = User::where('rol', '=', 'Profesor')->get();
         return view('Carreras/create', compact('professors', 'departamentos'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => ['required', 'string', 'max:255'],           
+            'nombre' => ['required', 'string', 'max:255'],
             'anio_inicio' => ['required', 'integer', 'digits:4'],
             'id_str' => ['required', 'string', 'max:255', 'unique:carreras'],
             'departamento_responsable' => ['required', 'string'],
@@ -63,28 +65,28 @@ class CarrerasController extends Controller
             'integer' => 'El atributo tiene que ser de tipo numérico',
             'unique' => 'El atributo tiene que ser único para cada usuario, actualmente hay un usuario con estos datos'
         ];
-        
-       $this->validate(request(), $rules, $messages);       
+
+        $this->validate(request(), $rules, $messages);
 
         $carrera = new Carreras();
-        $carrera->fill([            
+        $carrera->fill([
             'nombre' => $request->nombre,
-            'anio_inicio' => $request->anio_inicio, 
+            'anio_inicio' => $request->anio_inicio,
             'id_str' => $request->id_str,
-            'departamento_responsable' => $request->departamento_responsable, 
+            'departamento_responsable' => $request->departamento_responsable,
             'profesor_responsable' => $request->profesor_responsable,
         ]);
-        
+
         $carrera->save();
-       
+
         return redirect('Carreras/');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Carreras  $carreras
-     * @return \Illuminate\Http\Response
+     * @param Carreras $carreras
+     * @return Response
      */
     public function show(Carreras $carreras)
     {
@@ -94,31 +96,51 @@ class CarrerasController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Carreras  $carreras
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function edit(Carreras $carreras)
+    public function edit(int $id)
     {
-        //
+        $carrera = Carreras::findOrFail($id);
+        $carrera['departamento_responsable'] = Departamentos::findOrFail($carrera->departamento_responsable)->nombre;
+        $carrera['profesor_responsable'] = User::findOrFail($carrera->profesor_responsable)->legajo;
+        $professors = User::where('rol', '=', 'Profesor')->get();
+        $dptos = Departamentos::all();
+        return view('Carreras.carreras_edit', compact('carrera', 'dptos', 'professors'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Carreras  $carreras
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, Carreras $carreras)
+    public function update(Request $request, int $id)
     {
-        //
+        $carrera = Carreras::findOrFail($id);
+        $request->validate([
+            'nombre' => ['required', 'string', 'max:255'],
+            'anio_inicio' => ['required', 'integer', 'digits:4'],
+            'id_str' => ['required', 'string', 'max:255', 'unique:carreras,id_str,'.$carrera->id.',id'],
+            'departamento_responsable' => ['string', 'exists:departamentos,id'],
+            'profesor_responsable' => ['exists:users,legajo'],
+        ]);
+        $carrera->nombre = $request->nombre;
+        $carrera->anio_inicio = $request->anio_inicio;
+        $carrera->id_str = $request->id_str;
+        $carrera->departamento_responsable = $request->departamento_responsable ?? $carrera->departamento_responsable;
+        $carrera->profesor_responsable = $request->profesor_responsable ?? $carrera->profesor_responsable;
+        $carrera->save();
+
+        return redirect(route('Carreras.index'))->with('success', 'La carrera se actualizó correctamente.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Carreras  $carreras
-     * @return \Illuminate\Http\Response
+     * @param Carreras $carreras
+     * @return Response
      */
     public function destroy(Carreras $carreras)
     {

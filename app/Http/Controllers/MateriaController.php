@@ -29,7 +29,7 @@ class MateriaController extends Controller
         $materias = Materia::all()->sortByDesc('created_at');
         $carreras = Carreras::all()->sortBy('created_at');
         $matInfo = null;
-        return view('materias.materias_search', compact('materias', 'carreras', 'matInfo'));
+        return view('materias.materias_index', compact('materias', 'carreras', 'matInfo'));
     }
 
     /**
@@ -109,7 +109,7 @@ class MateriaController extends Controller
         $materia = Materia::findOrFail($materia->id);
         $request->validate([
             'nombre' => 'required',
-            'id_str' => 'required|min:1|max:5|unique:materias,id_str',
+            'id_str' => 'required|min:1|max:5|unique:materias,id_str,'.$materia->id.',id',
             'departamento' => 'required|exists:departamentos,id',
         ]);
         $materia->nombre = $request->nombre;

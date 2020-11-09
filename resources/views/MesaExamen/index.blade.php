@@ -34,7 +34,7 @@
                             <th scope="col"> {{$mesa->observaciones}}</th>
                             <th scope="col"> {{$mesa->notas()->count()}}</th>
                             <th>{{App\Models\User::where('id', '=', App\Models\Materia::where('id', '=', $mesa->id_materia)->first()->id_profesor)->first()->nombre}}</th>
-                           
+
                             <td>
                                 <div class="btn-group">
                                     <a href="/materias/{{ $mesa->id }}/edit">
@@ -56,16 +56,16 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Delete artist</h5>
+                            <h5 class="modal-title">Borrar</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
                             <div class="alert alert-warning" role="alert">
-                                <p>Esta seguro de borrar la materia <b id="name">{{ $mesa->name }}</b> ?</p>
+                                <p>Esta seguro de borrar la mesa de exámen <b id="name">{{ $mesa->name }}</b> ?</p>
                             </div>
-                            <form id="formDeleteSignature" action="{{ route('materias.destroy', 1) }}"
+                            <form id="formDeleteSignature" action="{{ route('MesaExamen.destroy', 1) }}"
                                   method="POST">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="_method" value="DELETE">
@@ -88,5 +88,5 @@
 
 @section('scripts')
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" type="application/javascript"></script>
-    <script src="/js/MateriasTable.js" type="application/javascript"></script>
+    <script src="/js/MesaExamenTable.js" type="application/javascript"></script>
 @endsection
