@@ -34,7 +34,7 @@
                             <th scope="col"> {{$mesa->observaciones}}</th>
                             <th scope="col"> {{$mesa->notas()->count()}}</th>
                             <th>
-                                @if( $mesa->materia()->profesor() != null )
+                                @if($mesa->materia() !== null && $mesa->materia()->profesor() !== null)
                                     {{$mesa->materia()->profesor()->nombre}}
                                 @else
                                     No hay profesor asignado
@@ -42,14 +42,18 @@
                             </th>
                             <td>
                                 <div class="btn-group">
-                                    <a href="/materias/{{ $mesa->id }}/edit">
-                                        <button type="button" class="btn btn-primary btn-small">Editar</button>
-                                    </a>
-                                    <button type="button" class="btn red lighten-1 ml-2 btn-small"
-                                            data-toggle="modal" data-target="#deleteModal"
-                                            onclick="deleteSignature($(this))"
-                                            data-name="{{$mesa->name}}" data-id="{{$mesa->id}}">Borrar
-                                    </button>
+                                    @if(!auth()->user()->isStudent())
+                                        <a href="/MesaExamen/{{ $mesa->id }}/edit">
+                                            <button type="button" class="btn btn-primary btn-small">Editar</button>
+                                        </a>
+                                    @endif
+                                    @if(auth()->user()->isAdmin())
+                                        <button type="button" class="btn red lighten-1 ml-2 btn-small"
+                                                data-toggle="modal" data-target="#deleteModal"
+                                                onclick="deleteSignature($(this))"
+                                                data-name="{{$mesa->name}}" data-id="{{$mesa->id}}">Borrar
+                                        </button>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
