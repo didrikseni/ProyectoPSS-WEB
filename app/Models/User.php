@@ -158,13 +158,6 @@ class User extends Authenticatable
             ->join('users', 'inscripcion_en_materias.id_alumno', '=', 'users.id')
             ->where('users.id', $this->id)
             ->get();
-
-//        return self::select('mesa_examens.*')
-//            ->join('inscripcion_en_materias', 'inscripcion_en_materias.id_alumno', '=', 'users.id')
-//            ->join('mesa_examens', 'mesa_examens.id_materia', '=', 'inscripcion_en_materias.id_materia')
-//            ->join('materias', 'materias.id', '=', 'inscripcion_en_materias.id_materia')
-//            ->where('users.id', $this->id)
-//            ->get();
     }
 
 
@@ -191,11 +184,11 @@ class User extends Authenticatable
     public function notasFinales()
     {
         return self::select('notas.*')
-        ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Final')
-        ->join('notas', 'notas.LU_alumno', '=', 'users_id')
-        ->join('notas', 'mesa_examens.id', '=', 'notas.id')
-        ->where('users.id', $this->id)
-        ->get();
+            ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Final')
+            ->join('notas', 'notas.LU_alumno', '=', 'users_id')
+            ->join('notas', 'mesa_examens.id', '=', 'notas.id')
+            ->where('users.id', $this->id)
+            ->get();
     }
 
 }

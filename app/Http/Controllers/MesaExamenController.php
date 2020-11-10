@@ -146,7 +146,7 @@ class MesaExamenController extends Controller
             'observaciones' => ['nullable'],
         ]);
         $mesa = MesaExamen::findOrFail($id);
-        if(auth()->user()->isAdmin()) {
+        if (auth()->user()->isAdmin()) {
             $mesa->materia = $request->materia;
             $mesa->tipo_examen = $request->tipo_examen;
         }
