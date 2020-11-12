@@ -56,22 +56,27 @@ class APIUserController extends Controller
     public function index()
     {
         $usr = auth()->user();
-        $user = [
-            'nombre' => $usr->nombre,
-            'apellido' => $usr->apellido,
-            'fecha_nacimiento' => $usr->fecha_nacimiento,
-            'lugar_nacimiento' => $usr->lugar_nacimiento,
-            'tipo_documento' => $usr->tipo_documento,
-            'DNI' => $usr->DNI,
-            'direccion_calle' => $usr->direccion_calle,
-            'direccion_numero' => $usr->direccion_numero,
-            'numero_telefono' => $usr->numero_telefono,
-            'legajo' => $usr,
-            'nombre_usuario' => $usr->nombre_usuario,
-            'email' => $usr->email,
-            'escuela_secundaria' => $usr->escuela_secundaria,
+        return response(json_encode($this->getUserInformation($usr)), 200);
+    }
+
+    private function getUserInformation(User $user)
+    {
+        return [
+            'id' => $user->id,
+            'nombre' => $user->nombre,
+            'apellido' => $user->apellido,
+            'fecha_nacimiento' => $user->fecha_nacimiento,
+            'lugar_nacimiento' => $user->lugar_nacimiento,
+            'tipo_documento' => $user->tipo_documento,
+            'DNI' => $user->DNI,
+            'direccion_calle' => $user->direccion_calle,
+            'direccion_numero' => $user->direccion_numero,
+            'numero_telefono' => $user->numero_telefono,
+            'legajo' => $user->legajo,
+            'nombre_usuario' => $user->nombre_usuario,
+            'email' => $user->email,
+            'escuela_secundaria' => $user->escuela_secundaria,
         ];
-        return response(json_encode($user), 200);
     }
 
     /**
@@ -83,13 +88,9 @@ class APIUserController extends Controller
     public function edit(User $user)
     {
         return response(json_encode([
-            'nombre' => 'String, maximo 255 caracteres, requerido',
-            'apellido' => 'String, maximo 255 caracteres, requerido',
             'direccion_calle' => 'String, maximo 255 caracteres, requerido',
             'direccion_numero' => 'Entero, requerido',
             'numero_telefono' => 'Entero, requerido',
-            'escuela_secundaria' => ['required_if:rol,Alumno'],
-            'email' => 'String, maximo 255 caracteres, requerido, formato de email válido',
             'password' => 'String, minimo 8 caracteres, requerido'
         ]), 200);
     }
@@ -98,7 +99,7 @@ class APIUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param User $materia
+     * @param User $user
      * @return Response
      */
     public function update(Request $request, User $user)
@@ -106,36 +107,26 @@ class APIUserController extends Controller
         try {
             $this->validateUser($request);
             $user = auth()->user();
-            $user->
 
-            $user->fill([
-                'nombre' => $request->nombre,
-                'apellido' => $request->apellido,
-                'direccion_calle' => $request->direccion_calle,
-                'direccion_numero' => $request->direccion_numero,
-                'numero_telefono' => $request->numero_telefono,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'escuela_secundaria' => $request->escuela_secundaria,
-            ]);
+            $user->direccion_calle = $request->direccion_calle ? $request->direccion_calle : $user->direccion_calle;
+            $user->direccion_numero = $request->direccion_numero ? $request->direccion_numero : $user->direccion_numero;
+            $user->numero_telefono = $request->numero_telefono ? $request->numero_telefono : $user->numero_telefono;
+            $user->password = $request->password ? Hash::make($request->password) : $user->password;
+
             $user->save();
-            return response('Succesfully update user information', 200);
+            return response(json_encode(['Succesfully update user information', $this->getUserInformation($user)]), 200);
         } catch (ValidationException $exception) {
-            return response("Error updating user information", 406);
+            return response("Error updating user information \n" . $exception->getMessage(), 406);
         }
     }
 
     private function validateUser(Request $request): array
     {
         return request()->validate([
-            'nombre' => ['required', 'string', 'max:255'],
-            'apellido' => ['required', 'string', 'max:255'],
-            'direccion_calle' => ['required', 'string', 'max:255'],
-            'direccion_numero' => ['required', 'integer'],
-            'numero_telefono' => ['required', 'integer'],
-            'escuela_secundaria' => ['required_if:rol,Alumno'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8']
+            'direccion_calle' => ['string', 'max:255', 'required_without_all:direccion_numero,numero_telefono,password'],
+            'direccion_numero' => ['integer','required_without_all:direccion_calle,numero_telefono,password'],
+            'numero_telefono' => ['integer','required_without_all:direccion_numero,direccion_calle,password'],
+            'password' => ['string', 'min:8', 'required_without_all:direccion_numero,numero_telefono,direccion_calle'],
         ]);
     }
 
