@@ -15,9 +15,11 @@ class CreateNotasTable extends Migration
     {
         Schema::create('notas', function (Blueprint $table) {
             $table->id();
-            $table->integer('calificacion');
-            $table->foreignId('id_mesa_examen')->references('id')->on('mesa_examens')->onDelete('cascade');
-            $table->foreignId('LU_alumnno')->references('legajo')->on('users')->onDelete('cascade');
+            $table->integer('calificacionFinal')->nullable();
+            $table->string('calificacionCursada')->nullable();
+            $table->foreignId('id_mesa_examen')->references('id')->on('mesa_examens')->onDelete('cascade')->nullable();
+            $table->foreignId('LU_alumnno')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_materia')->references('id')->on('materias')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

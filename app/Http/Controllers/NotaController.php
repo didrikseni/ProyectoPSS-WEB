@@ -34,16 +34,16 @@ class NotaController extends Controller
      */
     public function create(){
         $tipo_examen = MesaExamen::type_exam_options();
-        $materias = Materia::all();
+        $materias = Materia::where('id_profesor', auth()->user()->id)->get();
         $nota = new Nota();
         return view('Nota/create', compact('materias', 'tipo_examen', 'nota'));
     }
 
-    public function createF(){
+    public function createFinal(){
         $tipo_examen = MesaExamen::type_exam_options();
         $materias = Materia::all();
         $nota = new Nota();
-        return view('Nota/createF', compact('materias', 'tipo_examen', 'nota'));
+        return view('Nota/create', compact('materias', 'tipo_examen', 'nota'));
     }
 
     /**
@@ -54,17 +54,18 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateData($request);
+        $this->validateDataCursada($request);
         $nota = new Nota();
 
         $nota->fill([
-            'calificacion' => $request->calificacion,
+            'calificacionCursada' => $request->calificacion,
             'LU_alumno' => $request->LU_alumno,
-            'id_mesa_examen'=>$request->materia // Habría que pedirle el mesaExamen a la nota
+            'id_materia'=>$request->materia
         ]);
-
+        dd($nota);
         $nota->save();
-        return redirect('Nota/confirmation/' . $nota->id);
+        
+        return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
     }
 
     public function confirmation($mesa_id){
@@ -123,11 +124,11 @@ class NotaController extends Controller
         return redirect()->route('Nota.index');
     }
 
-    private function validateData(Request $request): array {
+    private function validateDataCursada(Request $request): array {
         return request()->validate([
             'calificacion' => ['required'],
             'LU_alumno' =>['required'],
-            'id_mesa_examen' => ['required']
+            'materia' => ['required']
         ]);
 
     }
