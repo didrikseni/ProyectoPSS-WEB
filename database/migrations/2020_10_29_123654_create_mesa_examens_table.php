@@ -19,7 +19,7 @@ class CreateMesaExamensTable extends Migration
             $table->time('horario');
             $table->string('tipo_examen');
             $table->string('observaciones')->nullable();
-            $table->foreignId('id_materia')->references('id')->on('materias');
+            $table->foreignId('id_materia')->references('id')->on('materias')->onDelete('set null');
             $table->timestamps();
         });
     }

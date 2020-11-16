@@ -62,10 +62,8 @@ class Materia extends Model
 
     public function getAnio()
     {
-        $carrera = auth()->user()->carrera();
         $materias_carreras = MateriasCarreras::join('materias', 'materias.id', '=', 'materias_carreras.id_materia')
             ->join('carreras', 'carreras.id', '=', 'materias_carreras.id_carrera')
-//            ->where('carreras.id', $carrera->id)
             ->where('materias_carreras.id_materia', $this->id)
             ->select('materias_carreras.*')
             ->first();
@@ -74,10 +72,8 @@ class Materia extends Model
 
     public function getCuatrimestre()
     {
-        $carrera = auth()->user()->carrera();
         $materias_carreras = MateriasCarreras::join('materias', 'materias.id', '=', 'materias_carreras.id_materia')
             ->join('carreras', 'carreras.id', '=', 'materias_carreras.id_carrera')
-//            ->where('carreras.id', $carrera->id)
             ->where('materias_carreras.id_materia', $this->id)
             ->select('materias_carreras.*')
             ->first();

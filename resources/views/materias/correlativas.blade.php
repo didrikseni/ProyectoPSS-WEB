@@ -24,7 +24,8 @@
                 <tr>
                     <td>{{ $corr->nombre }}</td>
                     <td>{{ $corr->id_str }}</td>
-                    <td>{{ $corr->anio }}</td>
+                    <td>{{ $corr->getAnio() }}</td>
+                    <td>{{ $corr->getCuatrimestre() === "0" ? 'primero' : 'segundo' }}</td>
                 </tr>
             @endforeach
         </table>
