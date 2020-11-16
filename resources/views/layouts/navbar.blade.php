@@ -109,7 +109,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
                             @if(auth()->user()->isProfessor())
                                 <a class="dropdown-item" href="/Nota/create">Cargar Nota Cursada</a>
-                                <a class="dropdown-item" href="/Nota/createFinal">Cargar Nota Final</a>
+                                <a class="dropdown-item" href="/final/nota/create">Cargar Nota Final</a>
                             @endif
                             <a class="dropdown-item" href="/Nota">Buscar</a>
                         </div>

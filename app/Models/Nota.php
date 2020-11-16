@@ -34,12 +34,6 @@ class Nota extends Model
         return $this->id_mesa_examen == null;
     }
 
-    public function gradingType(){
-        return [
-            'Parcial',
-            'Final'
-        ];
-    }
     public function gradingResult(){
         return [
             'Aprobado',
@@ -55,6 +49,12 @@ class Nota extends Model
         return $toRet;
     }
 
-
+    public function aprobado() {
+        if($this->esFinal()) {
+            return $this->calificacionFinal >= 4;
+        } else {
+            return $this->calificacionCursada == 'Aprobado';
+        }
+    }
 
 }

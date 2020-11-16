@@ -9,9 +9,6 @@ class CorrelatividadCheck implements Rule
 {
     /**
      * Create a new rule instance.
-     * @param String $alumno
-     * @param String $materia
-     * @return void
      */
     public function __construct()
     {
@@ -21,8 +18,8 @@ class CorrelatividadCheck implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
     public function passes($attribute, $value)
@@ -31,7 +28,7 @@ class CorrelatividadCheck implements Rule
         $materiasAprobadas = [];
         $notasAlumno = auth()->user()->notas();
         foreach ($notasAlumno as $nota) {
-            if ($nota->calificacion > 4) {
+            if ($nota->aprobado()) {
                 $idMat = $nota->mesaExamen()->id_materia;
                 $materiasAprobadas[] = Materia::findOrFail($idMat);
             }
