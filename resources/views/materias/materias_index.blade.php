@@ -40,10 +40,10 @@
                             @else
                                 <th scope="col">{{ 'Sin asistente' }}</th>
                             @endif
-                            <th scope="col"> -</th>
-                            <th scope="col"> -</th>
-                            <th scope="col"> -</th>
-                            <th scope="col"> -</th>
+                            <th scope="col"> <a href="/correlatividad/debil/{{ $materia->id }}">ver</a> </th>
+                            <th scope="col"> <a href="/correlatividad/fuerte/{{ $materia->id }}">ver</a> </th>
+                            <th scope="col"> - </th>
+                            <th scope="col"> - </th>
                             @if (auth()->user()->isAdmin())
                             <td>
                                 <div class="btn-group">

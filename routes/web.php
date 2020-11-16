@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MateriaCorrelativaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -21,11 +22,6 @@ Auth::routes(['register' => false]);
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('/');
 
-//Route::get('/User', [UserController::class, 'index']);
-//Route::get('/User/create', [UserController::class, 'create']);
-//Route::get('User/confirmation/{user}', [UserController::class, 'confirmation']);
-//Route::post('/User', [UserController::class, 'store']);
-
 Route::resource('/User', UserController::class);
 Route::get('User/confirmation/{user}', [UserController::class, 'confirmation']);
 
@@ -34,6 +30,9 @@ Route::get('/materia/profesor', 'App\Http\Controllers\MateriaController@edit_pro
 Route::put('/materia/profesor', 'App\Http\Controllers\MateriaController@update_professor');
 Route::resource('/correlativas', 'App\Http\Controllers\MateriaCorrelativaController');
 Route::resource('/inscripcion_materia', 'App\Http\Controllers\InscripcionEnMateriaController');
+Route::get('/correlatividad/debil/{materia}', [MateriaCorrelativaController::class, 'indexCorrelativasDebiles']);
+Route::get('/correlatividad/fuerte/{materia}', [MateriaCorrelativaController::class, 'indexCorrelativasFuertes']);
+
 
 Route::resource('/Carreras', 'App\Http\Controllers\CarrerasController');
 Route::resource('/carreras_materias', 'App\Http\Controllers\MateriasCarrerasController');

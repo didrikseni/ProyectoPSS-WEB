@@ -42,35 +42,25 @@
                             </th>
                             <td>
                                 <div class="btn-group">
-<<<<<<< HEAD
-                                    @if(auth()->user()->isAdmin())
-                                        <a href="/materias/{{ $mesa->id }}/edit">
-                                            <button type="button" class="btn btn-primary btn-small">Editar</button>
-                                        </a>
-=======
+
                                     @if(!auth()->user()->isStudent())
                                         <a href="/MesaExamen/{{ $mesa->id }}/edit">
                                             <button type="button" class="btn btn-primary btn-small">Editar</button>
                                         </a>
                                     @endif
                                     @if(auth()->user()->isAdmin())
->>>>>>> 9ebd096711534d8026cdfe5ed470fd71a7be9c1d
                                         <button type="button" class="btn red lighten-1 ml-2 btn-small"
                                                 data-toggle="modal" data-target="#deleteModal"
                                                 onclick="deleteSignature($(this))"
                                                 data-name="{{$mesa->name}}" data-id="{{$mesa->id}}">Borrar
                                         </button>
                                     @endif
-<<<<<<< HEAD
                                     @if(auth()->user()->isStudent())
                                         <a href="/materias/{{ $mesa->id }}/edit">
                                             <button type="button" class="btn btn-primary btn-small">Editar</button>
                                         </a>
-
                                     @endif
                                    
-=======
->>>>>>> 9ebd096711534d8026cdfe5ed470fd71a7be9c1d
                                 </div>
                             </td>
                         </tr>

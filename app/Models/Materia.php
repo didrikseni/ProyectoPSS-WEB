@@ -38,17 +38,22 @@ class Materia extends Model
     public function getCorrelativasFuertes()
     {
         return Materia::join('materia_correlativas', 'materia_correlativas.id_materia', '=', 'materias.id')
-            ->select('materia_correlativas.*')
-            ->where('materia_correlativas.tipo', '1')
-            ->where('id_materia', $this->id)->get();
+            ->select('mat.*')
+            ->join('materias as mat', 'id_correlativa', '=', 'mat.id')
+            ->where('materia_correlativas.tipo', '=', '1')
+            ->where('id_materia', $this->id)
+            ->get();
     }
 
     public function getCorrelativasDebiles()
     {
         return Materia::join('materia_correlativas', 'materia_correlativas.id_materia', '=', 'materias.id')
-            ->select('materia_correlativas.*')
+            ->select('mat.*')
+            ->join('materias as mat', 'id_correlativa', '=', 'mat.id')
             ->where('materia_correlativas.tipo', '=', '0')
-            ->where('id_materia', $this->id)->get();
+            ->where('id_materia', $this->id)
+            ->get();
+
     }
 
     public function getMesasExamen()
@@ -56,5 +61,15 @@ class Materia extends Model
         return $this->hasMany(MesaExamen::class);
     }
 
+    public function getAnio() {
+        $carrera = auth()->user()->carrera();
+
+
+
+    }
+
+    public function getCuatrimestre() {
+
+    }
 
 }

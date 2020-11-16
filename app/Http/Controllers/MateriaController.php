@@ -115,20 +115,23 @@ class MateriaController extends Controller
      */
     public function update(Request $request, Materia $materia)
     {
+        // dd($request->nombre, $request->id_str, $request->departamento, $request->profesor, $request->asistente);
         $materia = Materia::findOrFail($materia->id);
         $request->validate([
             'nombre' => 'required',
             'id_str' => 'required|min:1|max:255|unique:materias,id_str,'.$materia->id.',id',
             'departamento' => 'required|exists:departamentos,id',
+            'profesor' => ['integer', new MateriaProfesor],
+            'asistente' => ['integer', new MateriaProfesor],
         ]);
         $materia->nombre = $request->nombre;
         $materia->id_str = $request->id_str;
         $materia->departamento = $request->departamento;
-        $materia->id_profesor = null;
-        $materia->id_asistente = null;
+        $materia->id_profesor = $request->profesor ? $request->profesor : $materia->id_profesor;
+        $materia->id_asistente = $request->asistente ? $request->asistente : $materia->id_asistente;
         $materia->save();
 
-        return redirect(route('materias.index'))->with('success');
+        return redirect(route('materias.index'))->with('success', 'La materia fue editada correctamente.');
     }
 
     /**
@@ -141,7 +144,7 @@ class MateriaController extends Controller
     {
         $materia = Materia::findOrFail($materia->id);
         $materia->delete();
-        return redirect()->route('materias.index');
+        return redirect()->route('materias.index')->with('success', 'La materia se ha eliminado correctamente.');
     }
 
     public function edit_professor()
@@ -161,6 +164,6 @@ class MateriaController extends Controller
         $materia['id_asistente'] = $request->asistente;
 
         $materia->save();
-        return redirect(route('materias.index'));
+        return redirect(route('materias.index'))->with('success', 'El profesor se ha actualizado correctamente.');
     }
 }
