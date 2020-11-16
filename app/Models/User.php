@@ -190,13 +190,6 @@ class User extends Authenticatable
             ->where('mesa_examens', 'mesa_examens.tipo_examen', '=', 'Parcial')
             ->where('users.id', $this->id)
             ->get();
-
-//        return self::select('notas.*')
-//            ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Parcial')
-//            ->join('notas', 'notas.LU_alumno', '=', 'users.id')
-//            ->join('notas', 'mesa_examens.id', '=', 'notas.id')
-//            ->where('users.id', $this->id)
-//            ->get();
     }
 
     public function notasFinales()
@@ -207,13 +200,6 @@ class User extends Authenticatable
             ->where('mesa_examens', 'mesa_examens.tipo_examen', '=', 'Final')
             ->where('users.id', $this->id)
             ->get();
-
-//        return self::select('notas.*')
-//            ->join('mesa_examens', 'mesa_examens.tipo_examen:', '=', 'Final')
-//            ->join('notas', 'notas.LU_alumno', '=', 'users.id')
-//            ->join('notas', 'mesa_examens.id', '=', 'notas.id')
-//            ->where('users.id', $this->id)
-//            ->get();
     }
 
 

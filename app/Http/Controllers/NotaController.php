@@ -34,16 +34,16 @@ class NotaController extends Controller
      */
     public function create(){
         $tipo_examen = MesaExamen::type_exam_options();
-        $materias = Materia::where('id_profesor', auth()->user()->id)->get();
+        $materias = Materia::all();
         $nota = new Nota();
         return view('Nota/create', compact('materias', 'tipo_examen', 'nota'));
     }
 
-    public function createFinal(){
+    public function createF(){
         $tipo_examen = MesaExamen::type_exam_options();
         $materias = Materia::all();
         $nota = new Nota();
-        return view('Nota/create', compact('materias', 'tipo_examen', 'nota'));
+        return view('Nota/createF', compact('materias', 'tipo_examen', 'nota'));
     }
 
     /**
@@ -54,18 +54,17 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateDataCursada($request);
+        $this->validateData($request);
         $nota = new Nota();
 
         $nota->fill([
-            'calificacionCursada' => $request->calificacion,
+            'calificacion' => $request->calificacion,
             'LU_alumno' => $request->LU_alumno,
-            'id_materia'=>$request->materia
+            'id_mesa_examen'=>$request->materia // Habría que pedirle el mesaExamen a la nota
         ]);
-        dd($nota);
+
         $nota->save();
-        
-        return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
+        return redirect('Nota/confirmation/' . $nota->id);
     }
 
     public function confirmation($mesa_id){
@@ -124,11 +123,11 @@ class NotaController extends Controller
         return redirect()->route('Nota.index');
     }
 
-    private function validateDataCursada(Request $request): array {
+    private function validateData(Request $request): array {
         return request()->validate([
             'calificacion' => ['required'],
             'LU_alumno' =>['required'],
-            'materia' => ['required']
+            'id_mesa_examen' => ['required']
         ]);
 
     }

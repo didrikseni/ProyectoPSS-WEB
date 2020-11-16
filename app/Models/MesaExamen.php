@@ -27,7 +27,7 @@ class MesaExamen extends Model
     }
 
     public function notas(){
-        return $this->hasMany(IncriptoEnMesaExamen::class,'id_mesa_examen');
+        return $this->hasMany(Nota::class,'id_mesa_examen');
     }
 
     public function materia(){

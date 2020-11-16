@@ -10,11 +10,9 @@ class Nota extends Model
     use HasFactory;
 
     protected $fillable = [
-        'calificacionFinal',
-        'calificacionCursada',
+        'calificacion',
         'LU_alumno',
         'id_mesa_examen',
-        'id_materia',
     ];
 
     public function user()
@@ -24,14 +22,6 @@ class Nota extends Model
 
     public function mesaExamen() {
         return $this->hasOne(MesaExamen::class);
-    }
-
-    public function esFinal() {
-        return $this->id_materia == null;
-    }
-
-    public function esCursada() {
-        return $this->id_mesa_examen == null;
     }
 
     public function gradingType(){

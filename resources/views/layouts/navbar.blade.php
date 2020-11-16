@@ -107,9 +107,9 @@
                            id="dropdownMenuUsuario"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Notas</a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuUsuario">
-                            @if(auth()->user()->isProfessor())
+                            @if(auth()->user()->isAdmin())
                                 <a class="dropdown-item" href="/Nota/create">Cargar Nota Cursada</a>
-                                <a class="dropdown-item" href="/Nota/createFinal">Cargar Nota Final</a>
+                                <a class="dropdown-item" href="/Nota/createF">Cargar Nota Final</a>
                             @endif
                             <a class="dropdown-item" href="/Nota">Buscar</a>
                         </div>
