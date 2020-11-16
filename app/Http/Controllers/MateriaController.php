@@ -7,8 +7,13 @@ use App\Models\Departamentos;
 use App\Models\Materia;
 use App\Models\User;
 use App\Rules\MateriaProfesor;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 class MateriaController extends Controller
 {
@@ -22,20 +27,34 @@ class MateriaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
-        $materias = Materia::all()->sortByDesc('created_at');
+        $mat = Materia::all()->sortByDesc('created_at');
         $carreras = Carreras::all()->sortBy('created_at');
         $matInfo = null;
+        $materias = [];
+        foreach ($mat as $materia) {
+            $materias[] = [
+                'id' => $materia->id,
+                'id_str' => $materia->id_str,
+                'nombre' => $materia->nombre,
+                'departamento' => $materia->departamento,
+                'id_profesor' => $materia->id_profesor,
+                'id_asistente' => $materia->id_asistente,
+                'anio' => $materia->asociadaACarrera() ? $materia->getAnio() : 'No asociada',
+                'cuatrimestre' => $materia->asociadaACarrera() ? ($materia->getCuatrimestre() === 0 ? 'primero' : 'segundo') : 'No asociada',
+            ];
+        }
+
         return view('materias.materias_index', compact('materias', 'carreras', 'matInfo'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
@@ -46,7 +65,7 @@ class MateriaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
@@ -95,7 +114,7 @@ class MateriaController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function edit(int $id)
     {
@@ -111,7 +130,7 @@ class MateriaController extends Controller
      *
      * @param Request $request
      * @param Materia $materia
-     * @return Response
+     * @return Application|RedirectResponse|Response|Redirector
      */
     public function update(Request $request, Materia $materia)
     {
@@ -119,7 +138,7 @@ class MateriaController extends Controller
         $materia = Materia::findOrFail($materia->id);
         $request->validate([
             'nombre' => 'required',
-            'id_str' => 'required|min:1|max:255|unique:materias,id_str,'.$materia->id.',id',
+            'id_str' => 'required|min:1|max:255|unique:materias,id_str,' . $materia->id . ',id',
             'departamento' => 'required|exists:departamentos,id',
             'profesor' => ['integer', new MateriaProfesor],
             'asistente' => ['integer', new MateriaProfesor],

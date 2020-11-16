@@ -17,6 +17,7 @@
                         <th scope="col">Identificador</th>
                         <th scope="col"> Departamento Responsable</th>
                         <th scope="col">Profesor Responsable</th>
+                        <th scope="col">Materias</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -28,6 +29,7 @@
                             <th>{{$carrera->id_str}} </th>
                             <th>{{App\Models\Departamentos::where('id', '=', $carrera->departamento_responsable)->first()->nombre}} </th>
                             <th>{{App\Models\User::where('id', '=', $carrera->profesor_responsable)->first()->nombre}}</th>
+                            <th><a href="/Carreras/{{ $carrera->id }}/materias">Ver materias</a></th>
                             <td>
                                 <div class="btn-group">
                                     <a href="/Carreras/{{ $carrera->id }}/edit">

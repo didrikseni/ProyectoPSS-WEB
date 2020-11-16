@@ -33,7 +33,6 @@ Route::resource('/inscripcion_materia', 'App\Http\Controllers\InscripcionEnMater
 Route::get('/correlatividad/debil/{materia}', [MateriaCorrelativaController::class, 'indexCorrelativasDebiles']);
 Route::get('/correlatividad/fuerte/{materia}', [MateriaCorrelativaController::class, 'indexCorrelativasFuertes']);
 
-
 Route::resource('/Carreras', 'App\Http\Controllers\CarrerasController');
 Route::resource('/carreras_materias', 'App\Http\Controllers\MateriasCarrerasController');
 Route::resource('/inscripcion_carrera', 'App\Http\Controllers\InscriptoEnCarreraController');
@@ -43,6 +42,5 @@ Route::resource('/MesaExamen', 'App\Http\Controllers\MesaExamenController');
 Route::get('MesaExamen/confirmation/{mesa}', [MesaExamenController::class, 'confirmation']);
 Route::get('MesaExamen/inscripcion/{mesa}', [MesaExamenController::class, 'inscripcion']);
 Route::get('MesaExamen/desinscripcion/{mesa}', [MesaExamenController::class, 'desinscripcion']);
-
 
 Route::resource('/Nota', 'App\Http\Controllers\NotaController');
