@@ -10,13 +10,13 @@ class MesaExamen extends Model
 {
     use HasFactory;
 
-    
+
     protected $fillable = [
         'fecha',
         'horario',
         'tipo_examen',
         'observaciones',
-        'id_materia'        
+        'id_materia'
     ];
 
     public static function type_exam_options(){
@@ -27,15 +27,12 @@ class MesaExamen extends Model
     }
 
     public function notas(){
-        return $this->hasMany(Nota::class,'id_mesa_examen');
+        return $this->hasMany(IncriptoEnMesaExamen::class,'id_mesa_examen');
     }
 
     public function materia(){
         return Materia::where('id', '=', $this->id_materia)->first();
     }
 
-
-
-    
 }
 

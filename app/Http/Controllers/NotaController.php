@@ -78,8 +78,8 @@ class NotaController extends Controller
             'id_materia' => $request->materia
         ]);
         $nota->save();
-//        $alumno = User::findOrFail($request->LU_alumno);
-//        $alumno->notify(new NotificacionNotas());
+        $alumno = User::findOrFail($request->LU_alumno);
+        $alumno->notify(new NotificacionNotas());
 
         return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
     }
@@ -95,8 +95,8 @@ class NotaController extends Controller
             'id_mesa_examen' => $request->mesaExamen
         ]);
         $nota->save();
-//        $alumno = User::findOrFail($request->LU_alumno);
-//        $alumno->notify(new NotificacionNotas());
+        $alumno = User::findOrFail($request->LU_alumno);
+        $alumno->notify(new NotificacionNotas());
 
         return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
     }
