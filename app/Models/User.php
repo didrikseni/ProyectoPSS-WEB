@@ -151,6 +151,7 @@ class User extends Authenticatable
             ->get();
     }
 
+    //Devolvemos las mesas de examen de las materias donde esta inscripto
     public function mesasExamenAlumno()
     {
         return MesaExamen::select('mesa_examens.*')
@@ -160,6 +161,16 @@ class User extends Authenticatable
             ->get();
     }
 
+    //Devolvemos las mesas de examen de todas las materias de la carrera donde esta inscripto
+    public function mesasExamenAlumnoCarrera()
+    {
+        return MesaExamen::select('mesa_examens.*')
+            ->join('materias_carreras', 'materias_carreras.id_materia', '=', 'mesa_examens.id_materia')
+            ->join('inscripto_en_carreras', 'inscripto_en_carreras.id_carrera', '=', 'materias_carreras.id_carrera')
+            ->join('users', 'inscripto_en_carreras.id_alumno', '=', 'users.id')
+            ->where('users.id', $this->id)
+            ->get();
+    }
 
     public function mesasExamenProfesor()
     {
@@ -204,5 +215,14 @@ class User extends Authenticatable
 //            ->where('users.id', $this->id)
 //            ->get();
     }
+
+
+    public function inscriptoEnMesa($mesa_id){
+        return IncriptoEnMesaExamen::where(
+            'id_alumno', '=', $this->id)
+            ->where('id_mesa_examen', '=', $mesa_id)
+            ->get();
+    }
+
 
 }

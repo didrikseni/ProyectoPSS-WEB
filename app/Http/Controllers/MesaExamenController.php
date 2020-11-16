@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Materia;
 use App\Models\MesaExamen;
+use App\Models\IncriptoEnMesaExamen;
+use App\Rules\CorrelatividadCheck;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -11,6 +13,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Auth;
+
 
 class MesaExamenController extends Controller
 {
@@ -43,7 +47,7 @@ class MesaExamenController extends Controller
                 $mesa_examen = $user->mesasExamenProfesor();
             } else {
                 if ($user->isStudent()) {
-                    $mesa_examen = $user->mesasExamenAlumno();
+                    $mesa_examen = $user->mesasExamenAlumnoCarrera();
                 }
             }
         }
@@ -173,5 +177,28 @@ class MesaExamenController extends Controller
         return redirect()->route('MesaExamen.index');
     }
 
+    public function inscripcion($mesa_id){
+        $mesa_examen = MesaExamen::where('id', $mesa_id)->firstOrFail();
+        $materia = Materia::where('id','=', $mesa_examen->id_materia)->firstOrFail();
+
+        // $this->validate([
+        //     'materia' => new CorrelatividadCheck(),
+        // ]);
+
+        $inscripcion = new IncriptoEnMesaExamen([
+            'id_mesa_examen' => $mesa_id,
+            'id_alumno' => Auth::id(),
+        ]);
+
+        $inscripcion->save();
+        return redirect()->back()->with('success', 'Se ha inscripto correctamente a la mesa de examen.');
+    }
+
+    //Probar si funciona, solo lo hice.
+    public function desinscripcion($mesa_id){
+        $mesa_examen = IncriptoEnMesaExamen::where('id_mesa_examen', $mesa_id)->where('id_alumno', Auth::id())->firstOrFail();
+        $mesa_examen->delete();
+        return redirect()->back()->with('error', 'Se ha desincripto correctamente de la mesa de examen');
+    }
 
 }
