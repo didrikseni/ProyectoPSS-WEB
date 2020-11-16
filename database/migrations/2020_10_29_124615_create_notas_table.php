@@ -17,9 +17,9 @@ class CreateNotasTable extends Migration
             $table->id();
             $table->integer('calificacionFinal')->nullable();
             $table->string('calificacionCursada')->nullable();
-            $table->foreignId('id_mesa_examen')->references('id')->on('mesa_examens')->onDelete('cascade')->nullable();
-            $table->foreignId('LU_alumnno')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('id_materia')->references('id')->on('materias')->onDelete('cascade')->nullable();
+            $table->foreignId('id_mesa_examen')->nullable()->references('id')->on('mesa_examens')->onDelete('cascade');
+            $table->foreignId('id_alumno')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('id_materia')->nullable()->references('id')->on('materias')->onDelete('cascade');
             $table->timestamps();
         });
     }

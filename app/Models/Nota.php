@@ -12,7 +12,7 @@ class Nota extends Model
     protected $fillable = [
         'calificacionFinal',
         'calificacionCursada',
-        'LU_alumno',
+        'id_alumno',
         'id_mesa_examen',
         'id_materia',
     ];

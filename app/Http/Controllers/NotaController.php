@@ -7,6 +7,7 @@ use App\Models\MesaExamen;
 use App\Models\Nota;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Rules\InscripcionAlumnoMateria;
 
 class NotaController extends Controller
 {
@@ -59,10 +60,10 @@ class NotaController extends Controller
 
         $nota->fill([
             'calificacionCursada' => $request->calificacion,
-            'LU_alumno' => $request->LU_alumno,
+            'id_alumno' => $request->LU_alumno,
             'id_materia'=>$request->materia
         ]);
-        dd($nota);
+        
         $nota->save();
         
         return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
@@ -127,7 +128,7 @@ class NotaController extends Controller
     private function validateDataCursada(Request $request): array {
         return request()->validate([
             'calificacion' => ['required'],
-            'LU_alumno' =>['required'],
+            'LU_alumno' =>['required', new InscripcionAlumnoMateria($request->materia)],
             'materia' => ['required']
         ]);
 
