@@ -17,7 +17,7 @@
 
 
             <div class="col-9">
-                <form action="/MesaExamen" method = "POST" class="py-3">
+                <form action="/Nota" method = "POST" class="py-3">
 
                     <div class="form-row my-3">
                         <div class="col">
@@ -29,35 +29,22 @@
                                         <option value="{{$materia->id}}">{{$materia->nombre }}</option>
                                     @endforeach
                                 </select>
-                                @error('nombre')
+                                @error('materia')
                                 <p class="badge badge-danger">{{ $errors->first('materia') }}</p>
                                 @enderror
                             </div>
                         </div>
-{{--                        <div class="col ">--}}
-{{--                            <label for="tipo_examen">Seleccione el tipo de Nota a cargar: (*)</label>--}}
-{{--                            <div>--}}
-{{--                                <select name="rol" id="rol" class="form-control" >--}}
-{{--                                    <option disabled selected>Seleccionar</option>--}}
-{{--                                    @foreach ($nota->gradingType() as $option)--}}
-{{--                                        <option value="{{$option}}">{{$option}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                                @error('rol')--}}
-{{--                                <p class="badge badge-danger">{{ $errors->first('rol') }}</p>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+
                     </div>
 
                     <div class="form-row my-3">
 
                         <div class="col">
-                            <label for="lu">LU del alumno: (*)</label>
+                            <label for="LU_alumno">LU del alumno: (*)</label>
                             <div>
-                                <input type="text" id="LU_alumno" name= "LU_alumno" class="form-control" placeholder="N° de LU">
-                                @error('lu')
-                                <p class="badge badge-danger">{{ $errors->first('lu') }}</p>
+                                <input type="text" id="LU_alumno" name= "LU_alumno" class="form-control" placeholder="N° de LU" value = "{{old ('LU_alumno')}}">
+                                @error('LU_alumno')
+                                <p class="badge badge-danger">{{ $errors->first('LU_alumno') }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -71,26 +58,12 @@
                                         <option value="{{$option}}">{{$option}}</option>
                                     @endforeach
                                 </select>
-                                @error('rol')
-                                <p class="badge badge-danger">{{ $errors->first('rol') }}</p>
+                                @error('calificacion')
+                                <p class="badge badge-danger">{{ $errors->first('calificacion') }}</p>
                                 @enderror
                             </div>
                         </div>
 
-{{--                        <div class="col ">--}}
-{{--                            <label for="tipo_examen">Seleccione la Calificación: (*)</label>--}}
-{{--                            <div>--}}
-{{--                                <select name="rol" id="rol" class="form-control" >--}}
-{{--                                    <option disabled selected>Seleccionar</option>--}}
-{{--                                    @foreach ($nota->gradingNumResult(10) as $option)--}}
-{{--                                        <option value="{{$option}}">{{$option}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                                @error('rol')--}}
-{{--                                <p class="badge badge-danger">{{ $errors->first('rol') }}</p>--}}
-{{--                                @enderror--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
 
                     </div>
 

@@ -7,13 +7,8 @@ use App\Models\Departamentos;
 use App\Models\Materia;
 use App\Models\User;
 use App\Rules\MateriaProfesor;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Redirector;
 
 class MateriaController extends Controller
 {
@@ -27,34 +22,20 @@ class MateriaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return Application|Factory|View|Response
+     * @return Response
      */
     public function index()
     {
-        $mat = Materia::all()->sortByDesc('created_at');
+        $materias = Materia::all()->sortByDesc('created_at');
         $carreras = Carreras::all()->sortBy('created_at');
         $matInfo = null;
-        $materias = [];
-        foreach ($mat as $materia) {
-            $materias[] = [
-                'id' => $materia->id,
-                'id_str' => $materia->id_str,
-                'nombre' => $materia->nombre,
-                'departamento' => $materia->departamento,
-                'id_profesor' => $materia->id_profesor,
-                'id_asistente' => $materia->id_asistente,
-                'anio' => $materia->asociadaACarrera() ? $materia->getAnio() : 'No asociada',
-                'cuatrimestre' => $materia->asociadaACarrera() ? ($materia->getCuatrimestre() === 0 ? 'primero' : 'segundo') : 'No asociada',
-            ];
-        }
-
         return view('materias.materias_index', compact('materias', 'carreras', 'matInfo'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Application|Factory|View|Response
+     * @return Response
      */
     public function create()
     {
@@ -65,7 +46,7 @@ class MateriaController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return RedirectResponse
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -114,7 +95,7 @@ class MateriaController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return Application|Factory|View|Response
+     * @return Response
      */
     public function edit(int $id)
     {
@@ -130,27 +111,24 @@ class MateriaController extends Controller
      *
      * @param Request $request
      * @param Materia $materia
-     * @return Application|RedirectResponse|Response|Redirector
+     * @return Response
      */
     public function update(Request $request, Materia $materia)
     {
-        // dd($request->nombre, $request->id_str, $request->departamento, $request->profesor, $request->asistente);
         $materia = Materia::findOrFail($materia->id);
         $request->validate([
             'nombre' => 'required',
-            'id_str' => 'required|min:1|max:255|unique:materias,id_str,' . $materia->id . ',id',
+            'id_str' => 'required|min:1|max:255|unique:materias,id_str,'.$materia->id.',id',
             'departamento' => 'required|exists:departamentos,id',
-            'profesor' => ['integer', new MateriaProfesor],
-            'asistente' => ['integer', new MateriaProfesor],
         ]);
         $materia->nombre = $request->nombre;
         $materia->id_str = $request->id_str;
         $materia->departamento = $request->departamento;
-        $materia->id_profesor = $request->profesor ? $request->profesor : $materia->id_profesor;
-        $materia->id_asistente = $request->asistente ? $request->asistente : $materia->id_asistente;
+        $materia->id_profesor = null;
+        $materia->id_asistente = null;
         $materia->save();
 
-        return redirect(route('materias.index'))->with('success', 'La materia fue editada correctamente.');
+        return redirect(route('materias.index'))->with('success');
     }
 
     /**
@@ -163,7 +141,7 @@ class MateriaController extends Controller
     {
         $materia = Materia::findOrFail($materia->id);
         $materia->delete();
-        return redirect()->route('materias.index')->with('success', 'La materia se ha eliminado correctamente.');
+        return redirect()->route('materias.index');
     }
 
     public function edit_professor()
@@ -183,6 +161,6 @@ class MateriaController extends Controller
         $materia['id_asistente'] = $request->asistente;
 
         $materia->save();
-        return redirect(route('materias.index'))->with('success', 'El profesor se ha actualizado correctamente.');
+        return redirect(route('materias.index'));
     }
 }

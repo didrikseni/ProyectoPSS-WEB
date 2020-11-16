@@ -170,11 +170,11 @@ class MesaExamenController extends Controller
      * @param MesaExamen $mesaExamen
      * @return Response
      */
-    public function destroy(int $id)
+    public function destroy(MesaExamen $mesaExamen_id)
     {
-        $mesa = MesaExamen::findOrFail($id);
+        $mesa = MesaExamen::findOrFail($mesaExamen_id);
         $mesa->delete();
-        return redirect()->route('MesaExamen.index')->with('success', 'La mesa de examen fue eliminada correctamente.');
+        return redirect()->route('MesaExamen.index');
     }
 
     public function inscripcion($mesa_id){

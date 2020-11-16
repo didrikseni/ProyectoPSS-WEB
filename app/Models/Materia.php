@@ -27,7 +27,7 @@ class Materia extends Model
 
     public function profesor()
     {
-        return User::where('id', $this->id_profesor)->first();
+        return User::where('id',$this->id_profesor)->first();
     }
 
     public function asistente()
@@ -38,21 +38,17 @@ class Materia extends Model
     public function getCorrelativasFuertes()
     {
         return Materia::join('materia_correlativas', 'materia_correlativas.id_materia', '=', 'materias.id')
-            ->select('mat.*')
-            ->join('materias as mat', 'id_correlativa', '=', 'mat.id')
-            ->where('materia_correlativas.tipo', '=', '1')
-            ->where('id_materia', $this->id)
-            ->get();
+            ->select('materia_correlativas.*')
+            ->where('materia_correlativas.tipo', '1')
+            ->where('id_materia', $this->id)->get();
     }
 
     public function getCorrelativasDebiles()
     {
         return Materia::join('materia_correlativas', 'materia_correlativas.id_materia', '=', 'materias.id')
-            ->select('mat.*')
-            ->join('materias as mat', 'id_correlativa', '=', 'mat.id')
+            ->select('materia_correlativas.*')
             ->where('materia_correlativas.tipo', '=', '0')
-            ->where('id_materia', $this->id)
-            ->get();
+            ->where('id_materia', $this->id)->get();
     }
 
     public function getMesasExamen()
@@ -60,33 +56,5 @@ class Materia extends Model
         return $this->hasMany(MesaExamen::class);
     }
 
-    public function getAnio()
-    {
-        $carrera = auth()->user()->carrera();
-        $materias_carreras = MateriasCarreras::join('materias', 'materias.id', '=', 'materias_carreras.id_materia')
-            ->join('carreras', 'carreras.id', '=', 'materias_carreras.id_carrera')
-//            ->where('carreras.id', $carrera->id)
-            ->where('materias_carreras.id_materia', $this->id)
-            ->select('materias_carreras.*')
-            ->first();
-        return $materias_carreras['anio'];
-    }
-
-    public function getCuatrimestre()
-    {
-        $carrera = auth()->user()->carrera();
-        $materias_carreras = MateriasCarreras::join('materias', 'materias.id', '=', 'materias_carreras.id_materia')
-            ->join('carreras', 'carreras.id', '=', 'materias_carreras.id_carrera')
-//            ->where('carreras.id', $carrera->id)
-            ->where('materias_carreras.id_materia', $this->id)
-            ->select('materias_carreras.*')
-            ->first();
-        return $materias_carreras['cuatrimestre'];
-    }
-
-    public function asociadaACarrera()
-    {
-        return MateriasCarreras::where('materias_carreras.id_materia', '=', $this->id)->exists();
-    }
 
 }

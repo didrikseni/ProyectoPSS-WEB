@@ -153,11 +153,4 @@ class CarrerasController extends Controller
         $carrera->delete();
         return redirect()->route('Carreras.index')->with('success', 'La carrera fue eliminada correctamente.');
     }
-
-
-    public function showMaterias(int $id) {
-        $carrera = Carreras::findOrFail($id);
-        $materias = $carrera->materias();
-        return view('Carreras.materias', compact('materias', 'carrera'));
-    }
 }

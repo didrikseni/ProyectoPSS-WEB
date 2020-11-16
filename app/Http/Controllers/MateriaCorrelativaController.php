@@ -133,22 +133,4 @@ class MateriaCorrelativaController extends Controller
     {
         //
     }
-
-    public function indexCorrelativasDebiles(int $id) {
-        $materia = Materia::findOrFail($id);
-        $tipo = 'debiles';
-        $correlativas = $materia->getCorrelativasDebiles();
-
-        return view('materias.correlativas', compact('materia', 'tipo', 'correlativas'));
-    }
-
-    public function indexCorrelativasFuertes(int $id) {
-        $materia = Materia::findOrFail($id);
-        $tipo = 'debiles';
-        $correlativas = $materia->getCorrelativasFuertes();
-
-        return view('materias.correlativas', compact('materia', 'tipo', 'correlativas'));
-    }
-
-
 }
