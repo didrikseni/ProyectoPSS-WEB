@@ -10,7 +10,6 @@
             <div class="title m-b-md text-center">
                 <h1>Notas de Examen</h1>
                 </br>
-                <h3> Notas Cursadas </h3>
                 <table id="example" style="width:100%">
                     <thead>
                     <tr>
@@ -18,18 +17,27 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Materia</th>
+                        <th scope="col">Tipo de Nota </th>
                         <th scope="col"> Nota </th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach ($notasCursadas as $nota)
+                    @foreach ($notas as $nota)
                         <tr>
                             <th>{{$nota->LU_alumno}}</th>
                             <th>{{App\Models\User::where('id', '=', $nota->LU_alumno)->first()->nombre}} </th>
                             <th>{{App\Models\User::where('id', '=', $materia->LU_alumno)->first()->apellido}} </th>
                             <th> {{App\Models\Materia::where('id', '=', App\Models\MesaExamen::where('id', '=', $nota->id_mesa_examen)->first()->id)->first()->nombre}} </th>
-                            <th>{{$nota->calificacion}}</th>
+                            
+                            @if( $nota->esCursada())
+                                <th>Cursada</th>
+                                <th>{{$nota->calificacionCursada}}</th>
+                            @else
+                                <th>Final</th>
+                                <th>{{$nota->calificacionFinal}}</th>
+                            @endif
+
                             <td>
                                 <div class="btn-group">
                                     <a href="/Nota/{{ $nota->id }}/edit">
