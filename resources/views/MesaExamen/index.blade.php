@@ -42,7 +42,7 @@
                             </th>
                             <td>
                                 <div class="btn-group">
-
+                                   
                                     @if(!auth()->user()->isStudent())
                                         <a href="/MesaExamen/{{ $mesa->id }}/edit">
                                             <button type="button" class="btn btn-primary btn-small">Editar</button>
@@ -56,9 +56,16 @@
                                         </button>
                                     @endif
                                     @if(auth()->user()->isStudent())
-                                        <a href="/materias/{{ $mesa->id }}/edit">
-                                            <button type="button" class="btn btn-primary btn-small">Editar</button>
-                                        </a>
+                                        @if(auth()->user()->inscriptoEnMesa($mesa->id)->count()<1)
+                                            <a href="/MesaExamen/inscripcion/{{$mesa->id}}">
+                                                <button type="button" class="btn btn-primary btn-small">Inscribirse</button>
+                                            </a>
+                                        @endif
+                                        @if(auth()->user()->inscriptoEnMesa($mesa->id)->count()>0)
+                                            <a href="/MesaExamen/desinscripcion/{{$mesa->id}}">
+                                                <button type="button" class="btn red btn-small">Desinscribirse</button>
+                                            </a>
+                                        @endif
                                     @endif
                                    
                                 </div>

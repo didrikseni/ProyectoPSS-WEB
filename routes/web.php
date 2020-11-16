@@ -41,5 +41,8 @@ Route::get('/Carreras/{carrera}/materias','App\Http\Controllers\CarrerasControll
 
 Route::resource('/MesaExamen', 'App\Http\Controllers\MesaExamenController');
 Route::get('MesaExamen/confirmation/{mesa}', [MesaExamenController::class, 'confirmation']);
+Route::get('MesaExamen/inscripcion/{mesa}', [MesaExamenController::class, 'inscripcion']);
+Route::get('MesaExamen/desinscripcion/{mesa}', [MesaExamenController::class, 'desinscripcion']);
+
 
 Route::resource('/Nota', 'App\Http\Controllers\NotaController');
