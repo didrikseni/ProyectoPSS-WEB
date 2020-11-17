@@ -64,7 +64,7 @@ class InscriptoEnCarreraController extends Controller
 
         $inscripcion->save();
 
-        return redirect(route('/'));
+        return redirect()->route('/')->with('success', 'El alumno fue inscripto correctamente en la carrera.');
     }
 
     /**

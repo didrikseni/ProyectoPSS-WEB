@@ -30,9 +30,6 @@ class InscripcionAlumnoMateria implements Rule
      */
     public function passes($attribute, $value)
     {
-//        dd($this->materia, $value);
-//        dd(InscripcionEnMateria::where('id_materia', $this->materia));
-
         return InscripcionEnMateria::where('id_materia', '=', $this->materia->id)->where('id_alumno', '=', $value)->exists();
     }
 
