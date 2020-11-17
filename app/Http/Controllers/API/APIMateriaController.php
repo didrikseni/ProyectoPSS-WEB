@@ -23,7 +23,7 @@ class APIMateriaController extends Controller
     {
         $carrera = auth()->user()->carrera()->first();
         $materias = $carrera->materias();
-        return response(json_encode($materias), 200);
+        return response(json_encode(['status_code' => 200, "materias" => $materias]), 200);
     }
 
     /**

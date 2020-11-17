@@ -18,16 +18,24 @@ class APIAuthController extends Controller
             return response(['message' => 'Invalid Credentials'], 401);
         }
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $user = auth()->user();
         $userData = [
-            'nombre' => auth()->user()->nombre,
-            'apellido' => auth()->user()->apellido,
-            'direccion_calle' => auth()->user()->direccion_calle,
-            'direccion_numero' => auth()->user()->direccion_numero,
-            'numero_telefono' => auth()->user()->numero_telefono,
-            'email' => auth()->user()->email,
-            'escuela_secundaria' => auth()->user()->escuela_secundaria,
+            'id' => $user->id,
+            'nombre' => $user->nombre,
+            'apellido' => $user->apellido,
+            'fecha_nacimiento' => $user->fecha_nacimiento,
+            'lugar_nacimiento' => $user->lugar_nacimiento,
+            'tipo_documento' => $user->tipo_documento,
+            'DNI' => $user->DNI,
+            'direccion_calle' => $user->direccion_calle,
+            'direccion_numero' => $user->direccion_numero,
+            'numero_telefono' => $user->numero_telefono,
+            'legajo' => $user->legajo,
+            'nombre_usuario' => $user->nombre_usuario,
+            'email' => $user->email,
+            'escuela_secundaria' => $user->escuela_secundaria,
         ];
-        return response(json_encode(['userData' => ['user' => $userData, 'access_token' => $accessToken]]), 200);
+        return response(json_encode(['status_code' => 200, 'user' => $userData, 'access_token' => $accessToken]), 200);
     }
 
     public function logout(Request $request) {
