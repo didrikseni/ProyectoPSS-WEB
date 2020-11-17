@@ -25,10 +25,10 @@
                     <tbody>
                     @foreach ($notas as $nota)
                         <tr>
-                            <th>{{$nota->LU_alumno}}</th>
+                            <th>{{$nota->alumno()->legajo}}</th>
                             <th>{{App\Models\User::where('id', '=', $nota->id_alumno)->first()->nombre}} </th>
-                            <th>{{App\Models\User::where('id', '=', $nota->LU_alumno)->first()->apellido}} </th>
-                            <th>{{App\Models\Materia::where('id', '=', App\Models\MesaExamen::where('id', '=', $nota->id_mesa_examen)->first()->id)->first()->nombre}}</th>
+                            <th>{{App\Models\User::where('id', '=', $nota->id_alumno)->first()->apellido}} </th>
+                            <th>{{ $nota->materia()->nombre }}</th>
 
                             @if( $nota->esCursada())
                                 <th>Cursada</th>
