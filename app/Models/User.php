@@ -181,13 +181,18 @@ class User extends Authenticatable
             ->get();
     }
 
+    public function notasAlumno(){
+        return Nota::select('notas.*')
+            ->join('users', 'notas.LU_alumno', '=', 'users.id')
+            ->where('users.id', $this->id)
+            ->get(); 
+    }
 
     public function notasCursada()
     {
         return Nota::select('notas.*')
             ->join('users', 'notas.LU_alumno', '=', 'users.id')
-            ->join('mesa_examens', 'mesa_examens.id', '=', 'notas.id_mesa_examen')
-            ->where('mesa_examens', 'mesa_examens.tipo_examen', '=', 'Parcial')
+            ->where('calificacionFinal', '==', 'null')
             ->where('users.id', $this->id)
             ->get();
     }
@@ -196,8 +201,7 @@ class User extends Authenticatable
     {
         return Nota::select('notas.*')
             ->join('users', 'notas.LU_alumno', '=', 'users.id')
-            ->join('mesa_examens', 'mesa_examens.id', '=', 'notas.id_mesa_examen')
-            ->where('mesa_examens', 'mesa_examens.tipo_examen', '=', 'Final')
+            ->where('calificacionFinal', '!=', 'null')
             ->where('users.id', $this->id)
             ->get();
     }

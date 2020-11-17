@@ -26,14 +26,13 @@ class NotaController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $notasCursadas = Nota::all();
-        $notasFinales = Nota::all();
+        $notas = Nota::all();
         if ($user->isStudent()) {
-            $notasCursadas = $user->notasCursada();
-            $notasFinales = $user->notasFinales();
+            $notas = $user->notasAlumno();
         }
-        return view('Nota/index', compact('notasFinales', 'notasCursadas'));
+        return view('Nota/index', compact('notas'));
     }
+
 
     /**
      * Show the form for creating a new resource.

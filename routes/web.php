@@ -46,3 +46,4 @@ Route::get('MesaExamen/desinscripcion/{mesa}', [MesaExamenController::class, 'de
 Route::resource('/Nota', 'App\Http\Controllers\NotaController');
 Route::get('/final/nota/create', 'App\Http\Controllers\NotaController@createFinal');
 Route::post('/notafinal', 'App\Http\Controllers\NotaController@storeFinal');
+Route::post('/notasFinales', 'App\Http\Controllers\NotaController@indexFinales');
