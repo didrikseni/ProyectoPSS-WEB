@@ -42,7 +42,7 @@ class NotificacionNotas extends Notification
         return (new MailMessage)
             ->greeting('Hola!')
             ->line('Se ha actualizado tu nota en la plataforma')
-            ->action('Puedes verla aquí', url('/' . $notifiable))
+            ->action('Puedes verla aquí', url('/Notas'))
             ->line('Atentamente, Universidad del Valle.');
     }
 

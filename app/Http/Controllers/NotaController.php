@@ -7,8 +7,6 @@ use App\Models\MesaExamen;
 use App\Models\Nota;
 use App\Models\User;
 use App\Notifications\NotificacionNotas;
-use App\Rules\CorrelativasCirculares;
-use App\Rules\CorrelatividadCheck;
 use App\Rules\InscripcionAlumnoMateria;
 use App\Rules\InscriptoMesaExamen;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,7 +15,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Date;
 
 class NotaController extends Controller
 {
@@ -84,8 +81,18 @@ class NotaController extends Controller
         return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
     }
 
-    public function storeFinal(Request $request) {
+    private function validateDataCursada(Request $request): array
+    {
+        return request()->validate([
+            'calificacion' => ['required'],
+            'LU_alumno' => ['required', new InscripcionAlumnoMateria($request->materia)],
+            'materia' => ['required']
+        ]);
 
+    }
+
+    public function storeFinal(Request $request)
+    {
         $this->validateDataFinal($request);
         $nota = new Nota();
 
@@ -107,18 +114,8 @@ class NotaController extends Controller
         return request()->validate([
             'calificacion' => ['required'],
             'LU_alumno' => ['required', new InscriptoMesaExamen($request->mesaExamen)],
-            'mesaExamen' => ['required' ]
+            'mesaExamen' => ['required']
         ]);
-    }
-
-    private function validateDataCursada(Request $request): array
-    {
-        return request()->validate([
-            'calificacion' => ['required'],
-            'LU_alumno' => ['required', new InscripcionAlumnoMateria($request->materia)],
-            'materia' => ['required']
-        ]);
-
     }
 
     public function confirmation($mesa_id)
@@ -142,15 +139,15 @@ class NotaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Nota $nota
-     * @return Response
+     * @param int $id
+     * @return Application|Factory|View|Response
      */
-    public function edit(int $nota_id)
+    public function edit(int $id)
     {
-//        $nota = MesaExamen::findOrFail($nota_id);
-//        $tipo_examen = MesaExamen::type_exam_options();
-//        $materias = Materia::all();
-//        return view('MesaExamen.edit', compact('materias', 'tipo_examen', 'mesa'));
+        $nota = Nota::findOrFail($id);
+        $tipo = $nota->esFinal() ? 'final' : 'cursada';
+
+        return view('Nota.edit', compact('tipo', 'nota'));
     }
 
     /**
@@ -158,7 +155,7 @@ class NotaController extends Controller
      *
      * @param Request $request
      * @param Nota $nota
-     * @return Response
+     * @return void
      */
     public function update(Request $request, Nota $nota)
     {

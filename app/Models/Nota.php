@@ -57,4 +57,16 @@ class Nota extends Model
         }
     }
 
+    public function materia() {
+        return ($this->esFinal()) ? MesaExamen::where('id', $this->id_mesa_examen)->first()->materia() : Materia::findOrFail($this->id_materia);
+    }
+
+    public function fecha() {
+        return ($this->esFinal()) ? MesaExamen::where('id', $this->id_mesa_examen)->first()->fecha : '';
+    }
+
+    public function alumno() {
+        return User::findOrFail($this->id_alumno);
+    }
+
 }
