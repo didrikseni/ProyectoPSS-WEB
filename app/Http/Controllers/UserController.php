@@ -141,20 +141,29 @@ class UserController extends Controller
     public function update(Request $request, int $id)
     {
         $user = User::findOrFail($id);
-        $request->validate([
-            'nombre' => ['required', 'string', 'max:255'],
-            'apellido' => ['required', 'string', 'max:255'],
-            'fecha_nacimiento' => ['required', 'date'],
-            'lugar_nacimiento' => ['required', 'string', 'max:255'],
-            'tipo_documento' => ['required'],
-            'DNI' => ['required', 'integer', 'digits_between:1,12', 'unique:users,DNI,' . $user->id . ',id'],
-            'direccion_calle' => ['required', 'string', 'max:255'],
-            'direccion_numero' => ['required', 'integer'],
-            'numero_telefono' => ['required', 'integer'],
-            'rol' => ['required'],
-            'escuela_secundaria' => ['required_if:rol,Alumno'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id . ',id'],
-        ]);
+        if($user->isAdmin()){
+            $request->validate([
+                'nombre' => ['required', 'string', 'max:255'],
+                'apellido' => ['required', 'string', 'max:255'],
+                'fecha_nacimiento' => ['required', 'date'],
+                'lugar_nacimiento' => ['required', 'string', 'max:255'],
+                'tipo_documento' => ['required'],
+                'DNI' => ['required', 'integer', 'digits_between:1,12', 'unique:users,DNI,' . $user->id . ',id'],
+                'direccion_calle' => ['required', 'string', 'max:255'],
+                'direccion_numero' => ['required', 'integer'],
+                'numero_telefono' => ['required', 'integer'],
+                'rol' => ['required'],
+                'escuela_secundaria' => ['required_if:rol,Alumno'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id . ',id'],
+            ]);
+        }
+        else {
+            $request->validate([                
+                'direccion_calle' => ['required', 'string', 'max:255'],
+                'direccion_numero' => ['required', 'integer'],
+                'numero_telefono' => ['required', 'integer']
+            ]);
+        }
         $user->nombre = $request->nombre ?? $user->nombre;
         $user->apellido = $request->apellido ?? $user->apellido;
         $user->fecha_nacimiento = $request->fecha_nacimiento ?? $user->fecha_nacimiento;
