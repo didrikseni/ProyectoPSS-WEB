@@ -13,6 +13,6 @@ class IncriptoEnMesaExamenSeeder extends Seeder
      */
     public function run()
     {
-        //
+        InscriptoEnMesaExamenFactory::factory()->times(20)->create();
     }
 }

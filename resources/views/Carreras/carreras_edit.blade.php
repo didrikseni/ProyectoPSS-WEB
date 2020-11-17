@@ -59,10 +59,10 @@
                     <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
-                                <label for="departamento">Departamento responsable</label>
+                                <label for="departamento_responsable">Departamento responsable</label>
                                 <select class="form-control @error('departamento') alert-danger @enderror"
-                                        type="text" name="departamento" id="departamento" value="{{ $carrera->departamento_responsable }}"
-                                        id="departamento">
+                                        type="text" name="departamento_responsable" id="departamento_responsable" value="{{ $carrera->departamento_responsable }}"
+                                        id="departamento_responsable">
                                     @foreach($dptos as $dpto)
                                         @if ($dpto->nombre === $carrera->departamento_responsable)
                                             <option selected value="{{ $dpto->id }}">{{ $dpto->nombre }}</option>
@@ -71,8 +71,8 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                @error('departamento')
-                                <p class="badge badge-danger">{{ $errors->first('departamento') }}</p>
+                                @error('departamento_responsable')
+                                <p class="badge badge-danger">{{ $errors->first('departamento_responsable') }}</p>
                                 @enderror
                             </div>
                         </div>
@@ -81,10 +81,10 @@
                     <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
-                                <label for="profesor">Profesor responsable</label>
-                                <select class="form-control @error('profesor') alert-danger @enderror"
-                                        type="text" name="profesor" id="profesor" value="{{ $carrera->profesor_responsable }}"
-                                        id="profesor">
+                                <label for="profesor_responsable">Profesor responsable</label>
+                                <select class="form-control @error('profesor_responsable') alert-danger @enderror"
+                                        type="text" name="profesor_responsable" id="profesor_responsable" value="{{ $carrera->profesor_responsable }}"
+                                        id="profesor_responsable">
                                     @foreach($professors as $professor)
                                         @if ($professor->id === $carrera->profesor_responsable)
                                             <option selected value="{{ $professor->id }}">{{ $professor->nombre }}</option>
@@ -93,8 +93,8 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                @error('profesor')
-                                <p class="badge badge-danger">{{ $errors->first('profesor') }}</p>
+                                @error('profesor_responsable')
+                                <p class="badge badge-danger">{{ $errors->first('profesor_responsable') }}</p>
                                 @enderror
                             </div>
                         </div>
