@@ -16,32 +16,19 @@
                     <div class="row my-5">
                         <div class="col">
                             <div class="form-group">
-                                <label class="label" for="mesaExamen">Mesa de examen</label>
+                                <label class="label" for="tipoExamen">{{ $nota->esFinal() ? 'Mesa de examen' : 'Materia' }}</label>
                                 <div>
                                     <input
-                                        class="disabled input-group form-control @error('mesaExamen') alert-danger @enderror"
-                                        type="text" name="mesaExamen" id="mesaExamen"
-                                        value="{{ $nota->materia()->nombre . '  ' . $nota->fecha() }}">
-                                    @error('mesaExamen')
-                                    <p class="badge badge-danger">{{ $errors->first('mesaExamen') }}</p>
+                                        class="disabled input-group form-control @error('tipoExamen') alert-danger @enderror"
+                                        type="text" name="tipoExamen" id="tipoExamen"
+                                        value="{{ $nota->esFinal() ? $nota->id_mesa_examen : $nota->id_materia }}">
+                                    @error('tipoExamen')
+                                    <p class="badge badge-danger">{{ $errors->first('tipoExamen') }}</p>
                                     @enderror
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col">
-                            <div class="form-group">
-                                <label class="label" for="materia">Materia</label>
-                                <div>
-                                    <input
-                                        class="input-group form-control @error('materia') alert-danger @enderror"
-                                        type="text" name="materia" id="materia" value="{{ $nota->materia()->id_str }}">
-                                    @error('materia')
-                                    <p class="badge badge-danger">{{ $errors->first('materia') }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="row my-5">

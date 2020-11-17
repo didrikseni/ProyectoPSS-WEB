@@ -153,12 +153,35 @@ class NotaController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Nota $nota
+     * @param int $id
      * @return void
      */
-    public function update(Request $request, Nota $nota)
+    public function update(Request $request, int $id)
     {
-        //
+        $nota = Nota::findOrFail($id);
+        if ($nota->esFinal()) {
+            $this->validateDataFinal($request);
+            $nota->fill([
+                'calificacionFinal' => $request->calificacion,
+                'calificacionCursada' => null,
+                'id_alumno' => $request->LU_alumno,
+                'id_mesa_examen' => $request->tipoExamen,
+                'id_materia' => null,
+            ]);
+        } else {
+            $this->validateDataCursada($request);
+            $nota->fill([
+                'calificacionCursada' => $request->calificacion,
+                'calificacionFinal' => null,
+                'id_alumno' => $request->LU_alumno,
+                'id_materia' => $request->tipoExamen,
+                'id_mesa_examen' => null,
+            ]);
+        }
+        $nota->save();
+        $alumno = User::findOrFail($request->LU_alumno);
+        $alumno->notify(new NotificacionNotas());
+        return redirect()->back()->with('success', 'La nota de cursada se cargo correctamente.');
     }
 
     /**
