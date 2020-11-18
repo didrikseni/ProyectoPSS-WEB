@@ -7,6 +7,9 @@ use App\Models\InscripcionEnMateria;
 use App\Models\Materia;
 use App\Rules\CorrelatividadCheck;
 use App\Rules\InscripcionRolAlumno;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -16,7 +19,6 @@ class InscripcionEnMateriaController extends Controller
     {
         $this->middleware('auth');
     }
-
 
 
     /**
@@ -32,11 +34,12 @@ class InscripcionEnMateriaController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function create()        //        Ni en pedo haría algo asi en producción... falta banda de optimización, se podría hacer con una sola query.
     {
         $carreras = auth()->user()->carrera();
+        dd($carreras, $carreras->first(), $carreras->first()->nombre);
         $materiasTotales = [];
         foreach ($carreras as $car) {
             $mat = Carreras::findOrFail($car->id)->materias();
