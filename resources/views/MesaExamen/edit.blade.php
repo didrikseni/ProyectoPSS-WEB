@@ -16,38 +16,6 @@
                 @csrf
                 {{ method_field('PUT') }}
 
-                @if(auth()->user()->isAdmin())
-                <div class="form-row my-5">
-                    <div class="col">
-                        <label for="materia">Materia </label>
-                        <div>
-                            <select name="materia" id="materia" class="form-control" >
-                                <option  value="{{$mesa->id_materia}}" selected>{{App\Models\Materia::where('id', '=', $mesa->id_materia)->first()->nombre}}</option>
-                                @foreach ($materias as $materia)
-                                    <option value="{{$materia->id}}">{{$materia->nombre }}</option>
-                                @endforeach
-                            </select>
-                            @error('nombre')
-                                <p class="badge badge-danger">{{ $errors->first('materia') }}</p>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col ">
-                        <label for="tipo_examen">Tipo de examen</label>
-                        <div>
-                            <select name="tipo_examen" id="tipo_examen" class="form-control" >
-                                <option value ="{{$mesa->tipo_examen}}" selected >{{$mesa->tipo_examen}}</option>
-                                @foreach ($tipo_examen as $tipo)
-                                    <option value="{{$tipo}}">{{$tipo }}</option>
-                                @endforeach
-                            </select>
-                            @error('tipo_examen')
-                                <p class="badge badge-danger">{{ $errors->first('tipo_examen') }}</p>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-                @endif
                 <div class="form-row my-5">
 
                     <div class="col">

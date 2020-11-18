@@ -39,7 +39,7 @@ class InscripcionEnMateriaController extends Controller
     public function create()        //        Ni en pedo haría algo asi en producción... falta banda de optimización, se podría hacer con una sola query.
     {
         $carreras = auth()->user()->carrera();
-        dd($carreras, $carreras->first(), $carreras->first()->nombre);
+//        dd($carreras, $carreras->first(), $carreras->first()->nombre);
         $materiasTotales = [];
         foreach ($carreras as $car) {
             $mat = Carreras::findOrFail($car->id)->materias();

@@ -22,5 +22,6 @@ Artisan::command('inspire', function () {
 Artisan::command('project:init', function() {
     Artisan::call('migrate:refresh');
     Artisan::call('db:seed');
+    Artisan::call('passport:install');
     Artisan::call('optimize');
 });

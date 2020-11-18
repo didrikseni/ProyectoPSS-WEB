@@ -143,17 +143,11 @@ class MesaExamenController extends Controller
     public function update(Request $request, int $id)
     {
         $request->validate([
-            'materia' => ['required_if:rol,Administrador'],
-            'tipo_examen' => ['required_if:rol,Administrador'],
             'fecha' => ['required', 'date'],
             'hora' => ['required'],
             'observaciones' => ['nullable'],
         ]);
         $mesa = MesaExamen::findOrFail($id);
-        if (auth()->user()->isAdmin()) {
-            $mesa->materia = $request->materia;
-            $mesa->tipo_examen = $request->tipo_examen;
-        }
         $mesa->fill([
             'fecha' => $request->fecha,
             'horario' => $request->hora,
