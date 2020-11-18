@@ -22,7 +22,6 @@ Route::post('login', [APIAuthController::class , 'login']);
 Route::post('logout', [APIAuthController::class, 'logout'])->middleware('auth:api');
 Route::get('isLoggedIn', [APIAuthController::class, 'isLoggedIn']);
 
-
 Route::resource('api_user', APIUserController::class)->middleware('auth:api');
 Route::resource('api_materias', APIMateriaController::class)->middleware('auth:api');
 Route::resource('api_carreras', APICarrerasController::class)->middleware('auth:api');
